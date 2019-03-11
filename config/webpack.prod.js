@@ -19,7 +19,7 @@ module.exports = merge(config, {
       new optimizeCSSAssetsPlugin({
         cssProcessor: cssNano,
         cssProcessorOptions: {
-          reduceIdents: false,
+          reduceIndents: false,
         },
       })
     ]

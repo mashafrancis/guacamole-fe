@@ -8,7 +8,7 @@ const {
 
 module.exports = merge(config, {
   output: {
-    filename: '[name].js'
+    publicPath: 'http://kari4me.com:3000/'
   },
   devServer: {
     historyApiFallback: true,
