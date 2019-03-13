@@ -8,14 +8,15 @@ const miniCssExtractPlugin = require('mini-css-extract-plugin');
 
 
 const getFaviconUrl = (size) => {
-  return `https://res.cloudinary.com/mashafrancis/image/upload/v1551124424/kari4me/favicon.png`
+  return `https://res.cloudinary.com/mashafrancis/image/upload/c_scale,h_${size},q_${size}/v1551124424/kari4me/favicon.png`
 }
 
 // instantiating webpack dependencies
 const cleanWebpack = new cleanWebpackPlugin(['dist']);
 const htmlWebpack = new htmlWebpackPlugin({
   template: 'src/index.html',
-  title: 'Kari4me',
+  inject: 'body',
+  title: 'kari4me',
   getFaviconUrl,
 });
 const namedModulesPlugin = new webpack.NamedModulesPlugin();
