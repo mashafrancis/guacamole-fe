@@ -66,7 +66,6 @@ typings/
 .nyc_output
 /build
 /coverage
-/dist
 yarn-error.log
 package-lock.json
 src/**/**/__snapshots__/*.test.tsx.snap
