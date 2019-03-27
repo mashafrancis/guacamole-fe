@@ -1,11 +1,11 @@
-import CacheHandler from 'src/utils/helpers/CacheHandler';
+import CacheHandler from 'utils/helpers/CacheHandler';
 
 describe('CacheHandler class', () => {
   describe('The extractUrlEndpoint function', () => {
     it('should return the endpoint without query parameters', () => {
-      const address = '/assets?limit=10';
+      const address = '/users?limit=10';
 
-      expect(CacheHandler.extractUrlEndpoint(address, 'https://baseapi.url')).toBe('/assets');
+      expect(CacheHandler.extractUrlEndpoint(address, 'https://baseapi.url')).toBe('/users');
     });
 
     it('should return the home route when the url passed is the base url', () => {
@@ -15,15 +15,15 @@ describe('CacheHandler class', () => {
     });
 
     it('should remove trailing forward slashes', () => {
-      const address = '/asset-categories/';
+      const address = '/users/';
 
-      expect(CacheHandler.extractUrlEndpoint(address)).toBe('/asset-categories');
+      expect(CacheHandler.extractUrlEndpoint(address)).toBe('/users');
     });
 
     it('should add a leading forward slash to urls that don\'t have', () => {
-      const address = 'asset-categories';
+      const address = 'users';
 
-      expect(CacheHandler.extractUrlEndpoint(address)).toBe('/asset-categories');
+      expect(CacheHandler.extractUrlEndpoint(address)).toBe('/users');
     });
 
     it('should return null if the url supplied is invalid', () => {

@@ -5,7 +5,7 @@ import axios from 'axios';
 import { displayInternalServerErrorMessage } from 'modules/internalServerError';
 
 // store
-import store from '../../store/index';
+import store from '../../store';
 
 // helpers
 import { authService } from 'utils/auth';
@@ -36,6 +36,10 @@ http.interceptors.response.use(
     if (method !== 'get' && endpoint) {
       const requestTimestamp = (new Date).getTime();
       CacheHandler.cacheInvalidationRegister[endpoint] = requestTimestamp;
+
+      if (endpoint === '/users') {
+        CacheHandler.cacheInvalidationRegister['/users-categories'] = requestTimestamp;
+      }
     }
 
     return response;

@@ -1,6 +1,6 @@
-[![CircleCI](https://circleci.com/gh/mashafrancis/guacamole-fe.svg?style=svg)](https://circleci.com/gh/mashafrancis/guacamole-fe)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/01e63a4af0a38a7cc977/test_coverage)](https://codeclimate.com/github/mashafrancis/guacamole-fe/test_coverage)
-[![Maintainability](https://api.codeclimate.com/v1/badges/01e63a4af0a38a7cc977/maintainability)](https://codeclimate.com/github/mashafrancis/guacamole-fe/maintainability)
+[![CircleCI](https://circleci.com/gh/mashafrancis/guacamole-fe.svg?style=svg&circle-token=9db4655cf67735853e2ca047c4b6fb52cfc198c4)](https://circleci.com/gh/mashafrancis/guacamole-fe)
+[![codecov](https://codecov.io/gh/mashafrancis/guacamole-fe/branch/develop/graph/badge.svg?token=5Pw7MjAUvr)](https://codecov.io/gh/mashafrancis/guacamole-fe)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ba779484639543769150bf12f6d5f90a)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mashafrancis/guacamole-fe&amp;utm_campaign=Badge_Grade)
 
 # guacamole-fe
 An online travel community to share luggage spaces onboard. (frontend)

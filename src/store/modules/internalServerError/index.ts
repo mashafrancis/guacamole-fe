@@ -7,9 +7,9 @@ import { INTERNAL_SERVER_ERROR_MESSAGE } from './types';
 /**
  * internal server error message action creator.
  *
- * @param {internalServerErrorMessage}
  *
  * @returns {InternalServerErrorMessageAction}
+ * @param error
  */
 export const displayInternalServerErrorMessage = (
 error = true
