@@ -14,12 +14,6 @@ jobs:
       # Checkout the code
       - checkout
 
-      - run:
-          name: Setup the test reporter
-          command: |
-            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-            chmod +x ./cc-test-reporter
-
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -29,7 +23,7 @@ jobs:
 
       - run:
           name: Install the node modules
-          command: npm install
+          command: yarn install
 
       # Save node_modules to cache to speed up subsequent builds
       - save_cache:
@@ -41,6 +35,9 @@ jobs:
       - run: # run tests
           name: Run the tests and report coverage
           command: |
-            ./cc-test-reporter before-build
-            npm test
-            ./cc-test-reporter after-build --exit-code $?
+            yarn test:unit
+
+      # upload code coverage
+      - run:
+          name: Send coverage to CodeCov
+          command: yarn add --dev codecov && ./node_modules/.bin/codecov
