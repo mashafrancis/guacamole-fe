@@ -81,4 +81,6 @@ cypress/screenshots
 cypress/videos
 reports/
 tmp/
+/dist
+dist/
 
