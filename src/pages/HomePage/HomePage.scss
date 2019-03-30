@@ -1,8 +1,38 @@
-body {
-  background: #f5f5f5;
-  color: #1d1d1d;
+@import "../../../node_modules/@material/typography/mdc-typography";
+@import "../../../node_modules/@material/button/mdc-button";
+@import "../../../node_modules/@material/textfield/mdc-text-field.scss";
+
+h1 {
+  @include mdc-typography(headline1);
 }
 
- .h1-tag {
-  color: #000000;
+h2 {
+  @include mdc-typography(headline2);
+}
+
+h3 {
+  @include mdc-typography(headline3);
+}
+
+h4 {
+  @include mdc-typography(headline4);
+}
+
+h5 {
+  @include mdc-typography(headline5);
+}
+
+h6 {
+  @include mdc-typography(headline6);
+}
+
+// This sets all <p> elements with Material body1 typography styles
+p {
+  @include mdc-typography(body1);
+}
+
+
+.foo-button {
+  @include mdc-button-ink-color(teal);
+  @include mdc-states(teal);
 }
