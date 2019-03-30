@@ -3,7 +3,7 @@ import * as React from 'react';
 
 // third party libraries
 import { mount } from 'enzyme';
-import createHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import configureMockStore from 'redux-mock-store';
@@ -129,7 +129,7 @@ export const axiosMockAdapter = (response, error) => {
 export const routerContext = {
   context: {
     router: {
-      history: createHistory(),
+      history: createBrowserHistory(),
       route: {
         location: { pathname: '/' },
         match: { isExact: true },

@@ -154,6 +154,12 @@
       }
     ]
   },
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~*": ["./src/*"]
+    }
+  },
   "rulesDirectory": [],
   "jsdoc-require": [
     true

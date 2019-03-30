@@ -1,4 +1,5 @@
 const path = require('path');
+const autoprefixer = require('autoprefixer');
 const {
   cleanWebpack,
   definePlugin,
@@ -8,6 +9,32 @@ const {
 } = require('./webpack.plugins');
 
 const isDevMode = process.env.NODE_ENV !== 'production';
+
+function tryResolve_(url, sourceFilename) {
+  // Put require.resolve in a try/catch to avoid node-sass failing with cryptic libsass errors
+  // when the importer throws
+  try {
+    return require.resolve(url, {paths: [path.dirname(sourceFilename)]});
+  } catch (e) {
+    return '';
+  }
+}
+
+function tryResolveScss(url, sourceFilename) {
+  // Support omission of .scss and leading _
+  const normalizedUrl = url.endsWith('.scss') ? url : `${url}.scss`;
+  return tryResolve_(normalizedUrl, sourceFilename) ||
+    tryResolve_(path.join(path.dirname(normalizedUrl), `_${path.basename(normalizedUrl)}`),
+      sourceFilename);
+}
+
+function materialImporter(url, prev) {
+  if (url.startsWith('@material')) {
+    const resolved = tryResolveScss(url, prev);
+    return {file: resolved || url};
+  }
+  return {file: url};
+}
 
 module.exports = {
   entry: {
@@ -25,7 +52,7 @@ module.exports = {
       pages: path.resolve(__dirname, '..', 'src/pages/'),
       components: path.resolve(__dirname, '..', 'src/components/'),
       modules: path.resolve(__dirname, '../src/store/modules'),
-      utils: path.resolve(__dirname, '../src/utils')
+      utils: path.resolve(__dirname, '../src/utils'),
     },
     modules: [path.resolve(__dirname, 'src'), 'node_modules']
   },
@@ -50,9 +77,11 @@ module.exports = {
           {
             loader: 'sass-loader',
             options: {
-              sourceMap: true
+              sourceMap: true,
+              includePaths: [path.resolve(__dirname, 'src'), 'node_modules'],
+              import: materialImporter
             }
-          }
+          },
         ]
       },
       {
@@ -60,7 +89,21 @@ module.exports = {
         use: {
           loader: 'awesome-typescript-loader'
         }
-      }
+      },
+      {
+        test: /\.(js|jsx)$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+        query: {
+          presets: ['es2015'],
+          plugins: ['transform-object-assign']
+        }
+      },
+      {
+        test: /\.js$/,
+        use: ["source-map-loader"],
+        enforce: "pre"
+      },
     ]
   },
   plugins: [htmlWebpack, cleanWebpack, definePlugin, miniCssExtract]

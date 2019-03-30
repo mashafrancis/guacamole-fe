@@ -20,14 +20,15 @@ describe('AuthService object', () => {
     });
   });
 
-  // describe('LogoutUser function', () => {
-  //   it('should call Cookie.expire to make user token expired', () => {
-  //     Cookie.expire = jest.fn();
-  //     authService.logoutUser();
-  //
-  //     expect(Cookie.expire).toHaveBeenCalled();
-  //   });
-  // });
+  describe('LogoutUser function', () => {
+    it('should call Cookie.expire to make user token expired', () => {
+      // @ts-ignore
+      Cookie.expire = jest.fn();
+      authService.logoutUser();
+
+      expect(Cookie.expire).toHaveBeenCalled();
+    });
+  });
 
   describe('RedirectUser function', () => {
     it('should call logoutUser', () => {

@@ -33,7 +33,7 @@ module.exports = {
     '\\.(css|less|scss)$': 'identity-obj-proxy'
   },
   'collectCoverage': true,
-  'collectCoverageFrom': ["src/**/*.{ts, tsx}", "!src/utils/helpers/downloadChartsAsPDF.ts", "!src/**/interface.d.ts", "!src/**/*interfaces.d.ts"],
+  'collectCoverageFrom': ["src/**/*.{ts, tsx}", "!src/utils/helpers/downloadChartsAsPDF.ts", "!src/**/interface.d.ts", "!src/**/*interface.d.ts"],
   'coverageThreshold': {
     "global": {
       "branches": 80,
@@ -48,7 +48,7 @@ module.exports = {
     '<rootDir>/node_modules/regenerator-runtime/runtime',
     '<rootDir>/src/setupMocks.ts',
   ],
-  'coveragePathIgnorePatterns': ['/node_modules', '<rootDir>/src/index.ts', 'src/store/index.ts|rootReducer.ts'],
+  'coveragePathIgnorePatterns': ['/node_modules', '<rootDir>/src/index.ts', 'src/store/index.ts|rootReducer.ts', 'src/setupMocks.ts'],
   'snapshotSerializers': ['enzyme-to-json/serializer'],
   'setupTestFrameworkScriptFile': '<rootDir>/src/setupEnzyme.ts',
 };
