@@ -3,10 +3,6 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 // third party packages
-import 'animate';
-import 'animsition';
-import 'jquery.easing';
-import 'particlesjs';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 

@@ -85,24 +85,23 @@ module.exports = {
         ]
       },
       {
+        test: /\.(js|jsx)$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+        query: {
+          presets: ['es2015'],
+        }
+      },
+      {
         test: /\.tsx?$/,
         use: {
           loader: 'awesome-typescript-loader'
         }
       },
       {
-        test: /\.(js|jsx)$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/,
-        query: {
-          presets: ['es2015'],
-          plugins: ['transform-object-assign']
-        }
-      },
-      {
+        enforce: 'pre',
         test: /\.js$/,
-        use: ["source-map-loader"],
-        enforce: "pre"
+        loader: 'source-map-loader',
       },
     ]
   },

@@ -95,15 +95,13 @@ const loginPage = () => {
                     </div>
                   </div>
                   <p id="1-helper-text" aria-hidden="true"
-                     className="mdc-text-field-helper-text
-                                   mdc-text-field-helper-text--validation-msg">
+                     className="mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg">
                     Username is required</p>
                 </div>
 
                 <div className="form-cell">
                   <div>
-                    <div className="mdc-text-field mdc-text-field--outlined
-                                        mdc-text-field--fullwidth
+                    <div className="mdc-text-field mdc-text-field--outlined mdc-text-field--fullwidth
                                         mdc-text-field--with-leading-icon">
                       <i className="material-icons mdc-text-field__icon">remove_red_eye</i>
                       <input id="3" placeholder="" aria-controls="3-helper-text"
@@ -125,9 +123,7 @@ const loginPage = () => {
                 </div>
               </div>
             </div>
-
-            <div
-              className="mdc-layout-grid__cell register__section grid-start-5
+            <div className="mdc-layout-grid__cell register__section grid-start-5
                         mdc-layout-grid__cell--span-5-tablet mdc-layout-grid__cell--span-4-desktop
                         mdc-layout-grid__cell--align-middle">
               <div className="form-grid">
