@@ -17,9 +17,9 @@ export const authService = {
 
     return decodedToken.exp < currentDate;
   },
-  getUser() {
-    return this.getToken() ? this.decodeToken() : {};
-  },
+  // getUser() {
+  //   return this.getToken() ? this.decodeToken() : {};
+  // },
   logoutUser() {
     Cookie.expire('jwt-token', { path: '/' });
   },

@@ -48,7 +48,7 @@ module.exports = {
     '<rootDir>/node_modules/regenerator-runtime/runtime',
     '<rootDir>/src/setupMocks.ts',
   ],
-  'coveragePathIgnorePatterns': ['/node_modules', '<rootDir>/src/index.ts', 'src/store/index.ts|rootReducer.ts'],
+  'coveragePathIgnorePatterns': ['/node_modules', '<rootDir>/src/index.ts', 'src/store/index.ts|rootReducer.ts', 'src/setupMocks.ts'],
   'snapshotSerializers': ['enzyme-to-json/serializer'],
   'setupTestFrameworkScriptFile': '<rootDir>/src/setupEnzyme.ts',
 };

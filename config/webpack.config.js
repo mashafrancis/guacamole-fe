@@ -44,7 +44,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, '..', 'dist'),
     filename: '[name].js',
-    publicPath: './'
+    publicPath: '/'
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
@@ -78,18 +78,11 @@ module.exports = {
             loader: 'sass-loader',
             options: {
               sourceMap: true,
-              include: [path.resolve(__dirname, 'src'), 'node_modules'],
-              includePaths: ['../../../node_modules/'],
-              importer: materialImporter
+              includePaths: [path.resolve(__dirname, 'src'), 'node_modules'],
+              import: materialImporter
             }
           },
         ]
-      },
-      {
-        test: /\.tsx?$/,
-        use: {
-          loader: 'awesome-typescript-loader'
-        }
       },
       {
         test: /\.(js|jsx)$/,
@@ -100,9 +93,15 @@ module.exports = {
         }
       },
       {
-        enforce: "pre",
+        test: /\.tsx?$/,
+        use: {
+          loader: 'awesome-typescript-loader'
+        }
+      },
+      {
+        enforce: 'pre',
         test: /\.js$/,
-        loader: "source-map-loader"
+        loader: 'source-map-loader',
       },
     ]
   },

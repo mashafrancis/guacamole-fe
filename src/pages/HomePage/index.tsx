@@ -1,136 +1,106 @@
 import * as React from 'react';
-// import './HomePage.scss';
 
-class App extends React.Component<{}> {
-  componentDidMount() {
-    const script = document.createElement('script');
-    script.src = '../src/assets/js/app.js';
-    script.async = true;
-    document.body.appendChild(script);
-  }
+// third-party libraries
+import { NavLink } from 'react-router-dom';
 
-  render() {
+// styles
+import './HomePage.scss';
+
+const homePage = () => {
+  const drawerModal = () => {
     return (
+      <React.Fragment>
         <div>
-        <div className="register">
-            <header>
-                <a href="index.html">
-                  <span className="register-toolbar-actions">
-                    <button aria-label="Go back to home page"
-                            className="mdc-icon-button material-icons">arrow_back</button>
-                    <div className="register__logo">
-                      <span className="product-logo-text">Home</span>
-                    </div>
-                  </span>
-                </a>
-
-                <div className="mini-account-menu">
-                    <div className="mini-account-menu--desktop">
-                        <a href="login.html">
-                          <span className="register-toolbar-actions">
-                            <div className="register__logo">
-                              <span className="product-logo-text">Login</span>
-                            </div>
-                            <button aria-label="Go back to home page"
-                                    className="mdc-icon-button material-icons">arrow_forward
-                            </button>
-                          </span>
-                        </a>
-                    </div>
-
-                    <div className="mini-account-menu--mobile">
-                        <a href="login.html">
-                          <span className="register-toolbar-actions">
-                            <div className="register__logo">
-                              <span className="product-logo-text">Login</span>
-                            </div>
-                            <button aria-label="Go back to home page"
-                                    className="mdc-icon-button material-icons">arrow_forward
-                            </button>
-                          </span>
-                        </a>
-                    </div>
-                </div>
-            </header>
-            <div className="mdc-layout-grid">
-                <div className="mdc-layout-grid__inner">
-                    <div
-                        className="mdc-layout-grid__cell grid-start-5 mdc-layout-grid__cell--span-4-desktop-hd
-                        mdc-layout-grid__cell--span-6-tablet mdc-layout-grid__cell--span-7-desktop
-                        mdc-layout-grid__cell--align-middle">
-                        <h1 className="headline-2">Kari4me Test Hosting</h1>
-                    </div>
-                    <div
-                        className="mdc-layout-grid__cell register__section grid-start-5
-                        mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-desktop
-                        mdc-layout-grid__cell--align-middle">
-                        <div className="form-grid">
-                            <div className="form-cell">
-                                <div>
-                                    <div className="mdc-text-field mdc-text-field--outlined mdc-text-field--fullwidth
-                                        mdc-text-field--with-trailing-icon">
-                                        <i className="material-icons mdc-text-field__icon">tag_faces</i>
-                                        <input id="1" placeholder="" aria-controls="1-helper-text"
-                                               aria-describedby="1-helper-text" required={true}
-                                               type="text" className="mdc-text-field__input" />
-                                        <div className="mdc-notched-outline mdc-notched-outline--upgraded">
-                                            <div className="mdc-notched-outline__leading"/>
-                                            <div className="mdc-notched-outline__notch"><label
-                                                htmlFor="1" className="mdc-floating-label">Username</label></div>
-                                            <div className="mdc-notched-outline__trailing"/>
-                                        </div>
-                                    </div>
-                                    <p id="1-helper-text" aria-hidden="true"
-                                       className="mdc-text-field-helper-text
-                                       mdc-text-field-helper-text--validation-msg">
-                                        Username is required</p>
-                                </div>
-                            </div>
-                            <div className="form-cell">
-                                <div>
-                                    <div className="mdc-text-field mdc-text-field--outlined mdc-text-field--fullwidth
-                                        mdc-text-field--with-trailing-icon">
-                                        <i className="material-icons mdc-text-field__icon">remove_red_eye</i>
-                                        <input id="2" placeholder="" aria-controls="2-helper-text"
-                                               aria-describedby="2-helper-text" required={true}
-                                               type="password" className="mdc-text-field__input" />
-                                        <div className="mdc-notched-outline mdc-notched-outline--upgraded">
-                                            <div className="mdc-notched-outline__leading"/>
-                                            <div className="mdc-notched-outline__notch"><label
-                                                htmlFor="1" className="mdc-floating-label">Password</label></div>
-                                            <div className="mdc-notched-outline__trailing"/>
-                                        </div>
-                                    </div>
-                                    <p id="2-helper-text" aria-hidden="true"
-                                       className="mdc-text-field-helper-text
-                                       mdc-text-field-helper-text--validation-msg">
-                                        Password is required</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div
-                        className="mdc-layout-grid__cell register__section grid-start-5
-                        mdc-layout-grid__cell--span-5-tablet mdc-layout-grid__cell--span-4-desktop
-                        mdc-layout-grid__cell--align-middle">
-                        <div className="form-grid">
-                            <div className="">
-                                <button
-                                    className="mdc-button big-round-corner-button mdc-button--raised
-                                    mdc-ripple-upgraded"
-                                    id="cc-register">
-                                    <span className="mdc-button__label">Register</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          <aside aria-expanded="false" aria-hidden="true" dir="ltr"
+                 className="mdc-drawer mdc-drawer--modal mdc-drawer--modal" slot="drawer"
+                 id="navigation-drawer">
+            <div className="mdc-drawer__content">
+              <nav role="menubar" className="mdc-list">
+                <NavLink to={'/about'} className="mdc-list-item" role="menuitem">
+                  <span className="mdc-list-item__text">How it works</span>
+                </NavLink>
+                <NavLink to={'/register'} className="mdc-list-item" role="menuitem">
+                  <span className="mdc-list-item__text">Register</span>
+                </NavLink>
+              </nav>
+              <footer className="nav-drawer-footer">
+                <NavLink to={'/register'} className="mdc-tab--active">
+                  <p className="anchor-label font-weight__500">Join us</p>
+                </NavLink>
+              </footer>
             </div>
+          </aside>
+          <div className="mdc-drawer-scrim" />
+        </div>
+      </React.Fragment>
+    );
+  };
+
+  return (
+    <div>
+      <header className="carryforme-nav mdc-top-app-bar">
+          <div className="mdc-top-app-bar__row">
+              <section className="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                {/*<a aria-controls="navigation-drawer"*/}
+                   {/*className="mdc-toolbar-menu-icon mdc-toolbar__menu-icon material-icons">*/}
+                  {/*menu*/}
+                {/*</a>*/}
+                  <span className="mdc-top-app-bar__title">
+                      <NavLink to={'/'} className="router-link-exact-active mdc-tab--active">kari4me</NavLink>
+                  </span>
+                  <div className="mdc-tab-scroller mdc-tab-scroller--align-center carryforme-navigation">
+                      <div className="mdc-tab-scroller__scroll-area mdc-tab-scroller__scroll-area--scroll">
+                            <div className="mdc-tab-scroller__scroll-content">
+                                <a href="/" className="mdc-tab" role="menuitem">
+                                    <span className="mdc-tab__content">
+                                        <span className="mdc-tab__text-label">How it works</span>
+                                    </span>
+                                    <span className="mdc-tab-indicator">
+                                        <span className="mdc-tab-indicator__content
+                                        mdc-tab-indicator__content--underline"/>
+                                    </span>
+                                    <span className="mdc-tab__ripple"/>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section role="toolbar"
+                         className="mdc-top-app-bar__section mdc-top-app-bar__section--align-end user-info__content">
+                    <div className="nav-actions">
+                        <NavLink to={'/register'} className="mdc-tab--active">
+                            <button className="mdc-button mdc-button--outlined">
+                                <span className="mdc-button__label">Join us</span>
+                            </button>
+                        </NavLink>
+                        <NavLink to={'/login'}>
+                            <button
+                                className="mdc-button big-round-corner-button sign-in
+                                mdc-button--raised mdc-ripple-upgraded">
+                                <span className="mdc-button__label">Sign in</span>
+                            </button>
+                        </NavLink>
+                    </div>
+                </section>
+            </div>
+        </header>
+      {drawerModal()}
+    <section id="hero">
+        <div id="particles-js" className="hero-container">
+            <div className="hero-info">
+                <h1>You Fly, We Connect</h1>
+                <h2>Fly anywhere and share your space.</h2>
+              <NavLink to={'/register'}>
+                <button className="mdc-button mdc-button--raised">
+                  <span className="mdc-button__label">Join a community</span>
+                </button>
+              </NavLink>
             </div>
         </div>
-    );
-  }
-}
+    </section>
+    </div>
+  );
+};
 
-export default App;
+export default homePage;

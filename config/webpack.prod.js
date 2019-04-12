@@ -2,7 +2,7 @@ const cssNano = require('cssnano');
 const merge = require('webpack-merge');
 const optimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const uglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const config = require('./webpack.common.js');
+const config = require('./webpack.config.js');
 
 module.exports = merge(config, {
   output: {
@@ -19,7 +19,7 @@ module.exports = merge(config, {
       new optimizeCSSAssetsPlugin({
         cssProcessor: cssNano,
         cssProcessorOptions: {
-          reduceIndents: false,
+          reduceIdents: false,
         },
       })
     ]

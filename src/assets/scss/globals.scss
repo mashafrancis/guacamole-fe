@@ -15684,9 +15684,9 @@ body.mdc-drawer-scroll-lock {
 }
 
 .carryforme-nav {
-  background-color: #1a1a1a;
+  background-color: #0c0c0c;
   min-height: 4rem;
-  color: whitesmoke;
+  color: white;
   .mdc-toolbar-menu-icon {
     color: whitesmoke;
     display: none;
@@ -15857,13 +15857,13 @@ body.mdc-drawer-scroll-lock {
 
 @media (min-width: 540px) and (max-width: 799px) {
   .carryforme-nav .mdc-top-app-bar__title {
-    padding-left: 0;
+    padding-left: 16px;
   }
 }
 
 @media (max-width: 539px) {
   .carryforme-nav .mdc-top-app-bar__title {
-    padding-left: 0;
+    padding-left: 16px;
   }
 }
 
