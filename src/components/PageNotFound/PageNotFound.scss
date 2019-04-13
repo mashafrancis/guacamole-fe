@@ -1,0 +1,38 @@
+@import '../../assets/scss/variables';
+
+.page-not-found {
+  position: fixed;
+  top: 30%;
+  left: 25%;
+  background-color: grey;
+  width: 50%;
+
+  &--page-not-found-body {
+    padding-top: 5px;
+    padding-bottom: 70px;
+    text-align: center;
+    color: grey;
+
+    &--404 {
+      font-size: 50px;
+      color: dodgerblue;
+    }
+
+    p {
+      font-size: 20px;
+    }
+
+    h6 {
+      font-size: 13px;
+    }
+
+    a {
+      color: dodgerblue;
+    }
+
+    span {
+      cursor: pointer;
+      color: dodgerblue;
+    }
+  }
+}

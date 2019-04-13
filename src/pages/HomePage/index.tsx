@@ -1,13 +1,80 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 
 // third-party libraries
 import { NavLink } from 'react-router-dom';
 
+// interfaces
+import { HomePageProps, HomePageState } from 'pages/HomePage/interfaces';
+
+// components
+import Spinner from '../../components/Spinner';
+
 // styles
 import './HomePage.scss';
 
-const homePage = () => {
-  const drawerModal = () => {
+export class HomePage extends React.Component<HomePageProps, HomePageState> {
+  state = {
+    isLoading: true,
+  };
+
+  componentDidMount() {
+    setTimeout(() => this.setState({ isLoading: false }), 3000);
+  }
+
+  renderHomeNavUnauth = () => {
+    return (
+      <div className="nav-actions">
+        <NavLink to={'/register'} className="mdc-tab--active">
+          <button className="mdc-button">
+            <span className="mdc-button__label">Join us</span>
+          </button>
+        </NavLink>
+        <NavLink to={'/login'}>
+          <button className="mdc-button big-round-corner-button sign-in mdc-button--raised mdc-ripple-upgraded">
+            <span className="mdc-button__label">Sign in</span>
+          </button>
+        </NavLink>
+      </div>
+    );
+  }
+
+  renderHomeNavAuth = () => {
+    return (
+      <React.Fragment>
+      <div className="mini-account-menu--desktop">
+        <span>
+          <img className="mini-account-menu__image"
+               src="https://res.cloudinary.com/mashafrancis/image/upload/v1552641620/kari4me/nan.jpg"/>
+        </span>
+        <div className="mini-account-menu__content">
+          <p className="body-2 mini-account-menu__email">{this.props.user.email}</p>
+          <a>Sign out</a>
+        </div>
+      </div>
+        <div className="mini-account-menu--mobile">
+          <span className="mini-account-menu__image">
+            <img className="mini-account-menu__image"
+                 src="https://res.cloudinary.com/mashafrancis/image/upload/v1552641620/kari4me/nan.jpg"/>
+          </span>
+        </div>
+        <div className="account-menu">
+          <p className="overline">Signed in as:</p>
+          <p className="body-1">{this.props.user.email}</p>
+          <div className="account-menu__actions">
+            <button className="mdc-button mdc-button--raised mdc-ripple-upgraded">
+              <span className="mdc-button__label">Sign out</span>
+            </button>
+            <button className="mdc-button router-link-exact-active mdc-tab--active">
+              <span className="mdc-button__label">View Profile</span>
+            </button>
+          </div>
+        </div>
+      </React.Fragment>
+    );
+  }
+
+  renderDrawerModal = () => {
     return (
       <React.Fragment>
         <div>
@@ -34,12 +101,18 @@ const homePage = () => {
         </div>
       </React.Fragment>
     );
-  };
+  }
 
-  return (
-    <div>
-      <header className="carryforme-nav mdc-top-app-bar">
-          <div className="mdc-top-app-bar__row">
+  render = () => {
+    const { isLoading } = this.state;
+
+    return (
+      isLoading
+      ? <Spinner/>
+      : (
+        <div>
+          <header className="carryforme-nav mdc-top-app-bar">
+            <div className="mdc-top-app-bar__row">
               <section className="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
                 {/*<a aria-controls="navigation-drawer"*/}
                    {/*className="mdc-toolbar-menu-icon mdc-toolbar__menu-icon material-icons">*/}
@@ -49,45 +122,30 @@ const homePage = () => {
                       <NavLink to={'/'} className="router-link-exact-active mdc-tab--active">kari4me</NavLink>
                   </span>
                   <div className="mdc-tab-scroller mdc-tab-scroller--align-center carryforme-navigation">
-                      <div className="mdc-tab-scroller__scroll-area mdc-tab-scroller__scroll-area--scroll">
-                            <div className="mdc-tab-scroller__scroll-content">
-                                <a href="/" className="mdc-tab" role="menuitem">
-                                    <span className="mdc-tab__content">
-                                        <span className="mdc-tab__text-label">How it works</span>
-                                    </span>
-                                    <span className="mdc-tab-indicator">
-                                        <span className="mdc-tab-indicator__content
-                                        mdc-tab-indicator__content--underline"/>
-                                    </span>
-                                    <span className="mdc-tab__ripple"/>
-                                </a>
-                            </div>
-                        </div>
+                    <div className="mdc-tab-scroller__scroll-area mdc-tab-scroller__scroll-area--scroll">
+                      <div className="mdc-tab-scroller__scroll-content">
+                        <a href="/" className="mdc-tab" role="menuitem">
+                          <span className="mdc-tab__content">
+                              <span className="mdc-tab__text-label">How it works</span>
+                          </span>
+                          <span className="mdc-tab-indicator">
+                            <span className="mdc-tab-indicator__content mdc-tab-indicator__content--underline"/>
+                          </span>
+                          <span className="mdc-tab__ripple"/>
+                        </a>
+                      </div>
+                      </div>
                     </div>
                 </section>
-
-                <section role="toolbar"
-                         className="mdc-top-app-bar__section mdc-top-app-bar__section--align-end user-info__content">
-                    <div className="nav-actions">
-                        <NavLink to={'/register'} className="mdc-tab--active">
-                            <button className="mdc-button mdc-button--outlined">
-                                <span className="mdc-button__label">Join us</span>
-                            </button>
-                        </NavLink>
-                        <NavLink to={'/login'}>
-                            <button
-                                className="mdc-button big-round-corner-button sign-in
-                                mdc-button--raised mdc-ripple-upgraded">
-                                <span className="mdc-button__label">Sign in</span>
-                            </button>
-                        </NavLink>
-                    </div>
-                </section>
-            </div>
-        </header>
-      {drawerModal()}
-    <section id="hero">
-        <div id="particles-js" className="hero-container">
+                  <section role="toolbar"
+                           className="mdc-top-app-bar__section mdc-top-app-bar__section--align-end user-info__content">
+                    {this.renderHomeNavUnauth()}
+                  </section>
+              </div>
+            </header>
+          {this.renderDrawerModal()}
+        <section id="hero">
+          <div id="particles-js" className="hero-container">
             <div className="hero-info">
                 <h1>You Fly, We Connect</h1>
                 <h2>Fly anywhere and share your space.</h2>
@@ -97,10 +155,16 @@ const homePage = () => {
                 </button>
               </NavLink>
             </div>
+          </div>
+        </section>
         </div>
-    </section>
-    </div>
-  );
-};
+      ));
+  }
+}
 
-export default homePage;
+export const mapStateToProps = state => ({
+  user: state.authentication.user,
+});
+
+// export default HomePage;
+export default connect(mapStateToProps)(HomePage);

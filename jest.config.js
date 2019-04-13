@@ -33,7 +33,7 @@ module.exports = {
     '\\.(css|less|scss)$': 'identity-obj-proxy'
   },
   'collectCoverage': true,
-  'collectCoverageFrom': ["src/**/*.{ts, tsx}", "!src/utils/helpers/downloadChartsAsPDF.ts", "!src/**/interface.d.ts", "!src/**/*interface.d.ts"],
+  'collectCoverageFrom': ["src/**/*.{ts, tsx}", "!src/utils/helpers/downloadChartsAsPDF.ts", "!src/**/interfaces.d.ts", "!src/**/*interfaces.d.ts"],
   'coverageThreshold': {
     "global": {
       "branches": 80,

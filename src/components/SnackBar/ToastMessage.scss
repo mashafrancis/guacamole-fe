@@ -1,5 +1,5 @@
-@import '../../assets/scss/variables';
-@import 'sass-rem';
+@import '../../assets/scss/variable';
+@import '../../../node_modules/sass-rem';
 
 .toast-message {
   position: fixed;
@@ -16,19 +16,19 @@
   padding: 0 rem(15px) 0 rem(20px);
   box-sizing: border-box;
   border-radius: rem(4px);
-  box-shadow: 0 rem(2px) rem(10px) 0 rgba(0, 0, 0, 0.15);
+  //box-shadow: 0 rem(2px) rem(10px) 0 rgba(0, 0, 0, 0.15);
   animation-duration: 0.5s;
   animation-fill-mode: both;
   animation-name: slideInDown;
   opacity: 0.95;
 
   &--danger {
-    background-color: map-get($palette, danger);
+    //background-color: map-get($palette, danger);
     color: map-get($grey, 100);
   }
 
   &--success {
-    background-color: map-get($palette, success);
+    //background-color: map-get($palette, success);
     color: map-get($grey, 100);
   }
 

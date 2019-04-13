@@ -2,6 +2,9 @@ import * as Cookie from 'cookies-js';
 import * as jwtDecode from 'jwt-decode';
 
 export const authService = {
+  saveToken(token) {
+    return Cookie.set('jwt-token', token);
+  },
   getToken() {
     return Cookie.get('jwt-token');
   },
@@ -9,7 +12,7 @@ export const authService = {
     return jwtDecode(this.getToken());
   },
   isAuthenticated() {
-    return !!this.getToken();
+    return this.getToken() ? true : false;
   },
   isExpired() {
     const currentDate = Date.now() / 1000;
@@ -17,9 +20,9 @@ export const authService = {
 
     return decodedToken.exp < currentDate;
   },
-  // getUser() {
-  //   return this.getToken() ? this.decodeToken() : {};
-  // },
+  getUser() {
+    return this.getToken() ? this.decodeToken() : {};
+  },
   logoutUser() {
     Cookie.expire('jwt-token', { path: '/' });
   },

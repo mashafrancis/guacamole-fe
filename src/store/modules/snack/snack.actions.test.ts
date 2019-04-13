@@ -1,28 +1,27 @@
 // thunks
-import { displayToastMessage } from '.';
+import { displaySnackMessage } from '.';
 
 // helper functions
 import { reduxMockStore } from '../../../testHelpers';
 
 // types
-import { DISPLAY_TOAST_MESSAGE } from './types';
+import { DISPLAY_SNACK_MESSAGE } from './types';
 
-describe('The toast action', () => {
+describe('The snack action', () => {
   const toastMessageInitialState = {};
 
-  it('should display a toast message', () => {
+  it('should display a snack message', () => {
     const toastMessage = 'Welcome to Activo the smart Asset management solution';
     const expectedAction = {
       toast: {
         message: toastMessage,
-        type: 'success',
         withName: false,
       },
-      type: DISPLAY_TOAST_MESSAGE,
+      type: DISPLAY_SNACK_MESSAGE,
     };
     const store = reduxMockStore({}, toastMessageInitialState);
 
-    store.dispatch(displayToastMessage(toastMessage));
+    store.dispatch(displaySnackMessage(toastMessage));
     expect(store.getActions()[0]).toEqual(expectedAction);
   });
 });
