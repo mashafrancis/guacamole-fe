@@ -5,20 +5,19 @@ import { Cell, Grid, Row } from '@material/react-layout-grid';
 import MaterialIcon from '@material/react-material-icon';
 import TextField, { HelperText, Input } from '@material/react-text-field';
 import { connect } from 'react-redux';
-import { NavLink, Redirect } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 // components
 import Button from 'components/Button';
 
 // thunks
-import { loginUser } from 'modules/authentication';
+import { registerUser } from 'modules/authentication';
 import { displaySnackMessage } from 'modules/snack';
 
 // interfaces
-import { LoginPageProps, LoginPageState } from './interfaces';
+import { RegisterPageProps, RegisterPageState } from './interfaces';
 
 // helpers
-import { authService } from 'utils/auth';
 import { applyValidation } from 'utils/helpers/validationUtils';
 
 // resources
@@ -26,9 +25,9 @@ import { validationConfig } from 'utils/helpers/resources';
 
 // styles
 import '@material/react-layout-grid/dist/layout-grid.css';
+import './RegisterPage.scss';
 
-export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
-  private errorMessage;
+export class RegisterPage extends React.Component<RegisterPageProps, RegisterPageState> {
   // This method calls the parent element with props parameter.
   constructor(props) {
     super(props);
@@ -40,19 +39,6 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
       errors: {},
     };
     this.onSubmit = this.onSubmit.bind(this);
-  }
-
-  componentDidMount () {
-    const sessionError = localStorage.getItem('sessionError');
-
-    if (sessionError) {
-      this.errorMessage = sessionError;
-      displaySnackMessage(this.errorMessage);
-    }
-  }
-
-  componentWillUnmount() {
-    localStorage.removeItem('locationReferrer');
   }
 
   /**
@@ -108,17 +94,17 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
   }
 
   /**
-   * Validates the password field
+   * Validates the confirmation password
    *
    * @param {event} event DOM event
    *
    * @returns {void}
    */
-  validatePasswordField = (event) => {
+  validateConfirmationPassword = (event) => {
     const field = event.target.name;
     const value = this.state.fields[field];
-    (!value)
-      ? this.setFieldError(field, 'Kindly provide your password')
+    (this.state.fields.password !== value)
+      ? this.setFieldError(field, 'Password mismatch')
       : this.setFieldError(field, '');
   }
 
@@ -129,7 +115,7 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
    */
   formIsReady = () => {
     const { errors, fields } = this.state;
-    const expectedFieldCount = 2;
+    const expectedFieldCount = 4;
     const formHasMissingFields = Object.keys(fields).length < expectedFieldCount;
     const formHasError = Object.values(errors).some(error => Boolean(error));
 
@@ -147,13 +133,14 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
     event.preventDefault();
     const { fields } = this.state;
     const user = {
+      username: fields.username as string,
       email: fields.email as string,
       password: fields.password as string,
     };
 
     this.setState({ isLoading: true });
 
-    this.props.loginUser(user)
+    this.props.registerUser(user)
       .then(() => {
         this.setState({ isLoading: false });
       });
@@ -162,17 +149,17 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
   forwardArrow = () => {
     return (
       <React.Fragment>
-        <NavLink to={'/register'}>
+        <NavLink to={'/login'}>
           <span className="register-toolbar-actions">
             <div className="register__logo">
-              <span className="product-logo-text">Register</span>
+              <span className="product-logo-text">Login</span>
             </div>
-            <Button
-              type="button"
-              name="arrow_forward"
-              classes="mdc-icon-button material-icons"
-              aria_label="Go back to login page"
-            />
+              <Button
+                type="button"
+                name="arrow_forward"
+                classes="mdc-icon-button material-icons"
+                aria_label="Go back to login page"
+              />
           </span>
         </NavLink>
       </React.Fragment>
@@ -217,39 +204,36 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
     );
   }
 
-  /**
-   * Validates user login and triggers an error toast if login is unsuccessful
-   *
-   * @param {string} triedToAuthenticate
-   * @param {Boolean} isAuthenticated
-   *
-   * @returns {void}
-   */
-  validateLogin = (triedToAuthenticate, isAuthenticated) => {
-    const hasErrorQuery = this.props.location.search === '?error=failed+to+create+user+token';
-
-    if ((triedToAuthenticate && !isAuthenticated) || hasErrorQuery) {
-      this.errorMessage = 'Login unsuccessful. Please login with a valid email account';
-      displaySnackMessage(this.errorMessage);
-      localStorage.removeItem('triedToAuthenticate');
-    }
-
-    if (triedToAuthenticate && isAuthenticated) {
-      localStorage.removeItem('triedToAuthenticate');
-    }
-  }
-
-  renderDefaultPage = () => {
-    const pathname = localStorage.getItem('locationReferrer');
-
-    return <Redirect to={pathname} />;
-  }
-
-  renderLoginForm = () => {
+  renderRegisterForm = () => {
     const { fields, errors } = this.state;
 
     return (
       <React.Fragment>
+        <div className="form-cell">
+          <TextField
+            className="mdc-text-field--fullwidth"
+            outlined
+            label="Username"
+            leadingIcon={<MaterialIcon role="button" icon="alternate_email" initRipple={null}/>}
+            helperText={
+              <HelperText
+                className="mdc-text-field-invalid-helper"
+                isValidationMessage={true}
+                persistent={true}
+                validation={true}>
+                {errors.username}
+              </HelperText>}
+          >
+            <Input
+              value={fields.username}
+              name="username"
+              id="1"
+              type="text"
+              required={true}
+              onBlur={this.validateSingleField}
+              onChange={this.handleInputChange}/>
+          </TextField>
+        </div>
         <div className="form-cell">
           <TextField
             className="mdc-text-field--fullwidth"
@@ -296,7 +280,32 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
               id="3"
               type="password"
               required={true}
-              onBlur={this.validatePasswordField}
+              onBlur={this.validateSingleField}
+              onChange={this.handleInputChange}/>
+          </TextField>
+        </div>
+        <div className="form-cell">
+          <TextField
+            className="mdc-text-field--fullwidth"
+            outlined
+            label="Confirm Password"
+            leadingIcon={<MaterialIcon role="button" icon="remove_red_eye" initRipple={null}/>}
+            helperText={
+              <HelperText
+                className="mdc-text-field-invalid-helper"
+                isValidationMessage={true}
+                persistent={true}
+                validation={true}>
+                {errors.confirmPassword}
+              </HelperText>}
+          >
+            <Input
+              value={fields.confirmPassword}
+              name="confirmPassword"
+              id="4"
+              type="password"
+              required={true}
+              onBlur={this.validateConfirmationPassword}
               onChange={this.handleInputChange}/>
           </TextField>
         </div>
@@ -305,17 +314,8 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
   }
 
   render() {
-    console.log('Class: LoginPage, Function: render, Line 302 this.props.isLoading()', this.state.isLoading);
-    const isAuthenticated = authService.isAuthenticated();
-    const triedToAuthenticate = localStorage.getItem('triedToAuthenticate');
-
-    this.validateLogin(triedToAuthenticate, isAuthenticated);
-
     return (
-      authService.isAuthenticated()
-      ? this.renderDefaultPage()
-      : (
-        <div className="register">
+      <div className="register">
         {this.renderHeader()}
         <Grid>
           <Row>
@@ -326,7 +326,7 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
               desktopColumns={4}
               tabletColumns={7}
             >
-              <h1 className="headline-2">Login into account</h1>
+              <h1 className="headline-2">Create a new account</h1>
             </Cell>
           </Row>
           <Row>
@@ -339,7 +339,7 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
               desktopColumns={4}
               tabletColumns={4}
             >
-              {this.renderLoginForm()}
+              {this.renderRegisterForm()}
             </Cell>
           </Row>
           <Row>
@@ -350,7 +350,7 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
             >
               <Button
                 type="button"
-                name="Login"
+                name="Register"
                 id="cc-register"
                 disabled={!this.formIsReady() || this.state.isLoading}
                 onClick={this.onSubmit}
@@ -360,7 +360,7 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
           </Row>
         </Grid>
       </div>
-    ));
+    );
   }
 }
 
@@ -370,8 +370,8 @@ export const mapStateToProps = state => ({
 });
 
 export const mapDispatchToProps = dispatch => ({
-  loginUser: user => dispatch(loginUser(user)),
+  registerUser: user => dispatch(registerUser(user)),
   displaySnackMessage: message => dispatch(displaySnackMessage(message)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterPage);

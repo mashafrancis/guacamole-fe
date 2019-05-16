@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Kari4me</title>
+  <title>${ htmlWebpackPlugin.options.title }</title>
 
   <!-- Fontfaces CSS-->
   <link href="https://fonts.googleapis.com/css?family=Google+Sans:400,400i,500,500i,700,700i|Google+Sans+Display:400,400i,500,500i,700,700i&amp;subset=all"
@@ -16,15 +16,15 @@
   <!--Material Icons-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
         rel="stylesheet">
-  <link rel="shortcut icon" href="./assets/favicon.ico">
-  <link rel="stylesheet" href="../src/assets/scss/globals.scss">
+  <link rel="shortcut icon" href="./favicon.ico">
+
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="${ htmlWebpackPlugin.options.getFaviconUrl }">
+  <link rel="icon" type="image/png" sizes="16x16" href="${ htmlWebpackPlugin.options.getFaviconUrl }">
 
 </head>
 <body class="mdc-typography">
 <div id="root"></div>
-<script src="../src/index.tsx"></script>
-<script src="../src/assets/js/particles.js"></script>
-<script src="../src/assets/js/particle.js"></script>
 
 </body>
 </html>

@@ -1,6 +1,40 @@
 import * as React from 'react';
 
-class AuthHeader extends React.Component<{}> {
+// interfaces
+import { AuthHeaderProps, AuthHeaderState } from 'components/AuthHeader/interfaces';
+
+class AuthHeader extends React.Component<AuthHeaderProps, AuthHeaderState> {
+  state = {
+    isUserExisting: false,
+    dropDownHidden: true,
+  };
+
+  componentDidMount() {
+    const { user } = this.props;
+
+    if (user.tokenId) {
+      this.setState({
+        isUserExisting: true,
+      });
+    }
+  }
+
+  /**
+   * Returns the first or second URI section of the current active route
+   *
+   * @returns {string} uriPath
+   */
+  currentPath = () => {
+    let uriPath = this.props.location.pathname.split('/')[1];
+    const paths = ['register', 'login', 'logout'];
+
+    if (!paths.includes(uriPath)) {
+      uriPath = this.props.location.pathname.split('/')[2];
+    }
+
+    return uriPath;
+  }
+
   render() {
     return (
         <header>

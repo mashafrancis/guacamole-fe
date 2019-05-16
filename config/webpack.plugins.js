@@ -12,16 +12,16 @@ const getFaviconUrl = () => {
 };
 
 // instantiating webpack dependencies
-const cleanWebpack = new cleanWebpackPlugin(['dist']);
+const cleanWebpack = new cleanWebpackPlugin();
 const htmlWebpack = new htmlWebpackPlugin({
   template: 'src/index.html',
-  inject: 'body',
   title: 'kari4me',
   getFaviconUrl,
 });
 const namedModulesPlugin = new webpack.NamedModulesPlugin();
 const hotModuleReplacementPlugin = new webpack.HotModuleReplacementPlugin();
 const miniCssExtract = new miniCssExtractPlugin();
+const progressPlugin = new webpack.ProgressPlugin();
 
 // stringify env variables
 const envs = dotEnv.config().parsed;
@@ -35,6 +35,7 @@ const definePlugin = new webpack.DefinePlugin({
 });
 
 module.exports = {
+  progressPlugin,
   cleanWebpack,
   htmlWebpack,
   namedModulesPlugin,

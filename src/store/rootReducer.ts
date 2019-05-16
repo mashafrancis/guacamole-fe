@@ -1,15 +1,17 @@
 import { combineReducers } from 'redux';
 
 // reducers
+import authentication from 'modules/authentication';
 import internalServerError from 'modules/internalServerError';
-import toast from 'modules/toasts';
+import snack from 'modules/snack';
 
 // types
 // import { LOG_OUT_USER } from 'modules/user/types';
 
 const appReducer = combineReducers({
   internalServerError,
-  toast,
+  snack,
+  authentication,
 });
 
 const rootReducer = (state, action) => {

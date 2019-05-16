@@ -26,6 +26,7 @@ body, html {
 h1 {
   font-size: 20px;
   font-weight: 500;
+  margin: 0 0 20px;
 }
 
 button {
@@ -110,7 +111,7 @@ body, html {
 
 .landing-page-section.hero--codejamio .hero-title, h1, h2, h3, h4, p {
   line-height: 1.6em;
-  margin: 0;
+  //margin: 0;
   padding: 0;
 }
 
@@ -8127,7 +8128,7 @@ a.mdc-list-item {
 .mdc-text-field--outlined {
   .mdc-floating-label--float-above {
     transform: translateY(-144%) scale(1);
-    font-size: 0.75rem;
+    font-size: 0.9rem;
   }
   .mdc-notched-outline--upgraded .mdc-floating-label--float-above, &.mdc-notched-outline--upgraded .mdc-floating-label--float-above {
     transform: translateY(-130%) scale(0.75);
@@ -8263,9 +8264,9 @@ a.mdc-list-item {
 }
 
 .mdc-text-field--with-leading-icon.mdc-text-field--outlined .mdc-floating-label--float-above {
-  transform: translateY(-144%) translateX(-32px) scale(1);
+  transform: translateY(-130%) translateX(-32px) scale(0.75);
   &[dir=rtl] {
-    transform: translateY(-144%) translateX(32px) scale(1);
+    transform: translateY(-130%) translateX(-32px) scale(0.75);
   }
 }
 
@@ -8275,7 +8276,7 @@ a.mdc-list-item {
 
 .mdc-text-field--with-leading-icon.mdc-text-field--outlined {
   .mdc-floating-label--float-above {
-    font-size: 0.75rem;
+    font-size: 0.9rem;
   }
   .mdc-notched-outline--upgraded .mdc-floating-label--float-above, &.mdc-notched-outline--upgraded .mdc-floating-label--float-above {
     transform: translateY(-130%) translateX(-32px) scale(0.75);
@@ -8308,7 +8309,7 @@ a.mdc-list-item {
 }
 
 .mdc-text-field--with-leading-icon.mdc-text-field--outlined .mdc-floating-label {
-  left: 36px;
+  left: 48px;
   right: initial;
   &[dir=rtl] {
     left: initial;
