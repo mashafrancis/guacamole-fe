@@ -2,6 +2,7 @@ const path = require('path');
 const autoprefixer = require('autoprefixer');
 const {
   cleanWebpack,
+  definePlugin,
   htmlWebpack,
   miniCssExtract,
   miniCssExtractPlugin
@@ -104,5 +105,5 @@ module.exports = {
       },
     ]
   },
-  plugins: [htmlWebpack, cleanWebpack, miniCssExtract]
+  plugins: [htmlWebpack, cleanWebpack, definePlugin, miniCssExtract]
 };
