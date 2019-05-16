@@ -2,7 +2,6 @@ const path = require('path');
 const autoprefixer = require('autoprefixer');
 const {
   cleanWebpack,
-  definePlugin,
   htmlWebpack,
   miniCssExtract,
   miniCssExtractPlugin
@@ -77,9 +76,7 @@ module.exports = {
           {
             loader: 'sass-loader',
             options: {
-              sourceMap: true,
-              includePaths: [path.resolve(__dirname, 'src'), 'node_modules'],
-              import: materialImporter
+              sourceMap: true
             }
           },
         ]
@@ -105,5 +102,5 @@ module.exports = {
       },
     ]
   },
-  plugins: [htmlWebpack, cleanWebpack, definePlugin, miniCssExtract]
+  plugins: [htmlWebpack, cleanWebpack, miniCssExtract]
 };

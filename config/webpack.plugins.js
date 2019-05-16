@@ -23,17 +23,6 @@ const hotModuleReplacementPlugin = new webpack.HotModuleReplacementPlugin();
 const miniCssExtract = new miniCssExtractPlugin();
 const progressPlugin = new webpack.ProgressPlugin();
 
-// stringify env variables
-const envs = dotEnv.config().parsed;
-const stringifiedEnvs = {};
-Object.keys(envs).forEach((envKey) => {
-  stringifiedEnvs[envKey] = JSON.stringify(envs[envKey]);
-});
-
-const definePlugin = new webpack.DefinePlugin({
-  'process.env': stringifiedEnvs
-});
-
 module.exports = {
   progressPlugin,
   cleanWebpack,
@@ -42,5 +31,4 @@ module.exports = {
   hotModuleReplacementPlugin,
   miniCssExtract,
   miniCssExtractPlugin,
-  definePlugin
 };
