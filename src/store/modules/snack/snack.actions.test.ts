@@ -8,20 +8,20 @@ import { reduxMockStore } from '../../../testHelpers';
 import { DISPLAY_SNACK_MESSAGE } from './types';
 
 describe('The snack action', () => {
-  const toastMessageInitialState = {};
+  const snackMessageInitialState = {};
 
   it('should display a snack message', () => {
-    const toastMessage = 'Welcome to Activo the smart Asset management solution';
+    const snackMessage = 'Welcome to Kari4me';
     const expectedAction = {
-      toast: {
-        message: toastMessage,
+      snack: {
+        message: snackMessage,
         withName: false,
       },
       type: DISPLAY_SNACK_MESSAGE,
     };
-    const store = reduxMockStore({}, toastMessageInitialState);
+    const store = reduxMockStore({}, snackMessageInitialState);
 
-    store.dispatch(displaySnackMessage(toastMessage));
+    store.dispatch(displaySnackMessage(snackMessage));
     expect(store.getActions()[0]).toEqual(expectedAction);
   });
 });

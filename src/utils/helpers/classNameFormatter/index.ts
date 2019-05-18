@@ -1,5 +1,5 @@
 // interfaces
-import { ClassConditions } from './interface';
+import { ClassConditions } from './interfaces';
 
 /**
  * Helps conditionally format element classNames

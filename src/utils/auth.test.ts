@@ -2,8 +2,8 @@
 import * as Cookie from 'cookies-js';
 
 // helpers
-import { authService } from 'utils/auth';
 import { token } from '../testHelpers';
+import { authService } from '../utils/auth';
 
 describe('AuthService object', () => {
   describe('IsAuthenticated function', () => {

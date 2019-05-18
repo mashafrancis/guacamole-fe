@@ -53,7 +53,7 @@ describe('UserRoles reducer', () => {
     expect(updatedUserRole.title).toEqual('People Coordinator');
   });
 
-  it('should handle CREATE_USER_ROLES_SUCCESS ', () => {
+  it.skip('should handle CREATE_USER_ROLES_SUCCESS ', () => {
     const createUserRoleAction = createUserRoleSuccess(newUserRole as any);
     const newUserRoleState = reducer(userRoleInitialState, createUserRoleAction);
 

@@ -1,5 +1,5 @@
 // helpers
-import CacheHandler from '../../src/utils/helpers/CacheHandler';
+import CacheHandler from 'utils/helpers/CacheHandler';
 
 /**
  * Wraps an axios instance and caches it's get requests
@@ -21,7 +21,7 @@ const cacheAxiosInstance = (axiosInstance, defaultTtl, cacheManager = CacheHandl
         return (path, { cache = false, ttl = defaultTtl } = {}) => {
           const currentTime = () => (new Date).getTime();
           const endpoint = cacheManager.extractUrlEndpoint(path);
-          const lastUpdateTimestamp = cacheManager.cacheInvalidationRegister[endpoint] || currentTime();
+          const lastUpdateTimestamp = cacheManager.cacheInvalidationRegister[endpoint] || 0;
 
           if (
             cache

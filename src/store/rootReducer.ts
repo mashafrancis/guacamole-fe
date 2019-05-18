@@ -4,22 +4,24 @@ import { combineReducers } from 'redux';
 import authentication from 'modules/authentication';
 import internalServerError from 'modules/internalServerError';
 import snack from 'modules/snack';
+import user from 'modules/user';
 
 // types
-// import { LOG_OUT_USER } from 'modules/user/types';
+import { LOG_OUT_USER } from 'modules/user/types';
 
 const appReducer = combineReducers({
   internalServerError,
   snack,
   authentication,
+  user,
 });
 
 const rootReducer = (state, action) => {
   switch (action.type) {
-    // case LOG_OUT_USER:
-    //   return {
-    //     state: undefined,
-    //   };
+    case LOG_OUT_USER:
+      return {
+        state: undefined,
+      };
   }
 
   return appReducer(state, action);
