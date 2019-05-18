@@ -5,6 +5,7 @@
   ],
   "plugins": [
     "add-module-exports",
+    "@babel/plugin-syntax-dynamic-import",
     ["module-resolver", {
       "root": ["./src"],
       "alias": {

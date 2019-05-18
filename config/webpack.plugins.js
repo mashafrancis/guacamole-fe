@@ -5,7 +5,7 @@ const webpack = require('webpack');
 const cleanWebpackPlugin = require('clean-webpack-plugin');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const miniCssExtractPlugin = require('mini-css-extract-plugin');
-
+const TerserPlugin = require('terser-webpack-plugin');
 
 const getFaviconUrl = () => {
   return `https://res.cloudinary.com/mashafrancis/image/upload/v1551124424/kari4me/favicon.png`;
@@ -22,6 +22,13 @@ const namedModulesPlugin = new webpack.NamedModulesPlugin();
 const hotModuleReplacementPlugin = new webpack.HotModuleReplacementPlugin();
 const miniCssExtract = new miniCssExtractPlugin();
 const progressPlugin = new webpack.ProgressPlugin();
+const hashedPlugin = new webpack.HashedModuleIdsPlugin();
+const terserPlugin = new TerserPlugin({
+  parallel: true,
+  terserOptions: {
+    ecma: 6,
+  },
+});
 
 // stringify env variables
 const envs = dotEnv.config().parsed;
@@ -42,5 +49,7 @@ module.exports = {
   hotModuleReplacementPlugin,
   miniCssExtract,
   miniCssExtractPlugin,
-  definePlugin
+  hashedPlugin,
+  definePlugin,
+  terserPlugin,
 };

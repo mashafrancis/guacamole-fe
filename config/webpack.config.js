@@ -1,50 +1,66 @@
 const path = require('path');
 const autoprefixer = require('autoprefixer');
+const {readMaterialPackages} = require('../scripts/package-json-reader');
+const {convertToImportMDCWebPaths} = require('../scripts/package-name-converter');
+const {getDirectories} = require('../scripts/directory-reader');
+const {importer} = require('./webpack.util');
 const {
   cleanWebpack,
-  definePlugin,
   htmlWebpack,
   miniCssExtract,
-  miniCssExtractPlugin
+  miniCssExtractPlugin,
+  hashedPlugin,
+  definePlugin,
+  terserPlugin,
 } = require('./webpack.plugins');
 
 const isDevMode = process.env.NODE_ENV !== 'production';
+// const config = {
+//   entry: [
+//     "core-js/modules/es6.promise",
+//     "core-js/modules/es6.array.iterator",
+//     path.resolve(__dirname, "src/main.js"),
+//   ],
+// };
 
-function tryResolve_(url, sourceFilename) {
-  // Put require.resolve in a try/catch to avoid node-sass failing with cryptic libsass errors
-  // when the importer throws
-  try {
-    return require.resolve(url, {paths: [path.dirname(sourceFilename)]});
-  } catch (e) {
-    return '';
-  }
+function getReactMaterialExternals() {
+  return getDirectories('./node_modules/@material').map((directory) => (
+    `react-${path.parse(directory).name}`
+  ));
 }
 
-function tryResolveScss(url, sourceFilename) {
-  // Support omission of .scss and leading _
-  const normalizedUrl = url.endsWith('.scss') ? url : `${url}.scss`;
-  return tryResolve_(normalizedUrl, sourceFilename) ||
-    tryResolve_(path.join(path.dirname(normalizedUrl), `_${path.basename(normalizedUrl)}`),
-      sourceFilename);
+function getMaterialExternals() {
+  const externals = {};
+  const importPaths = convertToImportMDCWebPaths(readMaterialPackages());
+  importPaths.forEach((importPath) => {
+    externals[importPath] = `${importPath}.js`;
+  });
+
+  getReactMaterialExternals().forEach((path) => {
+    externals[`@material/${path}`] = `@material/${path}/dist/index.js`;
+  });
+
+  return externals;
 }
 
-function materialImporter(url, prev) {
-  if (url.startsWith('@material')) {
-    const resolved = tryResolveScss(url, prev);
-    return {file: resolved || url};
-  }
-  return {file: url};
-}
+const materialExternals = getMaterialExternals();
 
 module.exports = {
   entry: {
-    bundle: path.join(__dirname, '..', 'src', 'index.tsx'),
+    main: path.join(__dirname, '..', 'src', 'index.tsx'),
     styleGlobals: path.join(__dirname, '..', 'src/assets/scss/globals.scss')
   },
   output: {
     path: path.join(__dirname, '..', 'dist'),
-    filename: '[name].js',
+    filename: '[name].[hash:8].js',
     publicPath: '/'
+  },
+  stats: {
+   entrypoints: false,
+   children: false
+  },
+  externals: {
+    materialExternals,
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
@@ -75,21 +91,30 @@ module.exports = {
             }
           },
           {
+            loader: 'postcss-loader',
+            options: {
+              plugins: () => [require('autoprefixer')({
+                'browsers': ['> 1%', 'last 2 versions']
+              })],
+            }
+          },
+          {
             loader: 'sass-loader',
             options: {
               sourceMap: true,
-              includePaths: [path.resolve(__dirname, 'src'), 'node_modules'],
-              import: materialImporter
+              importer
             }
           },
         ]
       },
       {
         test: /\.(js|jsx)$/,
-        loader: 'babel-loader',
         exclude: /node_modules/,
-        query: {
-          presets: ['es2015'],
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
         }
       },
       {
@@ -105,5 +130,12 @@ module.exports = {
       },
     ]
   },
-  plugins: [htmlWebpack, cleanWebpack, definePlugin, miniCssExtract]
+  plugins: [
+    htmlWebpack,
+    hashedPlugin,
+    definePlugin,
+    cleanWebpack,
+    miniCssExtract,
+    terserPlugin
+  ]
 };

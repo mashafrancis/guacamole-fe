@@ -24,7 +24,7 @@ import { applyValidation } from 'utils/helpers/validationUtils';
 import { validationConfig } from 'utils/helpers/resources';
 
 // styles
-import '@material/react-layout-grid/dist/layout-grid.css';
+// import '@material/react-layout-grid/dist/layout-grid.css';
 import './RegisterPage.scss';
 
 export class RegisterPage extends React.Component<RegisterPageProps, RegisterPageState> {

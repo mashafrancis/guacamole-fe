@@ -56,7 +56,7 @@ export class SnackBar extends React.Component<
               <Snackbar
                 message={this.state.snack.message}
                 timeoutMs={6000}
-                actionText='DISMISS'
+                actionText="DISMISS"
               />
             )
           : (<div />)
