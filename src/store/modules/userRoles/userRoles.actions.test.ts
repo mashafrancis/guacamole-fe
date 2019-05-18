@@ -59,9 +59,8 @@ describe('User roles action', () => {
       };
       const expectedAction = [
         {
-          toast: {
+          snack: {
             message: mockErrorResponse.message,
-            type: 'danger',
             withName: false,
           },
           type: DISPLAY_SNACK_MESSAGE,
@@ -85,9 +84,8 @@ describe('User roles action', () => {
           type: DELETE_USER_ROLES_SUCCESS,
         },
         {
-          toast: {
+          snack: {
             message: 'Role has been deleted successfully',
-            type: 'success',
             withName: false,
           },
           type: DISPLAY_SNACK_MESSAGE,
@@ -112,9 +110,8 @@ describe('User roles action', () => {
       };
       const expectedAction = [
         {
-          toast: {
+          snack: {
             message: mockErrorResponse.response.data.message,
-            type: 'danger',
             withName: false,
           },
           type: DISPLAY_SNACK_MESSAGE,
@@ -149,9 +146,8 @@ describe('User roles action', () => {
           type: EDIT_USER_ROLES_SUCCESS,
         },
         {
-          toast: {
+          snack: {
             message: 'Role updated successfully',
-            type: 'success',
             withName: false,
           },
           type: DISPLAY_SNACK_MESSAGE,
@@ -174,9 +170,8 @@ describe('User roles action', () => {
       };
       const expectedAction = [
         {
-          toast: {
+          snack: {
             message: mockErrorResponse.response.data.message,
-            type: 'danger',
             withName: false,
           },
           type: DISPLAY_SNACK_MESSAGE,
@@ -198,9 +193,8 @@ describe('User roles action', () => {
       };
       const expectedAction = [
         {
-          toast: {
+          snack: {
             message: mockErrorResponse.response.data.message,
-            type: 'danger',
             withName: false,
           },
           type: DISPLAY_SNACK_MESSAGE,
@@ -235,9 +229,8 @@ describe('User roles action', () => {
         userRole: userRoleTestData,
         type: CREATE_USER_ROLES_SUCCESS,
       }, {
-        toast: {
+        snack: {
           message: userRoleResponse.data.message,
-          type: 'success',
           withName: false,
         },
         type: DISPLAY_SNACK_MESSAGE,
@@ -259,9 +252,8 @@ describe('User roles action', () => {
 
       const expectedActions = [
         {
-          toast: {
+          snack: {
             message: mockErrorResponse.response.data.message,
-            type: 'danger',
             withName: false,
           },
           type: DISPLAY_SNACK_MESSAGE,

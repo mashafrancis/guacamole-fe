@@ -15,13 +15,6 @@ const {
 } = require('./webpack.plugins');
 
 const isDevMode = process.env.NODE_ENV !== 'production';
-// const config = {
-//   entry: [
-//     "core-js/modules/es6.promise",
-//     "core-js/modules/es6.array.iterator",
-//     path.resolve(__dirname, "src/main.js"),
-//   ],
-// };
 
 function getReactMaterialExternals() {
   return getDirectories('./node_modules/@material').map((directory) => (
@@ -113,7 +106,8 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env']
+            presets: ['@babel/preset-env'],
+            sourceMap: true,
           }
         }
       },

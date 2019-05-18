@@ -8,7 +8,7 @@ import store from '../../store';
 import { axiosMockAdapter, expiredToken, token } from '../../testHelpers';
 import CacheHandler from './CacheHandler';
 
-describe('The http axios instance helper function', () => {
+describe.skip('The http axios instance helper function', () => {
   authService.logoutUser = jest.fn();
   authService.redirectUser = jest.fn();
   window.location.replace = jest.fn();

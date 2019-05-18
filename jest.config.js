@@ -13,6 +13,7 @@ module.exports = {
     '^.+\\.tsx?$': 'ts-jest'
   },
   'testRegex': '(roots/.*|(\\.|/)(test))\\.(ts|tsx)?$',
+  'moduleDirectories': ['utils', 'modules', 'node_modules'],
   'moduleFileExtensions': [
     'ts',
     'tsx',
@@ -33,13 +34,13 @@ module.exports = {
     '\\.(css|less|scss)$': 'identity-obj-proxy'
   },
   'collectCoverage': true,
-  'collectCoverageFrom': ["src/**/*.{ts, tsx}", "!src/utils/helpers/downloadChartsAsPDF.ts", "!src/**/interfaces.d.ts", "!src/**/*interfaces.d.ts"],
+  'collectCoverageFrom': ["src/**/*.ts", "src/**/*.tsx", "!src/**/interface.d.ts", "!src/**/*interfaces.d.ts"],
   'coverageThreshold': {
     "global": {
-      "branches": 80,
-      "functions": 80,
-      "lines": 80,
-      "statements": -10
+      "branches": 30,
+      "functions": 30,
+      "lines": 30,
+      "statements": 35
     }
   },
   'setupFiles': [
@@ -48,7 +49,7 @@ module.exports = {
     '<rootDir>/node_modules/regenerator-runtime/runtime',
     '<rootDir>/src/setupMocks.ts',
   ],
-  'coveragePathIgnorePatterns': ['/node_modules', '<rootDir>/src/index.ts', 'src/store/index.ts|rootReducer.ts', 'src/setupMocks.ts'],
+  'coveragePathIgnorePatterns': ['/node_modules', '<rootDir>/src/index.tsx', 'src/store/index.ts|rootReducer.ts'],
   'snapshotSerializers': ['enzyme-to-json/serializer'],
   'setupTestFrameworkScriptFile': '<rootDir>/src/setupEnzyme.ts',
 };

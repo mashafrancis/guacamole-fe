@@ -1,5 +1,5 @@
 // interface
-import { InternalServerErrorMessageAction } from './interface';
+import { InternalServerErrorMessageAction } from './interfaces';
 
 // types
 import { INTERNAL_SERVER_ERROR_MESSAGE } from './types';
