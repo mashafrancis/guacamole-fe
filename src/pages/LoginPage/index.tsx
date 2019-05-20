@@ -25,7 +25,8 @@ import { applyValidation } from 'utils/helpers/validationUtils';
 import { validationConfig } from 'utils/helpers/resources';
 
 // styles
-import '@material/react-layout-grid/dist/layout-grid.css';
+import './LoginPage.scss';
+// import '@material/react-layout-grid/dist/layout-grid.css';
 
 export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
   private errorMessage;
@@ -268,7 +269,7 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
             <Input
               value={fields.email}
               name="email"
-              id="2"
+              id="5"
               type="text"
               required={true}
               onBlur={this.validateSingleField}
@@ -293,7 +294,7 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
             <Input
               value={fields.password}
               name="password"
-              id="3"
+              id="6"
               type="password"
               required={true}
               onBlur={this.validatePasswordField}
@@ -305,7 +306,6 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
   }
 
   render() {
-    console.log('Class: LoginPage, Function: render, Line 302 this.props.isLoading()', this.state.isLoading);
     const isAuthenticated = authService.isAuthenticated();
     const triedToAuthenticate = localStorage.getItem('triedToAuthenticate');
 
@@ -322,30 +322,32 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
             <Cell
               className="mdc-layout-grid__cell grid-start-5
                       mdc-layout-grid__cell--align-middle"
-              columns={4}
               desktopColumns={4}
               tabletColumns={7}
+              phoneColumns={4}
             >
               <h1 className="headline-2">Login into account</h1>
             </Cell>
           </Row>
           <Row>
             <Cell
-              className="mdc-layout-grid__cell grid-start-5 register__section
-                      mdc-layout-grid__cell--align-middle"
+              className="mdc-layout-grid__cell grid-start-5 register__section mdc-layout-grid__cell--align-middle"
               align="middle"
               order={5}
-              columns={4}
               desktopColumns={4}
               tabletColumns={4}
+              phoneColumns={4}
             >
               {this.renderLoginForm()}
             </Cell>
           </Row>
           <Row>
             <Cell
-              className="mdc-layout-grid__cell grid-start-5
-                      mdc-layout-grid__cell--align-middle"
+              className="mdc-layout-grid__cell grid-start-5 mdc-layout-grid__cell--span-2-desktop-hd"
+              desktopColumns={2}
+              order={1}
+              phoneColumns={2}
+              tabletColumns={2}
               align="middle"
             >
               <Button
@@ -356,6 +358,18 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
                 onClick={this.onSubmit}
                 classes="mdc-button big-round-corner-button mdc-button--raised"
               />
+            </Cell>
+            <Cell
+              className=""
+              desktopColumns={2}
+              order={2}
+              phoneColumns={2}
+              tabletColumns={2}
+              align="middle"
+            >
+              <NavLink to={'/reset-password'}>
+                <span>Reset Password</span>
+              </NavLink>
             </Cell>
           </Row>
         </Grid>

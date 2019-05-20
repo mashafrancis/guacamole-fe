@@ -320,8 +320,7 @@ export class RegisterPage extends React.Component<RegisterPageProps, RegisterPag
         <Grid>
           <Row>
             <Cell
-              className="mdc-layout-grid__cell grid-start-5
-                      mdc-layout-grid__cell--align-middle"
+              className="mdc-layout-grid__cell grid-start-5 mdc-layout-grid__cell--align-middle"
               columns={4}
               desktopColumns={4}
               tabletColumns={7}
@@ -331,8 +330,7 @@ export class RegisterPage extends React.Component<RegisterPageProps, RegisterPag
           </Row>
           <Row>
             <Cell
-              className="mdc-layout-grid__cell grid-start-5 register__section
-                      mdc-layout-grid__cell--align-middle"
+              className="mdc-layout-grid__cell grid-start-5 register__section mdc-layout-grid__cell--align-middle"
               align="middle"
               order={5}
               columns={4}
@@ -344,8 +342,7 @@ export class RegisterPage extends React.Component<RegisterPageProps, RegisterPag
           </Row>
           <Row>
             <Cell
-              className="mdc-layout-grid__cell grid-start-5
-                      mdc-layout-grid__cell--align-middle"
+              className="mdc-layout-grid__cell grid-start-5 mdc-layout-grid__cell--align-middle"
               align="middle"
             >
               <Button
