@@ -1,4 +1,5 @@
-const dotEnv = require('dotenv');
+// const dotEnv = require('dotenv');
+const DotEnv = require('dotenv-webpack');
 
 // importing webpack dependencies
 const webpack = require('webpack');
@@ -29,17 +30,8 @@ const terserPlugin = new TerserPlugin({
     ecma: 6,
   },
 });
-
-// stringify env variables
-const envs = dotEnv.config().parsed;
-const stringifiedEnvs = {};
-Object.keys(envs).forEach((envKey) => {
-  stringifiedEnvs[envKey] = JSON.stringify(envs[envKey]);
-});
-
-const definePlugin = new webpack.DefinePlugin({
-  'process.env': stringifiedEnvs
-});
+const dotEnv = new DotEnv();
+const environmentPlugin = new webpack.EnvironmentPlugin();
 
 module.exports = {
   progressPlugin,
@@ -50,6 +42,7 @@ module.exports = {
   miniCssExtract,
   miniCssExtractPlugin,
   hashedPlugin,
-  definePlugin,
+  dotEnv,
   terserPlugin,
+  environmentPlugin,
 };

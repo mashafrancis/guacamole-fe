@@ -8,7 +8,6 @@ import { NavLink } from 'react-router-dom';
 import { HomePageProps, HomePageState } from 'pages/HomePage/interfaces';
 
 // components
-import Spinner from '../../components/Spinner';
 
 // styles
 import './HomePage.scss';
@@ -104,61 +103,56 @@ export class HomePage extends React.Component<HomePageProps, HomePageState> {
   }
 
   render = () => {
-    const { isLoading } = this.state;
-
     return (
-      isLoading
-      ? <Spinner/>
-      : (
-        <div>
-          <header className="carryforme-nav mdc-top-app-bar">
-            <div className="mdc-top-app-bar__row">
-              <section className="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-                {/*<a aria-controls="navigation-drawer"*/}
-                   {/*className="mdc-toolbar-menu-icon mdc-toolbar__menu-icon material-icons">*/}
-                  {/*menu*/}
-                {/*</a>*/}
-                  <span className="mdc-top-app-bar__title">
-                      <NavLink to={'/'} className="router-link-exact-active mdc-tab--active">kari4me</NavLink>
-                  </span>
-                  <div className="mdc-tab-scroller mdc-tab-scroller--align-center carryforme-navigation">
-                    <div className="mdc-tab-scroller__scroll-area mdc-tab-scroller__scroll-area--scroll">
-                      <div className="mdc-tab-scroller__scroll-content">
-                        <a href="/" className="mdc-tab" role="menuitem">
-                          <span className="mdc-tab__content">
-                              <span className="mdc-tab__text-label">How it works</span>
-                          </span>
-                          <span className="mdc-tab-indicator">
-                            <span className="mdc-tab-indicator__content mdc-tab-indicator__content--underline"/>
-                          </span>
-                          <span className="mdc-tab__ripple"/>
-                        </a>
-                      </div>
-                      </div>
+      <div>
+        <header className="carryforme-nav mdc-top-app-bar">
+          <div className="mdc-top-app-bar__row">
+            <section className="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+              {/*<a aria-controls="navigation-drawer"*/}
+                 {/*className="mdc-toolbar-menu-icon mdc-toolbar__menu-icon material-icons">*/}
+                {/*menu*/}
+              {/*</a>*/}
+                <span className="mdc-top-app-bar__title">
+                    <NavLink to={'/'} className="router-link-exact-active mdc-tab--active">kari4me</NavLink>
+                </span>
+                <div className="mdc-tab-scroller mdc-tab-scroller--align-center carryforme-navigation">
+                  <div className="mdc-tab-scroller__scroll-area mdc-tab-scroller__scroll-area--scroll">
+                    <div className="mdc-tab-scroller__scroll-content">
+                      <a href="/" className="mdc-tab" role="menuitem">
+                        <span className="mdc-tab__content">
+                            <span className="mdc-tab__text-label">How it works</span>
+                        </span>
+                        <span className="mdc-tab-indicator">
+                          <span className="mdc-tab-indicator__content mdc-tab-indicator__content--underline"/>
+                        </span>
+                        <span className="mdc-tab__ripple"/>
+                      </a>
                     </div>
+                    </div>
+                  </div>
+              </section>
+                <section role="toolbar"
+                         className="mdc-top-app-bar__section mdc-top-app-bar__section--align-end user-info__content">
+                  {this.renderHomeNavUnauth()}
                 </section>
-                  <section role="toolbar"
-                           className="mdc-top-app-bar__section mdc-top-app-bar__section--align-end user-info__content">
-                    {this.renderHomeNavUnauth()}
-                  </section>
-              </div>
-            </header>
-          {this.renderDrawerModal()}
-        <section id="hero">
-          <div id="particles-js" className="hero-container">
-            <div className="hero-info">
-                <h1>You Fly, We Connect</h1>
-                <h2>Fly anywhere and share your space.</h2>
-              <NavLink to={'/register'}>
-                <button className="mdc-button mdc-button--raised">
-                  <span className="mdc-button__label">Join a community</span>
-                </button>
-              </NavLink>
             </div>
+          </header>
+        {this.renderDrawerModal()}
+      <section id="hero">
+        <div id="particles-js" className="hero-container">
+          <div className="hero-info">
+              <h1>You Fly, We Connect</h1>
+              <h2>Fly anywhere and share your space.</h2>
+            <NavLink to={'/register'}>
+              <button className="mdc-button mdc-button--raised">
+                <span className="mdc-button__label">Join a community</span>
+              </button>
+            </NavLink>
           </div>
-        </section>
         </div>
-      ));
+      </section>
+      </div>
+    );
   }
 }
 

@@ -14,7 +14,7 @@ body {
 .loader {
   position: relative;
   margin: 0 auto;
-  width: 150px;
+  width: 100px;
   height: 50%
 }
 .loader:before {
@@ -90,32 +90,12 @@ body {
 @-webkit-keyframes color {
   100%,
   0% {
-    stroke: #d62d20;
-  }
-  40% {
-    stroke: #0057e7;
-  }
-  66% {
-    stroke: #008744;
-  }
-  80%,
-  90% {
-    stroke: #ffa700;
+    stroke: #1971ff;
   }
 }
 @keyframes color {
   100%,
   0% {
-    stroke: #d62d20;
-  }
-  40% {
-    stroke: #0057e7;
-  }
-  66% {
-    stroke: #008744;
-  }
-  80%,
-  90% {
-    stroke: #ffa700;
+    stroke: #1971ff;
   }
 }

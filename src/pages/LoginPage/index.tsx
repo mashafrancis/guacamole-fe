@@ -368,7 +368,11 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
               align="middle"
             >
               <NavLink to={'/reset-password'}>
-                <span>Reset Password</span>
+                <Button
+                  type="button"
+                  name="Reset Password"
+                  classes="mdc-button"
+                />
               </NavLink>
             </Cell>
           </Row>

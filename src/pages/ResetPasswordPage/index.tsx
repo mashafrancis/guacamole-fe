@@ -4,6 +4,7 @@ import * as React from 'react';
 import { Cell, Grid, Row } from '@material/react-layout-grid';
 import MaterialIcon from '@material/react-material-icon';
 import TextField, { HelperText, Input } from '@material/react-text-field';
+import { NavLink } from 'react-router-dom';
 
 // components
 import Button from 'components/Button';
@@ -13,6 +14,10 @@ import { ResetPasswordPageProps, ResetPasswordPageState } from './interfaces';
 
 // styles
 import '@material/react-layout-grid/dist/layout-grid.css';
+
+// helpers
+import { validationConfig } from 'utils/helpers/resources';
+import { applyValidation } from 'utils/helpers/validationUtils';
 
 export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, ResetPasswordPageState> {
   constructor(props) {
@@ -24,6 +29,64 @@ export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, R
       fields: {},
       errors: {},
     };
+  }
+
+  forwardArrow = () => {
+    return (
+      <React.Fragment>
+        <NavLink to={'/'}>
+          <span className="register-toolbar-actions">
+            <div className="register__logo">
+              <span className="product-logo-text">Home</span>
+            </div>
+            <Button
+              type="button"
+              name="arrow_forward"
+              classes="mdc-icon-button material-icons"
+              aria_label="Go back to home page"
+            />
+          </span>
+        </NavLink>
+      </React.Fragment>
+    );
+  }
+
+  backArrow = () => {
+    return (
+      <React.Fragment>
+        <NavLink to={'/login'}>
+          <span className="register-toolbar-actions">
+            <Button
+              type="button"
+              name="arrow_back"
+              classes="mdc-icon-button material-icons"
+              aria_label="Go back to login page"
+            />
+            <div className="register__logo">
+              <span className="product-logo-text">Back</span>
+            </div>
+          </span>
+        </NavLink>
+      </React.Fragment>
+    );
+  }
+
+  renderHeader = () => {
+    return (
+      <React.Fragment>
+        <header>
+            {this.backArrow()}
+            <div className="mini-account-menu">
+              <div className="mini-account-menu--desktop">
+                {this.forwardArrow()}
+              </div>
+              <div className="mini-account-menu--mobile">
+                {this.forwardArrow()}
+              </div>
+            </div>
+          </header>
+      </React.Fragment>
+    );
   }
 
   /**
@@ -62,18 +125,20 @@ export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, R
   }
 
   /**
-   * Validates the password field
+   * Validates a single field of a form
+   * Triggered by a form input event
    *
    * @param {event} event DOM event
+   * @param {object} config
    *
    * @returns {void}
    */
-  validatePasswordField = (event) => {
+  validateSingleField = (event, config = validationConfig) => {
     const field = event.target.name;
     const value = this.state.fields[field];
-    (!value)
-      ? this.setFieldError(field, 'Kindly provide your password')
-      : this.setFieldError(field, '');
+    const error = applyValidation(value, config[field]);
+
+    this.setFieldError(field, error);
   }
 
   /**
@@ -109,7 +174,7 @@ export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, R
     this.setState({ isLoading: true });
   }
 
-  renderEnterOldPassword = () => {
+  renderEnterEmailForm = () => {
     const { fields, errors } = this.state;
 
     return (
@@ -118,24 +183,24 @@ export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, R
           <TextField
             className="mdc-text-field--fullwidth"
             outlined
-            label="Enter Old Password"
-            leadingIcon={<MaterialIcon role="button" icon="remove_red_eye" initRipple={null}/>}
+            label="Enter your email"
+            leadingIcon={<MaterialIcon role="button" icon="email" initRipple={null}/>}
             helperText={
               <HelperText
-                className="mdc-text-field-invalid-helper"
+                className="mdc-text-field-helper-text--validation-msg"
                 isValidationMessage={true}
                 persistent={true}
                 validation={true}>
-                {errors.password}
+                {'A password reset link will be sent to your email account'}
               </HelperText>}
           >
             <Input
-              value={fields.password}
-              name="password"
+              value={fields.email}
+              name="email"
               id="7"
-              type="password"
+              type="email"
               required={true}
-              onBlur={this.validatePasswordField}
+              onBlur={this.validateSingleField}
               onChange={this.handleInputChange}/>
           </TextField>
         </div>
@@ -146,6 +211,7 @@ export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, R
   render() {
     return (
       <div className="register">
+        {this.renderHeader()}
       <Grid>
         <Row>
           <Cell
@@ -168,7 +234,7 @@ export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, R
             desktopColumns={4}
             tabletColumns={4}
           >
-            {this.renderEnterOldPassword()}
+            {this.renderEnterEmailForm()}
           </Cell>
         </Row>
         <Row>

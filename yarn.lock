@@ -1028,6 +1028,22 @@
   dependencies:
     tslib "^1.9.3"
 
+"@material/drawer@^0.41.0":
+  version "0.41.1"
+  resolved "https://registry.yarnpkg.com/@material/drawer/-/drawer-0.41.1.tgz#abd860424c139a59e0dbd363ff2c16fcd435c55b"
+  integrity sha512-4t9ARGaIg8jpXIqD8hy4kcZ0hsF7y25gk2jNQAYG8ukQuDgbenjydlNFnC+I/eWBVIKqnVBlens+4ZUns+n3hg==
+  dependencies:
+    "@material/animation" "^0.41.0"
+    "@material/base" "^0.41.0"
+    "@material/elevation" "^0.41.0"
+    "@material/list" "^0.41.0"
+    "@material/ripple" "^0.41.0"
+    "@material/rtl" "^0.40.1"
+    "@material/shape" "^0.41.0"
+    "@material/theme" "^0.41.0"
+    "@material/typography" "^0.41.0"
+    focus-trap "^3.0.0"
+
 "@material/drawer@^2.1.1":
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/@material/drawer/-/drawer-2.1.1.tgz#ccdc3404bba60f3f72b153d04f9a8967c06a7df6"
@@ -1044,6 +1060,14 @@
     "@material/typography" "^1.0.0"
     focus-trap "^5.0.0"
     tslib "^1.9.3"
+
+"@material/elevation@^0.41.0":
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/@material/elevation/-/elevation-0.41.0.tgz#db6b75ea43354fe35936cba2d78c55390faf4e9e"
+  integrity sha512-ZtZS8z5ie9c7Cx5PVudgSorGYa0C3lu3dA+Nn6qJdhGUokl01msh54NfNuwk+EZsk65bNRRqw1Td/63TCbKIzg==
+  dependencies:
+    "@material/animation" "^0.41.0"
+    "@material/theme" "^0.41.0"
 
 "@material/elevation@^0.43.0":
   version "0.43.0"
@@ -1202,6 +1226,19 @@
     "@material/theme" "^1.1.0"
     tslib "^1.9.3"
 
+"@material/list@^0.41.0":
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/@material/list/-/list-0.41.0.tgz#b597fd844c9f5661565129db9103e6a08bf23255"
+  integrity sha512-HhYN0I02CTT8j91c1eeeI+L2KXVKdfzj0Zuapp2SdeCmQZLJO2tu2NYj0W6REBDTVBWBccr12Sn8o71CodEScQ==
+  dependencies:
+    "@material/base" "^0.41.0"
+    "@material/dom" "^0.41.0"
+    "@material/ripple" "^0.41.0"
+    "@material/rtl" "^0.40.1"
+    "@material/shape" "^0.41.0"
+    "@material/theme" "^0.41.0"
+    "@material/typography" "^0.41.0"
+
 "@material/list@^2.1.1":
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/@material/list/-/list-2.1.1.tgz#fac8fc886d72c33ffb0f91abbc2483570cda4674"
@@ -1290,6 +1327,17 @@
     classnames "^2.2.6"
     react "^16.4.2"
 
+"@material/react-drawer@^0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@material/react-drawer/-/react-drawer-0.11.0.tgz#faef4293e4800019412c44796168ca17917bdb30"
+  integrity sha512-QXWDLenuVdaWFo8rptxn3guuNUm+145D1AwmqKI1yWZaK/Eh30+b2oh+oq6Ufnb+c0RFb42o9s9NH5q88tIFhA==
+  dependencies:
+    "@material/drawer" "^0.41.0"
+    "@material/list" "^0.41.0"
+    classnames "^2.2.6"
+    focus-trap "^3.0.0"
+    react "^16.4.2"
+
 "@material/react-floating-label@^0.11.0":
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/@material/react-floating-label/-/react-floating-label-0.11.0.tgz#a1de21ea093726cdd77501bff7b8acf867324468"
@@ -1324,6 +1372,15 @@
   integrity sha512-sk+ChrZn6/e9aEbik4EcMaYtYhy+63YtZoLnFJRGevqrYWTVloWZzS5ehy02tkfiQUf3L3AFtnKAsv3EvsxW0A==
   dependencies:
     "@material/line-ripple" "^0.41.0"
+    classnames "^2.2.6"
+    react "^16.4.2"
+
+"@material/react-list@^0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@material/react-list/-/react-list-0.11.0.tgz#617978642776803c71472df7073f6513560d6bc0"
+  integrity sha512-QkhXy4cTaZrY0hLkBRChpTKVHsUCaVQ83+oyV/hb1QOTrHc8wuSa+2c7KgeOUUnWYSLaad+I+ohvt2qCMXYNoQ==
+  dependencies:
+    "@material/list" "^0.41.0"
     classnames "^2.2.6"
     react "^16.4.2"
 
@@ -2012,6 +2069,11 @@
   version "12.0.2"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.0.2.tgz#3452a24edf9fea138b48fad4a0a028a683da1e40"
   integrity sha512-5tabW/i+9mhrfEOUcLDu2xBPsHJ+X5Orqy9FKpale3SjDA17j5AEpYq5vfy3oAeAHGcvANRCO3NV3d2D6q3NiA==
+
+"@types/node@11.13.2":
+  version "11.13.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.2.tgz#dc85dde46aa8740bb4aed54b8104250f8f849503"
+  integrity sha512-HOtU5KqROKT7qX/itKHuTtt5fV0iXbheQvrgbLNXFJQBY/eh+VS5vmmTAVlo3qIGMsypm0G4N1t2AXjy1ZicaQ==
 
 "@types/prop-types@*":
   version "15.7.1"
@@ -5475,10 +5537,29 @@ dot-prop@^4.1.1:
   dependencies:
     is-obj "^1.0.0"
 
+dotenv-defaults@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/dotenv-defaults/-/dotenv-defaults-1.0.2.tgz#441cf5f067653fca4bbdce9dd3b803f6f84c585d"
+  integrity sha512-iXFvHtXl/hZPiFj++1hBg4lbKwGM+t/GlvELDnRtOFdjXyWP7mubkVr+eZGWG62kdsbulXAef6v/j6kiWc/xGA==
+  dependencies:
+    dotenv "^6.2.0"
+
+dotenv-webpack@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/dotenv-webpack/-/dotenv-webpack-1.7.0.tgz#4384d8c57ee6f405c296278c14a9f9167856d3a1"
+  integrity sha512-wwNtOBW/6gLQSkb8p43y0Wts970A3xtNiG/mpwj9MLUhtPCQG6i+/DSXXoNN7fbPCU/vQ7JjwGmgOeGZSSZnsw==
+  dependencies:
+    dotenv-defaults "^1.0.2"
+
 dotenv@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-5.0.1.tgz#a5317459bd3d79ab88cff6e44057a6a3fbb1fcef"
   integrity sha512-4As8uPrjfwb7VXC+WnLCbXK7y+Ueb2B3zgNCePYfhxS1PYeaO1YTeplffTEcbfLhvFNGLAz90VvJs9yomG7bow==
+
+dotenv@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-6.2.0.tgz#941c0410535d942c8becf28d3f357dbd9d476064"
+  integrity sha512-HygQCKUBSFl8wKQZBSemMywRWcEDNidvNbjGVyZu3nbZ8qq9ubiPoGLMdRDpfSrpkkm9BXYFkpKxxFX38o/76w==
 
 draft-js@^0.10.5:
   version "0.10.5"
@@ -6384,6 +6465,14 @@ flush-write-stream@^1.0.0:
   dependencies:
     inherits "^2.0.3"
     readable-stream "^2.3.6"
+
+focus-trap@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/focus-trap/-/focus-trap-3.0.0.tgz#4d2ee044ae66bf7eb6ebc6c93bd7a1039481d7dc"
+  integrity sha512-jTFblf0tLWbleGjj2JZsAKbgtZTdL1uC48L8FcmSDl4c2vDoU4NycN1kgV5vJhuq1mxNFkw7uWZ1JAGlINWvyw==
+  dependencies:
+    tabbable "^3.1.0"
+    xtend "^4.0.1"
 
 focus-trap@^5.0.0:
   version "5.0.0"
@@ -13592,6 +13681,11 @@ symbol-observable@^1.1.0, symbol-observable@^1.2.0:
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.2.tgz#ae27db38f660a7ae2e1c3b7d1bc290819b8519e6"
   integrity sha1-rifbOPZgp64uHDt9G8KQgZuFGeY=
 
+tabbable@^3.1.0:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/tabbable/-/tabbable-3.1.2.tgz#f2d16cccd01f400e38635c7181adfe0ad965a4a2"
+  integrity sha512-wjB6puVXTYO0BSFtCmWQubA/KIn7Xvajw0x0l6eJUudMG/EAiJvIUnyNX6xO4NpGrJ16lbD0eUseB9WxW0vlpQ==
+
 tabbable@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/tabbable/-/tabbable-4.0.0.tgz#5bff1d1135df1482cf0f0206434f15eadbeb9261"
@@ -14082,10 +14176,10 @@ typescript-estree@5.3.0:
     lodash.unescape "4.0.1"
     semver "5.5.0"
 
-typescript@^3.3.3:
-  version "3.4.5"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.4.5.tgz#2d2618d10bb566572b8d7aad5180d84257d70a99"
-  integrity sha512-YycBxUb49UUhdNMU5aJ7z5Ej2XGmaIBL0x34vZ82fn3hGvD+bgrMrVDpatgz2f7YxUMJxMkbWxJZeAvDxVe7Vw==
+typescript@3.4.3:
+  version "3.4.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.4.3.tgz#0eb320e4ace9b10eadf5bc6103286b0f8b7c224f"
+  integrity sha512-FFgHdPt4T/duxx6Ndf7hwgMZZjZpB+U0nMNGVCYPq0rEzWKjEDobm4J6yb3CS7naZ0yURFqdw9Gwc7UOh/P9oQ==
 
 ua-parser-js@^0.7.18:
   version "0.7.19"
