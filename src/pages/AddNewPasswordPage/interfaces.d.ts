@@ -1,5 +1,7 @@
 export interface AddNewPasswordPageProps {
   displaySnackMessage?: (message) => Promise<any>;
+  resetPassword: (user, token) => Promise<any>;
+  user?: any;
   error?: object;
   location: {
     search: string;

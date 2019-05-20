@@ -1,5 +1,6 @@
 export interface ResetPasswordPageProps {
   displaySnackMessage?: (message) => Promise<any>;
+  forgotPassword: (user) => Promise<any>;
   error?: object;
   location: {
     search: string;

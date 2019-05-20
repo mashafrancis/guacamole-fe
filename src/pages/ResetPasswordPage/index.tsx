@@ -4,9 +4,14 @@ import * as React from 'react';
 import { Cell, Grid, Row } from '@material/react-layout-grid';
 import MaterialIcon from '@material/react-material-icon';
 import TextField, { HelperText, Input } from '@material/react-text-field';
+import { connect } from 'react-redux';
 
 // components
 import Button from 'components/Button';
+
+// thunks
+import { forgotPassword } from 'modules/passwordReset';
+import { displaySnackMessage } from 'modules/snack';
 
 // interfaces
 import { ResetPasswordPageProps, ResetPasswordPageState } from './interfaces';
@@ -101,11 +106,9 @@ export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, R
     event.preventDefault();
     const { fields } = this.state;
     const user = {
-      username: fields.username as string,
       email: fields.email as string,
-      password: fields.password as string,
     };
-
+    this.props.forgotPassword(user)
     this.setState({ isLoading: true });
   }
 
@@ -119,7 +122,7 @@ export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, R
             className="mdc-text-field--fullwidth"
             outlined
             label="Enter Old Password"
-            leadingIcon={<MaterialIcon role="button" icon="remove_red_eye" initRipple={null}/>}
+            leadingIcon={<MaterialIcon role="button" icon="email" initRipple={null}/>}
             helperText={
               <HelperText
                 className="mdc-text-field-invalid-helper"
@@ -130,10 +133,10 @@ export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, R
               </HelperText>}
           >
             <Input
-              value={fields.password}
-              name="password"
+              value={fields.email}
+              name="email"
               id="7"
-              type="password"
+              type="email"
               required={true}
               onBlur={this.validatePasswordField}
               onChange={this.handleInputChange}/>
@@ -193,4 +196,15 @@ export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, R
   }
 }
 
-export default ResetPasswordPage;
+
+export const mapStateToProps = state => ({
+  user: state.user,
+  error: state.error,
+})
+
+export const mapDispatchToProps = dispatch => ({
+    forgotPassword: user => dispatch(forgotPassword(user)),
+    displaySnackMessage: message => dispatch(displaySnackMessage(message)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ResetPasswordPage);
