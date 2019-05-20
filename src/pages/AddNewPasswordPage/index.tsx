@@ -5,11 +5,17 @@ import { Cell, Grid, Row } from '@material/react-layout-grid';
 import MaterialIcon from '@material/react-material-icon';
 import TextField, { HelperText, Input } from '@material/react-text-field';
 import { NavLink, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 // components
 import Button from 'components/Button';
 import { validationConfig } from 'utils/helpers/resources';
 import { applyValidation } from 'utils/helpers/validationUtils';
+
+// thunks
+import { resetPassword } from 'modules/passwordReset';
+import { displaySnackMessage } from 'modules/snack';
+
 
 // interfaces
 import { AddNewPasswordPageProps, AddNewPasswordPageState } from './interfaces';
@@ -136,11 +142,9 @@ export class AddNewPasswordPage extends React.Component<AddNewPasswordPageProps,
     event.preventDefault();
     const { fields } = this.state;
     const user = {
-      username: fields.username as string,
-      email: fields.email as string,
       password: fields.password as string,
     };
-
+    this.props.resetPassword(user, this.props.user.token)
     this.setState({ isLoading: true });
   }
 
@@ -253,4 +257,15 @@ export class AddNewPasswordPage extends React.Component<AddNewPasswordPageProps,
   }
 }
 
-export default AddNewPasswordPage;
+export const mapStateToProps = state => ({
+  user: state.authentication.user,
+  error: state.error,
+})
+
+export const mapDispatchToProps = dispatch => ({
+    resetPassword: (user, token) => dispatch(resetPassword(user, token)),
+    displaySnackMessage: message => dispatch(displaySnackMessage(message)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddNewPasswordPage);
+
