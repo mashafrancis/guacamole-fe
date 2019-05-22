@@ -240,12 +240,6 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
     }
   }
 
-  renderDefaultPage = () => {
-    const pathname = localStorage.getItem('locationReferrer');
-
-    return <Redirect to={pathname} />;
-  }
-
   renderLoginForm = () => {
     const { fields, errors } = this.state;
 
@@ -312,69 +306,68 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
     this.validateLogin(triedToAuthenticate, isAuthenticated);
 
     return (
-      authService.isAuthenticated()
-      ? this.renderDefaultPage()
-      : (
-        <div className="register">
-        {this.renderHeader()}
-        <Grid>
-          <Row>
-            <Cell
-              className="mdc-layout-grid__cell grid-start-5
-                      mdc-layout-grid__cell--align-middle"
-              desktopColumns={4}
-              tabletColumns={7}
-              phoneColumns={4}
-            >
-              <h1 className="headline-2">Login into account</h1>
-            </Cell>
-          </Row>
-          <Row>
-            <Cell
-              className="mdc-layout-grid__cell grid-start-5 register__section mdc-layout-grid__cell--align-middle"
-              align="middle"
-              order={5}
-              desktopColumns={4}
-              tabletColumns={4}
-              phoneColumns={4}
-            >
-              {this.renderLoginForm()}
-            </Cell>
-          </Row>
-          <Row>
-            <Cell
-              className="mdc-layout-grid__cell grid-start-5 mdc-layout-grid__cell--span-2-desktop-hd"
-              desktopColumns={2}
-              order={1}
-              phoneColumns={2}
-              tabletColumns={2}
-              align="middle"
-            >
-              <Button
-                type="button"
-                name="Login"
-                id="cc-register"
-                disabled={!this.formIsReady() || this.state.isLoading}
-                onClick={this.onSubmit}
-                classes="mdc-button big-round-corner-button mdc-button--raised"
-              />
-            </Cell>
-            <Cell
-              className=""
-              desktopColumns={2}
-              order={2}
-              phoneColumns={2}
-              tabletColumns={2}
-              align="middle"
-            >
-              <NavLink to={'/reset-password'}>
-                <span>Reset Password</span>
-              </NavLink>
-            </Cell>
-          </Row>
-        </Grid>
-      </div>
-    ));
+      <div className="register">
+      {this.renderHeader()}
+      <Grid>
+        <Row>
+          <Cell
+            className="mdc-layout-grid__cell grid-start-5
+                    mdc-layout-grid__cell--align-middle"
+            columns={4}
+            desktopColumns={4}
+            tabletColumns={7}
+            phoneColumns={4}
+          >
+            <h1 className="headline-2">Login into account</h1>
+          </Cell>
+        </Row>
+        <Row>
+          <Cell
+            className="mdc-layout-grid__cell grid-start-5 register__section mdc-layout-grid__cell--align-middle"
+            align="middle"
+            order={5}
+            columns={4}
+            desktopColumns={4}
+            tabletColumns={4}
+            phoneColumns={4}
+          >
+            {this.renderLoginForm()}
+          </Cell>
+        </Row>
+        <Row>
+          <Cell
+            className="mdc-layout-grid__cell grid-start-5 mdc-layout-grid__cell--span-2-desktop-hd"
+            desktopColumns={2}
+            order={1}
+            phoneColumns={2}
+            tabletColumns={2}
+            align="middle"
+          >
+            <Button
+              type="button"
+              name="Login"
+              id="cc-register"
+              disabled={!this.formIsReady() || this.state.isLoading}
+              onClick={this.onSubmit}
+              classes="mdc-button big-round-corner-button mdc-button--raised"
+            />
+          </Cell>
+          <Cell
+            className=""
+            desktopColumns={2}
+            order={2}
+            phoneColumns={2}
+            tabletColumns={2}
+            align="middle"
+          >
+            <NavLink to={'/reset-password'}>
+              <span>Reset Password</span>
+            </NavLink>
+          </Cell>
+        </Row>
+      </Grid>
+    </div>
+    );
   }
 }
 
