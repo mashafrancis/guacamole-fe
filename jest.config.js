@@ -37,10 +37,10 @@ module.exports = {
   'collectCoverageFrom': ["src/**/*.ts", "src/**/*.tsx", "!src/**/interface.d.ts", "!src/**/*interfaces.d.ts"],
   'coverageThreshold': {
     "global": {
-      "branches": 10,
-      "functions": 10,
-      "lines": 10,
-      "statements": 15
+      "branches": 1,
+      "functions": 1,
+      "lines": 1,
+      "statements": 1
     }
   },
   'setupFiles': [
