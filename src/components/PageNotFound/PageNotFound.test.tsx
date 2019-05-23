@@ -19,6 +19,6 @@ describe('PageNotFound component', () => {
   });
 
   it('should render the Page Not Found component', () => {
-    expect(wrapper.find('.page-not-found').length).toEqual(1);
+    expect(wrapper.find('.notfound').length).toEqual(1);
   });
 });
