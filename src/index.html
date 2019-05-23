@@ -5,6 +5,23 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <title>${ htmlWebpackPlugin.options.title }</title>
+
+  <!-- Fontfaces CSS-->
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans:400,400i,500,500i,700,700i|Google+Sans+Display:400,400i,500,500i,700,700i&amp;subset=all"
+        rel="stylesheet">
+  <link rel="stylesheet"
+        href="//fonts.googleapis.com/css?family=Roboto:100,300,400,500,700|Google+Sans:300,400|Product+Sans:400&amp;lang=en">
+
+  <!--Material Icons-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet">
+  <link rel="shortcut icon" href="./favicon.ico">
+
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="${ htmlWebpackPlugin.options.getFaviconUrl }">
+  <link rel="icon" type="image/png" sizes="16x16" href="${ htmlWebpackPlugin.options.getFaviconUrl }">
+
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-140673404-1"></script>
   <script>
@@ -33,23 +50,6 @@
         g.clearUserCookie=function(){};
     })(window,document,window['_fs_namespace'],'script','user');
   </script>
-
-  <title>${ htmlWebpackPlugin.options.title }</title>
-
-  <!-- Fontfaces CSS-->
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans:400,400i,500,500i,700,700i|Google+Sans+Display:400,400i,500,500i,700,700i&amp;subset=all"
-        rel="stylesheet">
-  <link rel="stylesheet"
-        href="//fonts.googleapis.com/css?family=Roboto:100,300,400,500,700|Google+Sans:300,400|Product+Sans:400&amp;lang=en">
-
-  <!--Material Icons-->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-        rel="stylesheet">
-  <link rel="shortcut icon" href="./favicon.ico">
-
-  <!-- Favicon -->
-  <link rel="apple-touch-icon" sizes="180x180" href="${ htmlWebpackPlugin.options.getFaviconUrl }">
-  <link rel="icon" type="image/png" sizes="16x16" href="${ htmlWebpackPlugin.options.getFaviconUrl }">
 
 </head>
 <body class="mdc-typography">

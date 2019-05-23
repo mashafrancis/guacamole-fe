@@ -1,8 +1,8 @@
-import { Fragment } from 'react';
 import * as React from 'react';
-import { connect } from 'react-redux';
 
 // third-party libraries
+import Particles from 'react-particles-js';
+import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 // thunk
@@ -16,7 +16,85 @@ import HomeHeader from 'components/HomeAuthHeader';
 
 // styles
 import './HomePage.scss';
+
+// helpers
 import { authService } from 'utils/auth';
+
+const particlesOptions = {
+  particles: {
+    number: {
+      value: 90,
+      density: {
+        enable: true,
+        value_area: 800,
+      },
+    },
+    color: {
+      value: '#ffffff',
+    },
+    opacity: {
+      value: 0.5,
+      random: false,
+      anim: {
+        enable: false,
+        speed: 1,
+        opacity_min: 0.1,
+        sync: false,
+      },
+    },
+    size: {
+      value: 1,
+      random: true,
+      anim: {
+        enable: false,
+        speed: 30,
+        size_min: 0.1,
+        sync: false,
+      },
+    },
+    line_linked: {
+      enable: true,
+      distance: 200,
+      color: '#ffffff',
+      opacity: 0.4,
+      width: 1,
+    },
+    move: {
+      enable: true,
+      speed: 6,
+      random: false,
+      straight: false,
+      attract: {
+        enable: false,
+        rotateX: 600,
+        rotateY: 1200,
+      },
+    },
+  },
+  interactivity: {
+    events: {
+      onhover: {
+        enable: true,
+      },
+      onclick: {
+        enable: true,
+      },
+      resize: true,
+    },
+    modes: {
+      repulse: {
+        distance: 100,
+      },
+      push: {
+        particles_nb: 2,
+      },
+      remove: {
+        particles_nb: 1,
+      },
+    },
+  },
+  retina_detect: true,
+};
 
 export class HomePage extends React.Component<HomePageProps, HomePageState> {
   state = {
@@ -45,7 +123,7 @@ export class HomePage extends React.Component<HomePageProps, HomePageState> {
 
   render = () => {
     return (
-      <div>
+      <React.Fragment>
         <header className="carryforme-nav mdc-top-app-bar">
           <div className="mdc-top-app-bar__row">
             <section className="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
@@ -74,16 +152,17 @@ export class HomePage extends React.Component<HomePageProps, HomePageState> {
               </section>
             </div>
           </header>
-      <section id="hero">
-        <div id="particles-js" className="hero-container">
-          <div className="hero-info">
-              <h1>You Fly, We Connect</h1>
-              <h2>Fly anywhere and share your space.</h2>
-            { authService.isAuthenticated() ? this.renderGoToDashboard() : this.renderJoinCommunity() }
+          <section id="hero">
+            <Particles className="particles" params={particlesOptions} />
+          <div className="hero-container">
+            <div className="hero-info">
+                <h1>You Fly, We Connect</h1>
+                <h2>Fly anywhere and share your space.</h2>
+              { authService.isAuthenticated() ? this.renderGoToDashboard() : this.renderJoinCommunity() }
+            </div>
           </div>
-        </div>
-      </section>
-      </div>
+        </section>
+      </React.Fragment>
     );
   }
 }
