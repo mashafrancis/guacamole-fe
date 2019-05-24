@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 // helper functions
-import { authService } from '../../utils/auth';
+import { authService } from 'utils/auth';
 
 const token = authService.getToken();
 

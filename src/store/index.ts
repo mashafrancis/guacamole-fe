@@ -9,6 +9,7 @@ import http from 'utils/helpers/http';
 
 import rootReducer from './rootReducer';
 
+const initialState = {};
 // default cache ttl is set to 20 mins
 const cachedHttp = cacheAxiosInstance(http, 1200000);
 
@@ -20,12 +21,11 @@ const devMiddleware = composeWithDevTools(
 );
 const prodMiddleware = applyMiddleware(thunk.withExtraArgument(cachedHttp));
 
-const middleware = process.env.NODE_ENV === 'development' ?
-  devMiddleware : prodMiddleware;
+const middleware = process.env.NODE_ENV === 'development' ? devMiddleware : prodMiddleware;
 
 const store = createStore(
   rootReducer,
-  {},
+  initialState,
   middleware
 );
 

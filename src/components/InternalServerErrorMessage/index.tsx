@@ -2,22 +2,25 @@
 import * as React from 'react';
 
 // scss styles
+import { Link, NavLink } from 'react-router-dom';
 import './InternalServerError.scss';
 
 class InternalServerErrorMessage extends React.PureComponent {
   render () {
     return (
-      <div className="internal-server-error-message-body">
-         <div className="internal-server-error-message-inner">
-           <h1 className="header">
-             <span className="big-header">500</span> Server Error
-           </h1>
-           <p className="spacing">Sorry, it's not you. It's us.</p>
-           <p className="after-space">
-           We are experiencing an internal server problem.
-           </p>
-           <p>Please try again later or contact support <span className="mail">activo@andela.com</span></p>
-         </div>
+      <div id="internal-server-error">
+        <div className="server-error">
+          <div className="server-error-500"/>
+          <h1>500</h1>
+          <h2>Sorry. It is not you. It is us.</h2>
+          <p>We are experiencing an internal server problem.</p>
+          <p>Please try again later or contact support <span className="mail">kari4me.froyo@gmail.com</span></p>
+          <NavLink to={'/'}>
+            <button className="mdc-button mdc-button--raised">
+              <span className="mdc-button__label">Back to homepage</span>
+            </button>
+          </NavLink>
+        </div>
       </div>
     );
   }
