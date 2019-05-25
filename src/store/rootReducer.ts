@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
 
 // reducers
-import authentication from 'modules/authentication';
 import internalServerError from 'modules/internalServerError';
+import login from 'modules/login';
+import passwordReset from 'modules/passwordReset';
+import register from 'modules/register';
 import snack from 'modules/snack';
 import user from 'modules/user';
 import userRoles from 'modules/userRoles';
@@ -13,9 +15,11 @@ import { LOG_OUT_USER } from 'modules/user/types';
 const appReducer = combineReducers({
   internalServerError,
   snack,
-  authentication,
+  register,
+  login,
   user,
   userRoles,
+  passwordReset,
 });
 
 const rootReducer = (state, action) => {

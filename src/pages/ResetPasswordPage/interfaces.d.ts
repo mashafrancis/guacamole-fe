@@ -1,6 +1,7 @@
 export interface ResetPasswordPageProps {
   displaySnackMessage?: (message) => Promise<any>;
-  forgotPassword: (user) => Promise<any>;
+  resetPassword: (user, token) => Promise<any>;
+  user?: any;
   error?: object;
   location: {
     search: string;
@@ -9,6 +10,7 @@ export interface ResetPasswordPageProps {
 
 export interface ResetPasswordPageState {
   isLoading: boolean;
+  token: string;
   isValid: boolean;
   focused: boolean;
   fields: {

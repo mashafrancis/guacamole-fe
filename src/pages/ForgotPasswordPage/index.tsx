@@ -4,26 +4,22 @@ import * as React from 'react';
 import { Cell, Grid, Row } from '@material/react-layout-grid';
 import MaterialIcon from '@material/react-material-icon';
 import TextField, { HelperText, Input } from '@material/react-text-field';
-import { NavLink, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // components
 import Button from 'components/Button';
-import { validationConfig } from 'utils/helpers/resources';
-import { applyValidation } from 'utils/helpers/validationUtils';
 
 // thunks
-import { resetPassword } from 'modules/passwordReset';
+import { forgotPassword } from 'modules/passwordReset';
 import { displaySnackMessage } from 'modules/snack';
 
-
 // interfaces
-import { AddNewPasswordPageProps, AddNewPasswordPageState } from './interfaces';
+import { ForgotPasswordPageProps, ForgotPasswordPageState } from './interfaces';
 
 // styles
 import '@material/react-layout-grid/dist/layout-grid.css';
 
-export class AddNewPasswordPage extends React.Component<AddNewPasswordPageProps, AddNewPasswordPageState> {
+export class ForgotPasswordPage extends React.Component<ForgotPasswordPageProps, ForgotPasswordPageState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -71,23 +67,6 @@ export class AddNewPasswordPage extends React.Component<AddNewPasswordPageProps,
   }
 
   /**
-   * Validates a single field of a form
-   * Triggered by a form input event
-   *
-   * @param {event} event DOM event
-   * @param {object} config
-   *
-   * @returns {void}
-   */
-  validateSingleField = (event, config = validationConfig) => {
-    const field = event.target.name;
-    const value = this.state.fields[field];
-    const error = applyValidation(value, config[field]);
-
-    this.setFieldError(field, error);
-  }
-
-  /**
    * Validates the password field
    *
    * @param {event} event DOM event
@@ -103,28 +82,13 @@ export class AddNewPasswordPage extends React.Component<AddNewPasswordPageProps,
   }
 
   /**
-   * Validates the confirmation password
-   *
-   * @param {event} event DOM event
-   *
-   * @returns {void}
-   */
-  validateConfirmationPassword = (event) => {
-    const field = event.target.name;
-    const value = this.state.fields[field];
-    (this.state.fields.password !== value)
-      ? this.setFieldError(field, 'Password mismatch')
-      : this.setFieldError(field, '');
-  }
-
-  /**
    * Computed property for determining if the form can be submitted
    *
    * @returns {Boolean}
    */
   formIsReady = () => {
     const { errors, fields } = this.state;
-    const expectedFieldCount = 2;
+    const expectedFieldCount = 1;
     const formHasMissingFields = Object.keys(fields).length < expectedFieldCount;
     const formHasError = Object.values(errors).some(error => Boolean(error));
 
@@ -142,13 +106,13 @@ export class AddNewPasswordPage extends React.Component<AddNewPasswordPageProps,
     event.preventDefault();
     const { fields } = this.state;
     const user = {
-      password: fields.password as string,
+      email: fields.email as string,
     };
-    this.props.resetPassword(user, this.props.user.token)
+    this.props.forgotPassword(user);
     this.setState({ isLoading: true });
   }
 
-  renderResetPasswordForm = () => {
+  renderEnterOldPassword = () => {
     const { fields, errors } = this.state;
 
     return (
@@ -157,8 +121,8 @@ export class AddNewPasswordPage extends React.Component<AddNewPasswordPageProps,
           <TextField
             className="mdc-text-field--fullwidth"
             outlined
-            label="Enter New Password"
-            leadingIcon={<MaterialIcon role="button" icon="remove_red_eye" initRipple={null}/>}
+            label="Enter Old Password"
+            leadingIcon={<MaterialIcon role="button" icon="email" initRipple={null}/>}
             helperText={
               <HelperText
                 className="mdc-text-field-invalid-helper"
@@ -169,37 +133,12 @@ export class AddNewPasswordPage extends React.Component<AddNewPasswordPageProps,
               </HelperText>}
           >
             <Input
-              value={fields.password}
-              name="password"
+              value={fields.email}
+              name="email"
               id="7"
-              type="password"
+              type="email"
               required={true}
-              onBlur={this.validateSingleField}
-              onChange={this.handleInputChange}/>
-          </TextField>
-        </div>
-        <div className="form-cell">
-          <TextField
-            className="mdc-text-field--fullwidth"
-            outlined
-            label="Confirm New Password"
-            leadingIcon={<MaterialIcon role="button" icon="remove_red_eye" initRipple={null}/>}
-            helperText={
-              <HelperText
-                className="mdc-text-field-invalid-helper"
-                isValidationMessage={true}
-                persistent={true}
-                validation={true}>
-                {errors.confirmPassword}
-              </HelperText>}
-          >
-            <Input
-              value={fields.confirmPassword}
-              name="confirmPassword"
-              id="8"
-              type="password"
-              required={true}
-              onBlur={this.validateConfirmationPassword}
+              onBlur={this.validatePasswordField}
               onChange={this.handleInputChange}/>
           </TextField>
         </div>
@@ -219,7 +158,7 @@ export class AddNewPasswordPage extends React.Component<AddNewPasswordPageProps,
             desktopColumns={4}
             tabletColumns={7}
           >
-            <h1 className="headline-2">Enter New Password</h1>
+            <h1 className="headline-2">Reset password</h1>
           </Cell>
         </Row>
         <Row>
@@ -232,7 +171,7 @@ export class AddNewPasswordPage extends React.Component<AddNewPasswordPageProps,
             desktopColumns={4}
             tabletColumns={4}
           >
-            {this.renderResetPasswordForm()}
+            {this.renderEnterOldPassword()}
           </Cell>
         </Row>
         <Row>
@@ -243,7 +182,7 @@ export class AddNewPasswordPage extends React.Component<AddNewPasswordPageProps,
           >
             <Button
               type="button"
-              name="Confirm New Password"
+              name="Reset Password"
               id="cc-register"
               disabled={!this.formIsReady() || this.state.isLoading}
               onClick={this.onSubmit}
@@ -258,14 +197,13 @@ export class AddNewPasswordPage extends React.Component<AddNewPasswordPageProps,
 }
 
 export const mapStateToProps = state => ({
-  user: state.authentication.user,
+  user: state.user,
   error: state.error,
-})
-
-export const mapDispatchToProps = dispatch => ({
-    resetPassword: (user, token) => dispatch(resetPassword(user, token)),
-    displaySnackMessage: message => dispatch(displaySnackMessage(message)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddNewPasswordPage);
+export const mapDispatchToProps = dispatch => ({
+  forgotPassword: user => dispatch(forgotPassword(user)),
+  displaySnackMessage: message => dispatch(displaySnackMessage(message)),
+});
 
+export default connect(mapStateToProps, mapDispatchToProps)(ForgotPasswordPage);

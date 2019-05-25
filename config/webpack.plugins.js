@@ -37,6 +37,7 @@ const environmentPlugin = new webpack.EnvironmentPlugin();
 module.exports = {
   progressPlugin,
   cleanWebpack,
+  environmentPlugin,
   htmlWebpack,
   namedModulesPlugin,
   hotModuleReplacementPlugin,

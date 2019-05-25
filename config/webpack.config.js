@@ -6,6 +6,7 @@ const {getDirectories} = require('../scripts/directory-reader');
 const {importer} = require('./webpack.util');
 const {
   cleanWebpack,
+  environmentPlugin,
   htmlWebpack,
   miniCssExtract,
   miniCssExtractPlugin,
@@ -125,6 +126,7 @@ module.exports = {
     ]
   },
   plugins: [
+    environmentPlugin,
     htmlWebpack,
     hashedPlugin,
     dotEnv,

@@ -168,7 +168,7 @@ export class HomePage extends React.Component<HomePageProps, HomePageState> {
 }
 
 export const mapStateToProps = state => ({
-  user: state.authentication.user,
+  user: state.user,
 });
 
 export const mapDispatchToProps = dispatch => ({

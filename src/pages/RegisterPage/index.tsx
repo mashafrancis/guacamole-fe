@@ -11,7 +11,7 @@ import { NavLink } from 'react-router-dom';
 import Button from 'components/Button';
 
 // thunks
-import { registerUser } from 'modules/authentication';
+import { registerUser } from 'modules/register';
 import { displaySnackMessage } from 'modules/snack';
 
 // interfaces

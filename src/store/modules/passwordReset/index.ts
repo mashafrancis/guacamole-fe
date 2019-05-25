@@ -1,41 +1,40 @@
 // thunks
-import  { displaySnackMessage } from 'modules/snack';
+import { displaySnackMessage } from 'modules/snack';
 
 // interfaces
 import {
+  ForgotPasswordActionFailure,
+  ForgotPasswordActionRequest,
+  ForgotPasswordActionSuccess,
+  ResetPasswordActionFailure,
   ResetPasswordActionRequest,
   ResetPasswordActionSuccess,
-  ResetPasswordActionFailure,
 } from './interfaces';
 
 // types
 import {
+  FORGOT_PASSWORD_FAILURE,
+  FORGOT_PASSWORD_REQUEST,
+  FORGOT_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAILURE,
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
-  RESET_PASSWORD_FAILURE,
 } from './types';
-import { userInfo } from 'os';
-
 
 /**
  * Reset password request
  *
  * @returns { ResetPasswordActionRequest }
  */
-
-
 export const resetPasswordRequest = (): ResetPasswordActionRequest => ({
   type: RESET_PASSWORD_REQUEST,
 });
 
-
 /**
  * Reset password request
  *
  * @returns { ResetPasswordActionRequest }
  */
-
-
 export const resetPasswordSuccess = (user): ResetPasswordActionSuccess => ({
   type: RESET_PASSWORD_SUCCESS,
   payload: user,
@@ -46,51 +45,25 @@ export const resetPasswordSuccess = (user): ResetPasswordActionSuccess => ({
  *
  * @returns { ResetPasswordActionRequest }
  */
-
-
 export const resetPasswordFailure = (errors): ResetPasswordActionFailure => ({
-  type: RESET_PASSWORD_FAILURE,
   errors,
+  type: RESET_PASSWORD_FAILURE,
 });
-
-
-
-// interfaces
-import {
-  ForgotPasswordActionRequest,
-  ForgotPasswordActionSuccess,
-  ForgotPasswordActionFailure,
-} from './interfaces';
-
-// types
-import {
-  FORGOT_PASSWORD_REQUEST,
-  FORGOT_PASSWORD_SUCCESS,
-  FORGOT_PASSWORD_FAILURE,
-} from './types';
-import { authService } from 'utils/auth';
-
-
 
 /**
  * Forgot password request
  *
  * @returns { ForgotPasswordActionRequest }
  */
-
-
 export const forgotPasswordRequest = (): ForgotPasswordActionRequest => ({
   type: FORGOT_PASSWORD_REQUEST,
 });
-
 
 /**
  * Forgot password request
  *
  * @returns { ForgotPasswordActionSuccess }
  */
-
-
 export const  forgotPasswordSuccess = (user): ForgotPasswordActionSuccess => ({
   type: FORGOT_PASSWORD_SUCCESS,
   payload: user,
@@ -101,43 +74,40 @@ export const  forgotPasswordSuccess = (user): ForgotPasswordActionSuccess => ({
  *
  * @returns { ForgotPasswordActionFailure }
  */
-
-
 export const forgotPasswordFailure = (errors): ForgotPasswordActionFailure => ({
-  type: FORGOT_PASSWORD_FAILURE,
   errors,
+  type: FORGOT_PASSWORD_FAILURE,
 });
 
-export const forgotPassword = (user) => (dispatch, getState, http) => {
+export const forgotPassword = user => (dispatch, getState, http) => {
   dispatch(forgotPasswordRequest());
   return http.post('users/forgot_password', user)
     .then((response) => {
       dispatch(forgotPasswordSuccess(response.data.response));
-      const message = `successfully redirected`
+      const message = `${response.data.response.success}`;
       dispatch(displaySnackMessage(`${message}`));
     })
-      .catch((errors) => {
-        const errorMessage = "error";
-        dispatch(forgotPasswordFailure(errors));
-        dispatch(displaySnackMessage(`${errorMessage}`));
+    .catch((errors) => {
+      const errorMessage = `${errors.response.error}`;
+      dispatch(forgotPasswordFailure(errors));
+      dispatch(displaySnackMessage(`${errorMessage}`));
     });
 };
 
 export const resetPassword = (user, token) => (dispatch, getState, http) => {
   dispatch(resetPasswordRequest());
-  return http.put(`users/change_password/${token}`, user)
+  return http.put(`users/reset_password/${token}`, user)
     .then((response) => {
       dispatch(resetPasswordSuccess(response.data.response));
-      const message = `successfully updated`
+      const message = `${response.data.success}`;
       dispatch(displaySnackMessage(`${message}`));
     })
-      .catch((errors) => {
-        const errorMessage = "error";
-        dispatch(resetPasswordFailure(errors));
-        dispatch(displaySnackMessage(`${errorMessage}`));
+    .catch((errors) => {
+      const errorMessage = `${errors.response.error}`;
+      dispatch(resetPasswordFailure(errors));
+      dispatch(displaySnackMessage(`${errorMessage}`));
     });
 };
-
 
 // Set the initial user registration state
 export const passwordResetState = {
@@ -193,5 +163,4 @@ const reducer = (state = passwordResetState, action) => {
   }
 };
 
-export default reducer
-
+export default reducer;
