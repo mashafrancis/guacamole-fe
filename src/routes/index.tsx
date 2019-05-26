@@ -11,13 +11,17 @@ import HomePage from 'pages/HomePage';
 import LoginPage from 'pages/LoginPage';
 import RegisterPage from 'pages/RegisterPage';
 import ResetPasswordPage from 'pages/ResetPasswordPage';
+import SocialLoginPage from 'pages/SocialLoginPage';
+import SocialRegisterPage from 'pages/SocialRegisterPage';
 
 const Routes = () => (
   <Route>
       <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route exact path="/register" component={RegisterPage} />
-        <Route exact path="/login" component={LoginPage} />
+        <Route exact path="/register" component={SocialRegisterPage} />
+        <Route exact path="/register/email" component={RegisterPage} />
+        <Route exact path="/login" component={SocialLoginPage} />
+        <Route exact path="/login/email" component={LoginPage} />
         <Route exact path="/forgot-password" component={ForgotPasswordPage} />
         <Route exact path="/forgot-password/reset" component={ResetPasswordPage} />
         <Route path="/404" component={PageNotFound} />
