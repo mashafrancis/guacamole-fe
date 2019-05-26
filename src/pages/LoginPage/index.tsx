@@ -5,13 +5,13 @@ import { Cell, Grid, Row } from '@material/react-layout-grid';
 import MaterialIcon from '@material/react-material-icon';
 import TextField, { HelperText, Input } from '@material/react-text-field';
 import { connect } from 'react-redux';
-import { NavLink, Redirect } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 // components
 import Button from 'components/Button';
 
 // thunks
-import { loginUser } from 'modules/authentication';
+import { loginUser } from 'modules/login';
 import { displaySnackMessage } from 'modules/snack';
 
 // interfaces
@@ -360,7 +360,7 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
             tabletColumns={2}
             align="middle"
           >
-            <NavLink to={'/reset-password'}>
+            <NavLink to={'/forgot-password'}>
               <span>Reset Password</span>
             </NavLink>
           </Cell>

@@ -3,9 +3,6 @@ import { displaySnackMessage } from 'modules/snack';
 
 // interfaces
 import {
-  LoginActionFailure,
-  LoginActionRequest,
-  LoginActionSuccess,
   RegisterActionFailure,
   RegisterActionRequest,
   RegisterActionSuccess,
@@ -13,16 +10,10 @@ import {
 
 // types
 import {
-  LOGIN_FAILURE,
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
   REGISTER_FAILURE,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
 } from './types';
-
-// helpers
-import { authService } from 'utils/auth';
 
 /**
  * Register request
@@ -53,35 +44,6 @@ export const registerFailure = (errors): RegisterActionFailure => ({
   type: REGISTER_FAILURE,
 });
 
-/**
- * Login request
- *
- * @returns {LoginActionRequest}
- */
-export const loginRequest = (): LoginActionRequest => ({
-  type: LOGIN_REQUEST,
-});
-
-/**
- * Login user success
- *
- * @returns {LoginActionSuccess}
- */
-export const loginSuccess = (user): LoginActionSuccess => ({
-  type: LOGIN_SUCCESS,
-  payload: user,
-});
-
-/**
- * Login user fail
- *
- * @returns {LoginActionFailure}
- */
-export const loginFailure = (errors): LoginActionFailure => ({
-  errors,
-  type: LOGIN_FAILURE,
-});
-
 // actions
 /**
  * Thunk action creator
@@ -105,30 +67,6 @@ export const registerUser = user => (dispatch, getState, http) => {
     });
 };
 
-/**
- * Thunk action creator
- * Login a user
- *
- * @returns {Function} action type and payload
- * @param user
- */
-export const loginUser = user => (dispatch, getState, http) => {
-  dispatch(loginRequest());
-  return http.post('users/login', user)
-    .then((response) => {
-      authService.saveToken(response.data.response.token);
-      dispatch(loginSuccess(response.data.response));
-      const message = `${response.data.response.username} logged in successfully`;
-      dispatch(displaySnackMessage(`${message}`));
-      window.location.replace('/');
-    })
-    .catch((errors) => {
-      const errorMessage = errors.response.data.errors.error[0];
-      dispatch(loginFailure(errors));
-      dispatch(displaySnackMessage(`${errorMessage}`));
-    });
-};
-
 // Set the initial user registration state
 export const userRegistrationState = {
   user: {},
@@ -137,7 +75,7 @@ export const userRegistrationState = {
 };
 
 /**
- * Reducer for user authentication
+ * Reducer for user register
  *
  */
 const reducer = (state = userRegistrationState, action) => {
@@ -155,24 +93,6 @@ const reducer = (state = userRegistrationState, action) => {
         isLoading: false,
       };
     case REGISTER_FAILURE:
-      return {
-        ...state,
-        errors: action.errors,
-        isLoading: true,
-      };
-    case LOGIN_REQUEST:
-      return {
-        ...state,
-        isLoading: true,
-      };
-    case LOGIN_SUCCESS:
-      return {
-        ...state,
-        user: action.payload,
-        error: null,
-        isLoading: false,
-      };
-    case LOGIN_FAILURE:
       return {
         ...state,
         errors: action.errors,

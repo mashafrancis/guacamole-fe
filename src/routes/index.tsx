@@ -6,7 +6,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 // pages
 import PageNotFound from 'components/PageNotFound';
-import AddNewPasswordPage from 'pages/AddNewPasswordPage';
+import ForgotPasswordPage from 'pages/ForgotPasswordPage';
 import HomePage from 'pages/HomePage';
 import LoginPage from 'pages/LoginPage';
 import RegisterPage from 'pages/RegisterPage';
@@ -18,8 +18,8 @@ const Routes = () => (
         <Route exact path="/" component={HomePage} />
         <Route exact path="/register" component={RegisterPage} />
         <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/reset-password" component={ResetPasswordPage} />
-        <Route exact path="/new-password" component={AddNewPasswordPage} />
+        <Route exact path="/forgot-password" component={ForgotPasswordPage} />
+        <Route exact path="/forgot-password/reset" component={ResetPasswordPage} />
         <Route path="/404" component={PageNotFound} />
         <Redirect to="/404" />
       </Switch>

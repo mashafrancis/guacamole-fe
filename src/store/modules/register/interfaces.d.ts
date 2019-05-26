@@ -1,8 +1,5 @@
 // types
 import {
-  LOGIN_FAILURE,
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
   REGISTER_FAILURE,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
@@ -22,22 +19,8 @@ export interface RegisterActionFailure {
   errors: any;
 }
 
-export interface LoginActionRequest {
-  type: LOGIN_REQUEST;
-}
-
-export interface LoginActionSuccess {
-  type: LOGIN_SUCCESS;
-  payload: User;
-}
-
-export interface LoginActionFailure {
-  type: LOGIN_FAILURE;
-  errors: any;
-}
-
-export interface User {
+export default interface User {
   username?: string;
   email: string;
-  password: string;
+  password?: string;
 }
