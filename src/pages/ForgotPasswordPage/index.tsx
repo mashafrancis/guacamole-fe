@@ -7,6 +7,7 @@ import TextField, { HelperText, Input } from '@material/react-text-field';
 import { connect } from 'react-redux';
 
 // components
+import AuthHeader from 'components/AuthHeader';
 import Button from 'components/Button';
 
 // thunks
@@ -18,6 +19,10 @@ import { ForgotPasswordPageProps, ForgotPasswordPageState } from './interfaces';
 
 // styles
 import '@material/react-layout-grid/dist/layout-grid.css';
+
+// helpers
+import { validationConfig } from 'utils/helpers/resources';
+import { applyValidation } from 'utils/helpers/validationUtils';
 
 export class ForgotPasswordPage extends React.Component<ForgotPasswordPageProps, ForgotPasswordPageState> {
   constructor(props) {
@@ -67,18 +72,20 @@ export class ForgotPasswordPage extends React.Component<ForgotPasswordPageProps,
   }
 
   /**
-   * Validates the password field
+   * Validates a single field of a form
+   * Triggered by a form input event
    *
    * @param {event} event DOM event
+   * @param {object} config
    *
    * @returns {void}
    */
-  validatePasswordField = (event) => {
+  validateSingleField = (event, config = validationConfig) => {
     const field = event.target.name;
     const value = this.state.fields[field];
-    (!value)
-      ? this.setFieldError(field, 'Kindly provide your password')
-      : this.setFieldError(field, '');
+    const error = applyValidation(value, config[field]);
+
+    this.setFieldError(field, error);
   }
 
   /**
@@ -113,7 +120,7 @@ export class ForgotPasswordPage extends React.Component<ForgotPasswordPageProps,
   }
 
   renderEnterOldPassword = () => {
-    const { fields, errors } = this.state;
+    const { fields } = this.state;
 
     return (
       <React.Fragment>
@@ -121,15 +128,15 @@ export class ForgotPasswordPage extends React.Component<ForgotPasswordPageProps,
           <TextField
             className="mdc-text-field--fullwidth"
             outlined
-            label="Enter Old Password"
+            label="Enter your email"
             leadingIcon={<MaterialIcon role="button" icon="email" initRipple={null}/>}
             helperText={
               <HelperText
-                className="mdc-text-field-invalid-helper"
+                className="mdc-text-field-helper-text--validation-msg"
                 isValidationMessage={true}
                 persistent={true}
                 validation={true}>
-                {errors.password}
+                {'A password reset link will be sent to your email account'}
               </HelperText>}
           >
             <Input
@@ -138,7 +145,7 @@ export class ForgotPasswordPage extends React.Component<ForgotPasswordPageProps,
               id="7"
               type="email"
               required={true}
-              onBlur={this.validatePasswordField}
+              onBlur={this.validateSingleField}
               onChange={this.handleInputChange}/>
           </TextField>
         </div>
@@ -149,6 +156,12 @@ export class ForgotPasswordPage extends React.Component<ForgotPasswordPageProps,
   render() {
     return (
       <div className="register">
+      <AuthHeader
+        forwardButtonName="Home"
+        backwardButtonName="Back"
+        forwardLink={'/'}
+        backwardLink={'/login/email'}
+      />
       <Grid>
         <Row>
           <Cell

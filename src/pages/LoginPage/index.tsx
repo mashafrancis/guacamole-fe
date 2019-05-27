@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 // components
+import AuthHeader from 'components/AuthHeader';
 import Button from 'components/Button';
 
 // thunks
@@ -160,64 +161,6 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
       });
   }
 
-  forwardArrow = () => {
-    return (
-      <React.Fragment>
-        <NavLink to={'/register'}>
-          <span className="register-toolbar-actions">
-            <div className="register__logo">
-              <span className="product-logo-text">Register</span>
-            </div>
-            <Button
-              type="button"
-              name="arrow_forward"
-              classes="mdc-icon-button material-icons"
-              aria_label="Go back to login page"
-            />
-          </span>
-        </NavLink>
-      </React.Fragment>
-    );
-  }
-
-  backArrow = () => {
-    return (
-      <React.Fragment>
-        <NavLink to={'/'}>
-          <span className="register-toolbar-actions">
-            <Button
-              type="button"
-              name="arrow_back"
-              classes="mdc-icon-button material-icons"
-              aria_label="Go back to home page"
-            />
-            <div className="register__logo">
-              <span className="product-logo-text">Home</span>
-            </div>
-          </span>
-        </NavLink>
-      </React.Fragment>
-    );
-  }
-
-  renderHeader = () => {
-    return (
-      <React.Fragment>
-        <header>
-            {this.backArrow()}
-            <div className="mini-account-menu">
-              <div className="mini-account-menu--desktop">
-                {this.forwardArrow()}
-              </div>
-              <div className="mini-account-menu--mobile">
-                {this.forwardArrow()}
-              </div>
-            </div>
-          </header>
-      </React.Fragment>
-    );
-  }
-
   /**
    * Validates user login and triggers an error toast if login is unsuccessful
    *
@@ -307,7 +250,12 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
 
     return (
       <div className="register">
-      {this.renderHeader()}
+      <AuthHeader
+        forwardButtonName="Register"
+        backwardButtonName="Back"
+        forwardLink={'/register/email'}
+        backwardLink={'/login'}
+      />
       <Grid>
         <Row>
           <Cell
@@ -315,7 +263,7 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
                     mdc-layout-grid__cell--align-middle"
             columns={4}
             desktopColumns={4}
-            tabletColumns={7}
+            tabletColumns={8}
             phoneColumns={4}
           >
             <h1 className="headline-2">Login into account</h1>
@@ -328,7 +276,7 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
             order={5}
             columns={4}
             desktopColumns={4}
-            tabletColumns={4}
+            tabletColumns={8}
             phoneColumns={4}
           >
             {this.renderLoginForm()}
@@ -357,12 +305,10 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
             desktopColumns={2}
             order={2}
             phoneColumns={2}
-            tabletColumns={2}
+            tabletColumns={3}
             align="middle"
           >
-            <NavLink to={'/forgot-password'}>
-              <span>Reset Password</span>
-            </NavLink>
+            <NavLink to={'/forgot-password'}><h4 className="headline-5">Forgot your password?</h4></NavLink>
           </Cell>
         </Row>
       </Grid>

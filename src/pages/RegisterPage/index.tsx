@@ -5,9 +5,9 @@ import { Cell, Grid, Row } from '@material/react-layout-grid';
 import MaterialIcon from '@material/react-material-icon';
 import TextField, { HelperText, Input } from '@material/react-text-field';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 
 // components
+import AuthHeader from 'components/AuthHeader';
 import Button from 'components/Button';
 
 // thunks
@@ -146,64 +146,6 @@ export class RegisterPage extends React.Component<RegisterPageProps, RegisterPag
       });
   }
 
-  forwardArrow = () => {
-    return (
-      <React.Fragment>
-        <NavLink to={'/login'}>
-          <span className="register-toolbar-actions">
-            <div className="register__logo">
-              <span className="product-logo-text">Login</span>
-            </div>
-              <Button
-                type="button"
-                name="arrow_forward"
-                classes="mdc-icon-button material-icons"
-                aria_label="Go back to login page"
-              />
-          </span>
-        </NavLink>
-      </React.Fragment>
-    );
-  }
-
-  backArrow = () => {
-    return (
-      <React.Fragment>
-        <NavLink to={'/'}>
-          <span className="register-toolbar-actions">
-            <Button
-              type="button"
-              name="arrow_back"
-              classes="mdc-icon-button material-icons"
-              aria_label="Go back to home page"
-            />
-            <div className="register__logo">
-              <span className="product-logo-text">Home</span>
-            </div>
-          </span>
-        </NavLink>
-      </React.Fragment>
-    );
-  }
-
-  renderHeader = () => {
-    return (
-      <React.Fragment>
-        <header>
-            {this.backArrow()}
-            <div className="mini-account-menu">
-              <div className="mini-account-menu--desktop">
-                {this.forwardArrow()}
-              </div>
-              <div className="mini-account-menu--mobile">
-                {this.forwardArrow()}
-              </div>
-            </div>
-          </header>
-      </React.Fragment>
-    );
-  }
-
   renderRegisterForm = () => {
     const { fields, errors } = this.state;
 
@@ -316,14 +258,19 @@ export class RegisterPage extends React.Component<RegisterPageProps, RegisterPag
   render() {
     return (
       <div className="register">
-        {this.renderHeader()}
+        <AuthHeader
+          forwardButtonName="Login"
+          backwardButtonName="Back"
+          forwardLink={'/login/email'}
+          backwardLink={'/register'}
+        />
         <Grid>
           <Row>
             <Cell
               className="mdc-layout-grid__cell grid-start-5 mdc-layout-grid__cell--align-middle"
               columns={4}
               desktopColumns={4}
-              tabletColumns={7}
+              tabletColumns={8}
             >
               <h1 className="headline-2">Create a new account</h1>
             </Cell>
@@ -335,7 +282,7 @@ export class RegisterPage extends React.Component<RegisterPageProps, RegisterPag
               order={5}
               columns={4}
               desktopColumns={4}
-              tabletColumns={4}
+              tabletColumns={8}
             >
               {this.renderRegisterForm()}
             </Cell>
