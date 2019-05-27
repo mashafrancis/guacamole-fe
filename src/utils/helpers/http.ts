@@ -7,7 +7,7 @@ import { authService } from 'utils/auth';
 const token = authService.getToken();
 
 const http = axios.create({
-  baseURL: process.env.GUACAMOLE_API,
+  baseURL: 'https://kari4me-api.herokuapp.com/api/',
   headers: {
     Authorization: `Bearer ${token}`,
   },

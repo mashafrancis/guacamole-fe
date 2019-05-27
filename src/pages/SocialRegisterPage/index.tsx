@@ -6,7 +6,7 @@ import MaterialIcon from '@material/react-material-icon';
 import { NavLink } from 'react-router-dom';
 
 // components
-import Button from 'components/Button';
+import AuthHeader from 'components/AuthHeader';
 
 // interfaces
 import { SocialRegisterPageProps, SocialRegisterPageState } from './interfaces';
@@ -16,64 +16,6 @@ import { SocialRegisterPageProps, SocialRegisterPageState } from './interfaces';
 import './SocialRegisterPage.scss';
 
 export class SocialRegisterPage extends React.Component<SocialRegisterPageProps, SocialRegisterPageState> {
-  forwardArrow = () => {
-    return (
-      <React.Fragment>
-        <NavLink to={'/login'}>
-          <span className="register-toolbar-actions">
-            <div className="register__logo">
-              <span className="product-logo-text">Login</span>
-            </div>
-              <Button
-                type="button"
-                name="arrow_forward"
-                classes="mdc-icon-button material-icons"
-                aria_label="Go back to login page"
-              />
-          </span>
-        </NavLink>
-      </React.Fragment>
-    );
-  }
-
-  backArrow = () => {
-    return (
-      <React.Fragment>
-        <NavLink to={'/'}>
-          <span className="register-toolbar-actions">
-            <Button
-              type="button"
-              name="arrow_back"
-              classes="mdc-icon-button material-icons"
-              aria_label="Go back to home page"
-            />
-            <div className="register__logo">
-              <span className="product-logo-text">Home</span>
-            </div>
-          </span>
-        </NavLink>
-      </React.Fragment>
-    );
-  }
-
-  renderHeader = () => {
-    return (
-      <React.Fragment>
-        <header>
-            {this.backArrow()}
-            <div className="mini-account-menu">
-              <div className="mini-account-menu--desktop">
-                {this.forwardArrow()}
-              </div>
-              <div className="mini-account-menu--mobile">
-                {this.forwardArrow()}
-              </div>
-            </div>
-          </header>
-      </React.Fragment>
-    );
-  }
-
   renderFacebookRegister = () => (
     <React.Fragment>
       <button type="button" className="kirk-itemChoice mb-l" role="option" aria-selected="false">
@@ -124,14 +66,19 @@ export class SocialRegisterPage extends React.Component<SocialRegisterPageProps,
   render() {
     return (
       <div className="register">
-        {this.renderHeader()}
+        <AuthHeader
+          forwardButtonName="Login"
+          backwardButtonName="Home"
+          forwardLink={'/login'}
+          backwardLink={'/'}
+        />
         <Grid>
           <Row>
             <Cell
               className="mdc-layout-grid__cell grid-start-4 mdc-layout-grid__cell--align-middle"
               columns={5}
               desktopColumns={5}
-              tabletColumns={7}
+              tabletColumns={8}
             >
               <h1 className="headline-2">How do you want to sign up?</h1>
             </Cell>
@@ -142,7 +89,7 @@ export class SocialRegisterPage extends React.Component<SocialRegisterPageProps,
               align="middle"
               columns={5}
               desktopColumns={5}
-              tabletColumns={4}
+              tabletColumns={8}
             >
               <nav>
                 {this.renderFacebookRegister()}
@@ -156,7 +103,7 @@ export class SocialRegisterPage extends React.Component<SocialRegisterPageProps,
               className="mdc-layout-grid__cell grid-start-4 mdc-layout-grid__cell--align-middle"
               columns={5}
               desktopColumns={5}
-              tabletColumns={7}
+              tabletColumns={8}
             >
               <h4 className="headline-5">Already a member? <NavLink to={'/login'}>Login</NavLink></h4>
             </Cell>

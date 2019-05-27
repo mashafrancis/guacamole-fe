@@ -7,6 +7,7 @@ import TextField, { HelperText, Input } from '@material/react-text-field';
 import { connect } from 'react-redux';
 
 // components
+import AuthHeader from 'components/AuthHeader';
 import Button from 'components/Button';
 import { validationConfig } from 'utils/helpers/resources';
 import { applyValidation } from 'utils/helpers/validationUtils';
@@ -210,6 +211,12 @@ export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, R
   render() {
     return (
       <div className="register">
+      <AuthHeader
+        forwardButtonName="Login"
+        backwardButtonName="Home"
+        forwardLink={'/login/email'}
+        backwardLink={'/'}
+      />
       <Grid>
         <Row>
           <Cell

@@ -1,81 +1,62 @@
 import * as React from 'react';
 
+// components
+import Button from 'components/Button';
+import { NavLink } from 'react-router-dom';
+
 // interfaces
-import { AuthHeaderProps, AuthHeaderState } from 'components/AuthHeader/interfaces';
+import { AuthHeaderProps } from './interfaces';
 
-class AuthHeader extends React.Component<AuthHeaderProps, AuthHeaderState> {
-  state = {
-    isUserExisting: false,
-    dropDownHidden: true,
-  };
+const forwardArrow = (link, name) => (
+  <React.Fragment>
+    <NavLink to={link}>
+      <span className="register-toolbar-actions">
+        <div className="register__logo">
+          <span className="product-logo-text">{name}</span>
+        </div>
+          <Button
+            type="button"
+            name="arrow_forward"
+            classes="mdc-icon-button material-icons"
+            aria_label="Go forward"
+          />
+      </span>
+    </NavLink>
+  </React.Fragment>
+);
 
-  componentDidMount() {
-    const { user } = this.props;
+const backArrow = (link, name) => (
+  <React.Fragment>
+    <NavLink to={link}>
+      <span className="register-toolbar-actions">
+        <Button
+          type="button"
+          name="arrow_back"
+          classes="mdc-icon-button material-icons"
+          aria_label="Go back"
+        />
+        <div className="register__logo">
+          <span className="product-logo-text">{name}</span>
+        </div>
+      </span>
+    </NavLink>
+  </React.Fragment>
+);
 
-    if (user.tokenId) {
-      this.setState({
-        isUserExisting: true,
-      });
-    }
-  }
-
-  /**
-   * Returns the first or second URI section of the current active route
-   *
-   * @returns {string} uriPath
-   */
-  currentPath = () => {
-    let uriPath = this.props.location.pathname.split('/')[1];
-    const paths = ['register', 'login', 'logout'];
-
-    if (!paths.includes(uriPath)) {
-      uriPath = this.props.location.pathname.split('/')[2];
-    }
-
-    return uriPath;
-  }
-
-  render() {
-    return (
-        <header>
-            <a href="index.html">
-              <span className="register-toolbar-actions">
-                <button aria-label="Go back to home page"
-                        className="mdc-icon-button material-icons">arrow_back</button>
-                <div className="register__logo">
-                  <span className="product-logo-text">Home</span>
-                </div>
-              </span>
-            </a>
-            <div className="mini-account-menu">
-                <div className="mini-account-menu--desktop">
-                    <a href="login.html">
-                      <span className="register-toolbar-actions">
-                        <div className="register__logo">
-                          <span className="product-logo-text">Login</span>
-                        </div>
-                        <button aria-label="Go back to home page"
-                                className="mdc-icon-button material-icons">arrow_forward
-                        </button>
-                      </span>
-                    </a>
-                </div>
-                <div className="mini-account-menu--mobile">
-                    <a href="login.html">
-                      <span className="register-toolbar-actions">
-                        <div className="register__logo">
-                          <span className="product-logo-text">Login</span>
-                        </div>
-                        <button aria-label="Go back to home page"
-                                className="mdc-icon-button material-icons">arrow_forward
-                        </button>
-                      </span>
-                    </a>
-                </div>
-            </div>
-        </header>
-    );
-  }
-}
+const AuthHeader: React.SFC<AuthHeaderProps> = props => (
+  <React.Fragment>
+    <header>
+        {backArrow(props.backwardLink, props.backwardButtonName)}
+        <div className="mini-account-menu">
+          <div className="mini-account-menu--desktop">
+            {forwardArrow(props.forwardLink, props.forwardButtonName)}
+          </div>
+          <div className="mini-account-menu--mobile">
+            {forwardArrow(props.forwardLink, props.forwardButtonName)}
+          </div>
+        </div>
+      </header>
+  </React.Fragment>
+);
 
 export default AuthHeader;
