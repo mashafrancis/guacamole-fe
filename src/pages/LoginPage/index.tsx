@@ -40,6 +40,7 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
       focused: false,
       fields: {},
       errors: {},
+      isPasswordHidden: true,
     };
     this.onSubmit = this.onSubmit.bind(this);
   }
@@ -72,6 +73,12 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
         ...prevState.fields,
         [field]: value,
       },
+    }));
+  }
+
+  toggleHidePassword = () => {
+    this.setState(prevState => ({
+      isPasswordHidden: !prevState.isPasswordHidden,
     }));
   }
 
@@ -218,6 +225,7 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
             className="mdc-text-field--fullwidth"
             outlined
             label="Password"
+            onLeadingIconSelect={this.toggleHidePassword}
             leadingIcon={<MaterialIcon role="button" icon="remove_red_eye" initRipple={null}/>}
             helperText={
               <HelperText
@@ -232,7 +240,7 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
               value={fields.password}
               name="password"
               id="6"
-              type="password"
+              type={this.state.isPasswordHidden ? 'password' : 'text'}
               required={true}
               onBlur={this.validatePasswordField}
               onChange={this.handleInputChange}/>

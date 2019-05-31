@@ -12,7 +12,7 @@ export const authService = {
     return jwtDecode(this.getToken());
   },
   isAuthenticated() {
-    return this.getToken() ? true : false;
+    return !!this.getToken();
   },
   isExpired() {
     const currentDate = Date.now() / 1000;

@@ -13,6 +13,7 @@ export interface ResetPasswordPageState {
   token: string;
   isValid: boolean;
   focused: boolean;
+  isPasswordHidden: boolean;
   fields: {
     [key: string]: string | number
   };

@@ -5,7 +5,9 @@ import * as React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 // pages
+import AuthenticatedRoute from 'components/AuthenticatedRoute';
 import PageNotFound from 'components/PageNotFound';
+import DashboardPage from 'pages/DashboardPage';
 import ForgotPasswordPage from 'pages/ForgotPasswordPage';
 import HomePage from 'pages/HomePage';
 import LoginPage from 'pages/LoginPage';
@@ -24,6 +26,15 @@ const Routes = () => (
         <Route exact path="/login/email" component={LoginPage} />
         <Route exact path="/forgot-password" component={ForgotPasswordPage} />
         <Route exact path="/forgot-password/reset" component={ResetPasswordPage} />
+        <AuthenticatedRoute
+          authorize={[
+            'explore:view',
+            'trips:view',
+            'preferences:view',
+          ]}
+          path="/dashboard"
+          component={DashboardPage}
+        />
         <Route path="/404" component={PageNotFound} />
         <Redirect to="/404" />
       </Switch>

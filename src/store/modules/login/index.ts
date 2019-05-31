@@ -58,9 +58,9 @@ export const loginUser = user => (dispatch, getState, http) => {
   dispatch(loginRequest());
   return http.post('users/login', user)
     .then((response) => {
-      authService.saveToken(response.data.response.token);
+      authService.saveToken(response.data.response.data.token);
       dispatch(loginSuccess(response.data.response));
-      const message = `${response.data.response.username} logged in successfully`;
+      const message = `${response.data.response.data.username} logged in successfully`;
       dispatch(displaySnackMessage(`${message}`));
       window.location.replace('/');
     })
@@ -100,7 +100,7 @@ const reducer = (state = userLoginState, action) => {
       return {
         ...state,
         errors: action.errors,
-        isLoading: true,
+        isLoading: false,
       };
     default:
       return state;

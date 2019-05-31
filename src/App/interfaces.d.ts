@@ -9,6 +9,6 @@ export interface AppProps {
 }
 
 export interface AppState {
-  isGettingUserDetails: boolean;
+  isGettingUserDetails?: boolean;
   isUserAuthenticated: boolean;
 }
