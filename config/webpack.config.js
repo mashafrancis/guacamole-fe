@@ -11,7 +11,7 @@ const {
   miniCssExtract,
   miniCssExtractPlugin,
   hashedPlugin,
-  dotEnv,
+  // definePlugin,
   terserPlugin,
 } = require('./webpack.plugins');
 
@@ -129,7 +129,7 @@ module.exports = {
     environmentPlugin,
     htmlWebpack,
     hashedPlugin,
-    dotEnv,
+    // definePlugin,
     cleanWebpack,
     miniCssExtract,
     terserPlugin

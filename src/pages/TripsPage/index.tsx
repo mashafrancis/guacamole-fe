@@ -5,9 +5,6 @@ import { Cell, Grid, Row } from '@material/react-layout-grid';
 import MaterialIcon from '@material/react-material-icon';
 import TextField, { Input } from '@material/react-text-field';
 
-// styles
-import '../SocialRegisterPage/SocialRegisterPage.scss';
-
 const TripsPage = () => {
   const renderSearchField = () => (
     <div className="form-cell">
