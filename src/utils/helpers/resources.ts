@@ -39,7 +39,7 @@ export const validationConfig = {
       message: 'Password must contain letters',
     },
     {
-      isValid: (value: string) => value.trim().length >= 7 && /^[\w+\s-!$%&*()\[\]:";'?,.\/]{1,7}/.test(value),
+      isValid: (value: string) => value.trim().length >= 7 && /^[\w+\s-!$%&*()\[\]:";'?,.\/]{7,}/.test(value),
       message: 'Password cannot be less than 7 characters',
     },
   ],

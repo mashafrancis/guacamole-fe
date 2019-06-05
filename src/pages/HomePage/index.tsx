@@ -1,3 +1,4 @@
+import { displaySnackMessage } from 'modules/snack';
 import * as React from 'react';
 
 // third-party libraries
@@ -97,9 +98,23 @@ const particlesOptions = {
 };
 
 export class HomePage extends React.Component<HomePageProps, HomePageState> {
+  private errorMessage;
   state = {
     isLoading: true,
   };
+
+  componentDidMount () {
+    const sessionError = localStorage.getItem('sessionError');
+
+    if (sessionError) {
+      this.errorMessage = sessionError;
+      displaySnackMessage(this.errorMessage);
+    }
+  }
+
+  componentWillUnmount () {
+    localStorage.removeItem('locationReferrer');
+  }
 
   renderJoinCommunity = () => (
     <React.Fragment>
@@ -113,7 +128,7 @@ export class HomePage extends React.Component<HomePageProps, HomePageState> {
 
   renderGoToDashboard = () => (
     <React.Fragment>
-      <NavLink to={'/profile'}>
+      <NavLink to={'/dashboard'}>
         <button className="mdc-button mdc-button--raised">
           <span className="mdc-button__label">Go to dashboard</span>
         </button>
@@ -143,22 +158,22 @@ export class HomePage extends React.Component<HomePageProps, HomePageState> {
                       <span className="mdc-tab__ripple"/>
                     </a>
                   </div>
-                  </div>
                 </div>
+              </div>
             </section>
-              <section role="toolbar"
-                       className="mdc-top-app-bar__section mdc-top-app-bar__section--align-end user-info__content">
-                <HomeHeader logoutUser={this.props.logoutUser}/>
-              </section>
-            </div>
-          </header>
-          <section id="hero">
-            <Particles className="particles" params={particlesOptions} />
+            <section role="toolbar"
+                     className="mdc-top-app-bar__section mdc-top-app-bar__section--align-end user-info__content">
+              <HomeHeader logoutUser={this.props.logoutUser}/>
+            </section>
+          </div>
+        </header>
+        <section id="hero">
+          <Particles className="particles" params={particlesOptions}/>
           <div className="hero-container">
             <div className="hero-info">
-                <h1>You Fly, We Connect</h1>
-                <h2>Fly anywhere and share your space.</h2>
-              { authService.isAuthenticated() ? this.renderGoToDashboard() : this.renderJoinCommunity() }
+              <h1>You Fly, We Connect</h1>
+              <h2>Fly anywhere and share your space.</h2>
+              {authService.isAuthenticated() ? this.renderGoToDashboard() : this.renderJoinCommunity()}
             </div>
           </div>
         </section>

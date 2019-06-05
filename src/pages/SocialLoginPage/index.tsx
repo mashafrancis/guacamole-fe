@@ -12,7 +12,7 @@ import AuthHeader from 'components/AuthHeader';
 import { SocialLoginPageProps, SocialLoginPageState } from './interfaces';
 
 // styles
-import './SocialRegisterPage.scss';
+import '../SocialRegisterPage/SocialRegisterPage.scss';
 
 export class SocialLoginPage extends React.Component<SocialLoginPageProps, SocialLoginPageState> {
   renderFacebookRegister = () => (

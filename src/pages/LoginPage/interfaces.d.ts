@@ -11,6 +11,7 @@ export interface LoginPageState {
   isLoading: boolean;
   isValid: boolean;
   focused: boolean;
+  isPasswordHidden: boolean;
   fields: {
     [key: string]: string | number
   };

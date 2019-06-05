@@ -101,6 +101,7 @@ export const resetPassword = (user, token) => (dispatch, getState, http) => {
       dispatch(resetPasswordSuccess(response.data.response));
       const message = `${response.data.success}`;
       dispatch(displaySnackMessage(`${message}`));
+      window.location.replace('/profile');
     })
     .catch((errors) => {
       const errorMessage = `${errors.response.error}`;

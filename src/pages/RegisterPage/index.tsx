@@ -37,6 +37,7 @@ export class RegisterPage extends React.Component<RegisterPageProps, RegisterPag
       focused: false,
       fields: {},
       errors: {},
+      isPasswordHidden: true,
     };
     this.onSubmit = this.onSubmit.bind(this);
   }
@@ -56,6 +57,12 @@ export class RegisterPage extends React.Component<RegisterPageProps, RegisterPag
         ...prevState.fields,
         [field]: value,
       },
+    }));
+  }
+
+  toggleHidePassword = () => {
+    this.setState(prevState => ({
+      isPasswordHidden: !prevState.isPasswordHidden,
     }));
   }
 
@@ -206,6 +213,7 @@ export class RegisterPage extends React.Component<RegisterPageProps, RegisterPag
             className="mdc-text-field--fullwidth"
             outlined
             label="Password"
+            onLeadingIconSelect={this.toggleHidePassword}
             leadingIcon={<MaterialIcon role="button" icon="remove_red_eye" initRipple={null}/>}
             helperText={
               <HelperText
@@ -220,7 +228,7 @@ export class RegisterPage extends React.Component<RegisterPageProps, RegisterPag
               value={fields.password}
               name="password"
               id="3"
-              type="password"
+              type={this.state.isPasswordHidden ? 'password' : 'text'}
               required={true}
               onBlur={this.validateSingleField}
               onChange={this.handleInputChange}/>
@@ -231,6 +239,7 @@ export class RegisterPage extends React.Component<RegisterPageProps, RegisterPag
             className="mdc-text-field--fullwidth"
             outlined
             label="Confirm Password"
+            onLeadingIconSelect={this.toggleHidePassword}
             leadingIcon={<MaterialIcon role="button" icon="remove_red_eye" initRipple={null}/>}
             helperText={
               <HelperText
@@ -245,7 +254,7 @@ export class RegisterPage extends React.Component<RegisterPageProps, RegisterPag
               value={fields.confirmPassword}
               name="confirmPassword"
               id="4"
-              type="password"
+              type={this.state.isPasswordHidden ? 'password' : 'text'}
               required={true}
               onBlur={this.validateConfirmationPassword}
               onChange={this.handleInputChange}/>

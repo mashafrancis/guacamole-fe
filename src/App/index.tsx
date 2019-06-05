@@ -25,7 +25,6 @@ import { authService } from 'utils/auth';
 export class App extends React.Component<AppProps, AppState> {
   state = {
     isUserAuthenticated: authService.isAuthenticated(),
-    isGettingUserDetails: true,
   };
 
   async componentDidMount() {
@@ -45,12 +44,10 @@ export class App extends React.Component<AppProps, AppState> {
   }
 
   render() {
-    const { location } = this.props;
-    const { isGettingUserDetails, isUserAuthenticated } = this.state;
+    const { isUserAuthenticated } = this.state;
 
-    return isGettingUserDetails && isUserAuthenticated
-      ? <Spinner />
-      : <React.Fragment>
+    return (
+      <React.Fragment>
         <SnackBar />
         <>
           {
@@ -59,7 +56,8 @@ export class App extends React.Component<AppProps, AppState> {
           }
           { this.props.serverError.error ? <InternalServerErrorMessage /> : <Routes /> }
         </>
-      </React.Fragment>;
+      </React.Fragment>
+    );
   }
 }
 

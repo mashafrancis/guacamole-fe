@@ -57,7 +57,7 @@ export const registerUser = user => (dispatch, getState, http) => {
   return http.post('users/register', user)
     .then((response) => {
       dispatch(registerSuccess(response.data.response));
-      const message = response.data.response.message;
+      const message = response.data.response.data.message;
       dispatch(displaySnackMessage(`${message}`));
     })
     .catch((errors) => {

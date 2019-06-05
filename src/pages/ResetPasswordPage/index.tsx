@@ -31,6 +31,7 @@ export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, R
       focused: false,
       fields: {},
       errors: {},
+      isPasswordHidden: true,
       token: window.location.search && new URLSearchParams(window.location.search).getAll('token')[0],
     };
   }
@@ -50,6 +51,12 @@ export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, R
         ...prevState.fields,
         [field]: value,
       },
+    }));
+  }
+
+  toggleHidePassword = () => {
+    this.setState(prevState => ({
+      isPasswordHidden: !prevState.isPasswordHidden,
     }));
   }
 
@@ -159,6 +166,7 @@ export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, R
             className="mdc-text-field--fullwidth"
             outlined
             label="Enter New Password"
+            onLeadingIconSelect={this.toggleHidePassword}
             leadingIcon={<MaterialIcon role="button" icon="remove_red_eye" initRipple={null}/>}
             helperText={
               <HelperText
@@ -184,6 +192,7 @@ export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, R
             className="mdc-text-field--fullwidth"
             outlined
             label="Confirm New Password"
+            onLeadingIconSelect={this.toggleHidePassword}
             leadingIcon={<MaterialIcon role="button" icon="remove_red_eye" initRipple={null}/>}
             helperText={
               <HelperText
