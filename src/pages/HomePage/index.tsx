@@ -1,4 +1,3 @@
-import { displaySnackMessage } from 'modules/snack';
 import * as React from 'react';
 
 // third-party libraries
@@ -7,6 +6,7 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 // thunk
+import { displaySnackMessage } from 'modules/snack';
 import { logoutUser } from 'modules/user';
 
 // interfaces
@@ -23,41 +23,27 @@ import { authService } from 'utils/auth';
 
 const particlesOptions = {
   particles: {
-    number: {
-      value: 90,
-      density: {
-        enable: true,
-        value_area: 800,
-      },
-    },
-    color: {
-      value: '#ffffff',
+    number: { value: 90, density: { enable: true, value_area: 400 } },
+    color: { value: '#ffffff' },
+    shape: {
+      stroke: { width: 0, color: '#000000' },
+      polygon: { nb_sides: 5 },
     },
     opacity: {
       value: 0.5,
       random: false,
-      anim: {
-        enable: false,
-        speed: 1,
-        opacity_min: 0.1,
-        sync: false,
-      },
+      anim: { enable: false, speed: 1, opacity_min: 0.1, sync: false },
     },
     size: {
-      value: 1,
+      value: 0,
       random: true,
-      anim: {
-        enable: false,
-        speed: 30,
-        size_min: 0.1,
-        sync: false,
-      },
+      anim: { enable: false, speed: 40, size_min: 0.1, sync: false },
     },
     line_linked: {
       enable: true,
-      distance: 200,
+      distance: 142,
       color: '#ffffff',
-      opacity: 0.4,
+      opacity: 0.15,
       width: 1,
     },
     move: {
@@ -65,33 +51,20 @@ const particlesOptions = {
       speed: 6,
       random: false,
       straight: false,
-      attract: {
-        enable: false,
-        rotateX: 600,
-        rotateY: 1200,
-      },
+      bounce: false,
+      attract: { enable: false, rotateX: 600, rotateY: 1200 },
     },
   },
   interactivity: {
     events: {
-      onhover: {
-        enable: true,
-      },
-      onclick: {
-        enable: true,
-      },
+      onhover: { enable: true },
+      onclick: { enable: true },
       resize: true,
     },
     modes: {
-      repulse: {
-        distance: 100,
-      },
-      push: {
-        particles_nb: 2,
-      },
-      remove: {
-        particles_nb: 1,
-      },
+      repulse: { distance: 200, duration: 0.4 },
+      push: { particles_nb: 4 },
+      remove: { particles_nb: 2 },
     },
   },
   retina_detect: true,
@@ -128,7 +101,7 @@ export class HomePage extends React.Component<HomePageProps, HomePageState> {
 
   renderGoToDashboard = () => (
     <React.Fragment>
-      <NavLink to={'/dashboard'}>
+      <NavLink to={'/dashboard/explore'}>
         <button className="mdc-button mdc-button--raised">
           <span className="mdc-button__label">Go to dashboard</span>
         </button>

@@ -17,10 +17,6 @@ const RestrictedRoute: React.SFC<RestrictedRouteProps> = (props) => {
     );
   }
 
-  if (props.fallbackView) {
-    return props.fallbackView;
-  }
-
   return (
     <Redirect to={props.redirectTo} />
   );
@@ -28,7 +24,7 @@ const RestrictedRoute: React.SFC<RestrictedRouteProps> = (props) => {
 
 RestrictedRoute.defaultProps = {
   redirectTo: '/',
-  strict: true,
+  strict: false,
 };
 
 export default RestrictedRoute;

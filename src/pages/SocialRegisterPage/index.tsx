@@ -2,67 +2,26 @@ import * as React from 'react';
 
 // third-party libraries
 import { Cell, Grid, Row } from '@material/react-layout-grid';
-import MaterialIcon from '@material/react-material-icon';
+import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
+// pages
+import { SocialAuthentication } from 'pages/SocialAuthentication';
+
 // components
+import AuthButton from 'components/AuthButton';
 import AuthHeader from 'components/AuthHeader';
+
+// thunks
+import { displaySnackMessage } from 'modules/snack';
+import { socialAuthentication } from 'modules/socialAuth';
 
 // interfaces
 import { SocialRegisterPageProps, SocialRegisterPageState } from './interfaces';
 
-// styles
-// import '@material/react-layout-grid/dist/layout-grid.css';
-import './SocialRegisterPage.scss';
+const emailIco = 'https://res.cloudinary.com/mashafrancis/image/upload/v1559726766/kari4me/baseline-email-24px.svg';
 
 export class SocialRegisterPage extends React.Component<SocialRegisterPageProps, SocialRegisterPageState> {
-  renderFacebookRegister = () => (
-    <React.Fragment>
-      <button type="button" className="kirk-itemChoice mb-l" role="option" aria-selected="false">
-          <div className="kirk-itemChoice-label">Continue with Facebook</div>
-        <div className="kirk-itemChoice-right">
-          <div className="kirk-itemChoice-rightAddon">
-            <img height="24" width="24" alt="facebook"
-              src="https://res.cloudinary.com/mashafrancis/image/upload/v1558929554/kari4me/f_logo_RGB-Blue_1024.png" />
-          </div>
-          <div className="kirk-itemChoice-chevron">
-            <MaterialIcon icon="keyboard_arrow_right" initRipple={null}/>
-          </div>
-        </div>
-      </button>
-    </React.Fragment>
-  )
-
-  renderGoogleRegister = () => (
-    <React.Fragment>
-      <button type="button" className="kirk-itemChoice mb-l" role="option" aria-selected="false">
-          <div className="kirk-itemChoice-label">Continue with Google</div>
-        <div className="kirk-itemChoice-right">
-          <div className="kirk-itemChoice-rightAddon">
-            <img height="24" width="24" alt="facebook"
-                 src="https://res.cloudinary.com/mashafrancis/image/upload/v1558904228/kari4me/Google__G__Logo.svg" />
-          </div>
-          <div className="kirk-itemChoice-chevron">
-            <MaterialIcon icon="keyboard_arrow_right" initRipple={null}/>
-          </div>
-        </div>
-      </button>
-    </React.Fragment>
-  )
-
-  renderEmailRegister = () => (
-    <React.Fragment>
-      <NavLink className=".kirk-itemChoice-label kirk-itemChoice mb-l" to={'/register/email'}>
-        <div className="kirk-itemChoice-label">Sign up with your email</div>
-        <div className="kirk-itemChoice-right">
-          <div className="kirk-itemChoice-chevron">
-            <MaterialIcon icon="keyboard_arrow_right" initRipple={null}/>
-          </div>
-        </div>
-      </NavLink>
-    </React.Fragment>
-  )
-
   render() {
     return (
       <div className="register">
@@ -92,9 +51,16 @@ export class SocialRegisterPage extends React.Component<SocialRegisterPageProps,
               tabletColumns={8}
             >
               <nav>
-                {this.renderFacebookRegister()}
-                {this.renderGoogleRegister()}
-                {this.renderEmailRegister()}
+                {<SocialAuthentication
+                  socialAuthentication={this.props.socialAuthentication}
+                  displaySnackMessage={this.props.displaySnackMessage}
+                />}
+                <NavLink className="kirk-itemChoice mb-l" to={'/register/email'}>
+                  <AuthButton
+                    name="Sign up with your email"
+                    image={emailIco}
+                  />
+                </NavLink>
               </nav>
             </Cell>
           </Row>
@@ -114,4 +80,9 @@ export class SocialRegisterPage extends React.Component<SocialRegisterPageProps,
   }
 }
 
-export default SocialRegisterPage;
+export const mapDispatchToProps = dispatch => ({
+  socialAuthentication: payload => dispatch(socialAuthentication(payload)),
+  displaySnackMessage: message => dispatch(displaySnackMessage(message)),
+});
+
+export default connect(null, mapDispatchToProps)(SocialRegisterPage);

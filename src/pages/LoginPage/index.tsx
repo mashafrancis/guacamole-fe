@@ -251,6 +251,7 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
   }
 
   render() {
+    const { isLoading } = this.state;
     const isAuthenticated = authService.isAuthenticated();
     const triedToAuthenticate = localStorage.getItem('triedToAuthenticate');
 
@@ -301,9 +302,9 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
           >
             <Button
               type="button"
-              name="Login"
+              name={isLoading ? 'Loading...' : 'Login'}
               id="cc-register"
-              disabled={!this.formIsReady() || this.state.isLoading}
+              disabled={!this.formIsReady()}
               onClick={this.onSubmit}
               classes="mdc-button big-round-corner-button mdc-button--raised"
             />

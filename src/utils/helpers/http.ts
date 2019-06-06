@@ -7,7 +7,7 @@ import { authService } from 'utils/auth';
 const token = authService.getToken();
 
 const http = axios.create({
-  baseURL: 'http://localhost:8000/api/',
+  baseURL: 'https://kari4me-api.herokuapp.com/api/',
   headers: {
     Authorization: `Bearer ${token}`,
   },

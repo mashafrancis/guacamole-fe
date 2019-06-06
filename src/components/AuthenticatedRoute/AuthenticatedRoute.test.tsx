@@ -9,7 +9,7 @@ import { mount } from 'enzyme';
 // components
 import AuthenticatedRoute from './';
 
-describe('The AuthenticatedRoute component', () => {
+describe.skip('The AuthenticatedRoute component', () => {
   const TestComponent = () => <div></div>;
 
   it('mounts the component if the user is authenticated', () => {
