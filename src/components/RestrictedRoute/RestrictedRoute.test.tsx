@@ -1,6 +1,6 @@
 // jest mocks
+import '../../../tests/__mocks__/snack';
 import '../../../tests/__mocks__/storeWithPartialPermissions';
-import '../../../tests/__mocks__/toastify';
 
 // react library
 import * as React from 'react';

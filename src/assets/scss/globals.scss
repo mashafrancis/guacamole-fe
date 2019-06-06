@@ -33,6 +33,40 @@ button {
   text-transform: none;
 }
 
+button.launch {
+  border: none;
+}
+
+button.launch:hover {
+  cursor: pointer;
+}
+
+button.launch {
+  border: none;
+}
+
+button.launch:hover {
+  cursor: pointer;
+}
+
+button.change {
+  border: none;
+  height: 40px;
+}
+
+button.change:hover {
+  cursor: pointer;
+}
+
+button:active {
+  outline: none;
+  border: none;
+}
+
+button:focus {
+  outline:0;
+}
+
 .container {
   height: 100%;
 }

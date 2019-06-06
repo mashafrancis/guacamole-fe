@@ -96,7 +96,7 @@ const reducer = (state = userRegistrationState, action) => {
       return {
         ...state,
         errors: action.errors,
-        isLoading: true,
+        isLoading: false,
       };
     default:
       return state;
