@@ -1,3 +1,4 @@
+import DashboardPage from 'pages/DashboardPage';
 import * as React from 'react';
 
 // third-party libraries
@@ -5,7 +6,7 @@ import { Cell, Grid, Row } from '@material/react-layout-grid';
 import MaterialIcon from '@material/react-material-icon';
 import TextField, { Input } from '@material/react-text-field';
 
-const ExplorePage = () => {
+const ExploreComponent = () => {
   const renderSearchField = () => (
     <div className="form-cell">
       <TextField
@@ -57,5 +58,11 @@ const ExplorePage = () => {
     </Grid>
   );
 };
+
+const ExplorePage = () => (
+  <React.Fragment>
+    <DashboardPage component={ExploreComponent()} />
+  </React.Fragment>
+);
 
 export default ExplorePage;

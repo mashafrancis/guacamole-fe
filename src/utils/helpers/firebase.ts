@@ -2,8 +2,8 @@ import * as firebase from 'firebase';
 import 'firebase/auth';
 
 const firebaseConfiguration = {
-  apiKey: process.env.FIREBASE_API_KEY,
-  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  apiKey: 'AIzaSyC4tjLivHyvfuEsRMYHnVy1W7j9oFsr8Og',
+  authDomain: 'kari4me.firebaseapp.com',
 };
 firebase.initializeApp(firebaseConfiguration);
 

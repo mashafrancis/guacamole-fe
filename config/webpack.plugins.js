@@ -18,7 +18,12 @@ const htmlWebpack = new htmlWebpackPlugin({
   template: 'src/index.html',
   title: 'kari4me',
   getFaviconUrl,
+  minify: {
+    removeComments: true,
+    collapseWhitespace: true
+  },
 });
+const noEmitOnErrorsPlugin = new webpack.NoEmitOnErrorsPlugin();
 const namedModulesPlugin = new webpack.NamedModulesPlugin();
 const hotModuleReplacementPlugin = new webpack.HotModuleReplacementPlugin();
 const miniCssExtract = new miniCssExtractPlugin();
@@ -56,4 +61,5 @@ module.exports = {
   miniCssExtractPlugin,
   hashedPlugin,
   terserPlugin,
+  noEmitOnErrorsPlugin,
 };

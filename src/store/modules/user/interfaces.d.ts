@@ -5,6 +5,9 @@ import {
   GET_USER_DETAILS_SUCCESS,
  } from './types';
 
+import { UserRole } from 'modules/userRoles/interfaces';
+import { FormattedPermissions } from 'utils/helpers/formatPermissions/interfaces';
+
 export interface GetUserDetailsActionSuccess {
   userDetails: UserDetails;
   type: GET_USER_DETAILS_SUCCESS;
@@ -25,11 +28,10 @@ export interface EditUserDetailsFailure {
 
 interface UserDetails {
   id?: string;
-  name: string;
-  picture?: string;
+  username: string;
   email: string;
-  tokenId: string;
+  photo?: string;
+  userId: string;
   role?: UserRole;
   permissions?: FormattedPermissions;
-  imageUrl?: string;
 }

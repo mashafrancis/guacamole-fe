@@ -55,7 +55,7 @@ export const logoutUserAction = (): Action => ({ type: LOG_OUT_USER });
  * @param userId
  */
 export const getUserDetails = userId => (dispatch, getState, http) => {
-  return http.get(`people/${userId}?provisionUser=true&include=permissions`, { cache: true })
+  return http.get(`user/${userId}`, { cache: true })
     .then((response) => {
       return dispatch(getUserDetailsSuccess(response.data.data));
     });
@@ -69,7 +69,7 @@ export const getUserDetails = userId => (dispatch, getState, http) => {
  * @returns {Function}
  */
 export const editUserDetails = userId => (dispatch, getState, http) => {
-  return http.patch(`people/${userId}`)
+  return http.patch(`user/${userId}`)
     .then((response) => {
       return dispatch(editUserDetailsSuccess(response.data.data.center));
     })
@@ -89,13 +89,8 @@ export const logoutUser = () => (dispatch) => {
 };
 
 const userInitialState = {
-  ...authService.getUser().UserInfo,
+  ...authService.getUser().userdata,
   permissions: {},
-  center: {
-    name: '',
-    id: '',
-    image: { url: '', secure_url: '', public_id: '' },
-  },
 };
 
 /**

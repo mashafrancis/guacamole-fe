@@ -1,5 +1,4 @@
 // react libraries
-import Spinner from 'components/Spinner';
 import * as React from 'react';
 
 // third party libraries
@@ -12,6 +11,7 @@ import { getUserDetails } from 'modules/user';
 
 // components
 import InternalServerErrorMessage from 'components/InternalServerErrorMessage';
+import Loader from 'components/Loader';
 import SnackBar from 'components/SnackBar';
 import Routes from '../routes';
 
@@ -25,14 +25,16 @@ import { authService } from 'utils/auth';
 export class App extends React.Component<AppProps, AppState> {
   state = {
     isUserAuthenticated: authService.isAuthenticated(),
+    isGettingUserDetails: true,
   };
 
   async componentDidMount() {
-    const { user } = this.props;
+    // const { user } = this.props;
+    const user = authService.getUser();
 
     if (this.state.isUserAuthenticated) {
       try {
-        await this.props.getUserDetails(user.id);
+        await this.props.getUserDetails(user.userdata.id);
         this.setState({ isGettingUserDetails: false });
 
       } catch {
@@ -44,10 +46,11 @@ export class App extends React.Component<AppProps, AppState> {
   }
 
   render() {
-    const { isUserAuthenticated } = this.state;
+    const { isUserAuthenticated, isGettingUserDetails } = this.state;
 
-    return (
-      <React.Fragment>
+    return isGettingUserDetails && isUserAuthenticated
+      ? <Loader />
+      : <React.Fragment>
         <SnackBar />
         <>
           {
@@ -56,8 +59,7 @@ export class App extends React.Component<AppProps, AppState> {
           }
           { this.props.serverError.error ? <InternalServerErrorMessage /> : <Routes /> }
         </>
-      </React.Fragment>
-    );
+      </React.Fragment>;
   }
 }
 

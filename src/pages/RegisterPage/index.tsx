@@ -265,6 +265,7 @@ export class RegisterPage extends React.Component<RegisterPageProps, RegisterPag
   }
 
   render() {
+    const { isLoading } = this.state;
     return (
       <div className="register">
         <AuthHeader
@@ -303,9 +304,9 @@ export class RegisterPage extends React.Component<RegisterPageProps, RegisterPag
             >
               <Button
                 type="button"
-                name="Register"
+                name={isLoading ? 'Registering...' : 'Register'}
                 id="cc-register"
-                disabled={!this.formIsReady() || this.state.isLoading}
+                disabled={!this.formIsReady()}
                 onClick={this.onSubmit}
                 classes="mdc-button big-round-corner-button mdc-button--raised"
               />
