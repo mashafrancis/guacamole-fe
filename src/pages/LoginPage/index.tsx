@@ -191,7 +191,7 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
   }
 
   renderLoginForm = () => {
-    const { fields, errors } = this.state;
+    const { fields, errors, isPasswordHidden } = this.state;
 
     return (
       <React.Fragment>
@@ -226,7 +226,12 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
             outlined
             label="Password"
             onLeadingIconSelect={this.toggleHidePassword}
-            leadingIcon={<MaterialIcon role="button" icon="remove_red_eye" initRipple={null}/>}
+            leadingIcon={
+              <MaterialIcon
+                role="button"
+                icon={isPasswordHidden ? 'lock' : 'lock_open'}
+                hasRipple={true}
+                initRipple={null}/>}
             helperText={
               <HelperText
                 className="mdc-text-field-invalid-helper"
@@ -240,7 +245,7 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
               value={fields.password}
               name="password"
               id="6"
-              type={this.state.isPasswordHidden ? 'password' : 'text'}
+              type={isPasswordHidden ? 'password' : 'text'}
               required={true}
               onBlur={this.validatePasswordField}
               onChange={this.handleInputChange}/>
