@@ -39,8 +39,9 @@ export const validationConfig = {
       message: 'Password must contain letters',
     },
     {
-      isValid: (value: string) => value.trim().length >= 7 && /^[\w+\s-!$%&*()\[\]:";'?,.\/]{7,}/.test(value),
-      message: 'Password cannot be less than 7 characters',
+      isValid: (value: string) => value.trim().length >= 7 &&
+        /^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{7,})/.test(value),
+      message: 'Password must have at least 7 character with at least one letter and a number',
     },
   ],
   confirmPassword: [
