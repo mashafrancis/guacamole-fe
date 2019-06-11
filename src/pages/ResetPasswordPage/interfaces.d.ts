@@ -14,6 +14,7 @@ export interface ResetPasswordPageState {
   isValid: boolean;
   focused: boolean;
   isPasswordHidden: boolean;
+  isConfirmPasswordHidden: boolean,
   fields: {
     [key: string]: string | number
   };

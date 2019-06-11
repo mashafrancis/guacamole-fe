@@ -7,6 +7,7 @@ import passwordReset from 'modules/passwordReset';
 import register from 'modules/register';
 import snack from 'modules/snack';
 import socialAuth from 'modules/socialAuth';
+import trips from 'modules/trips';
 import user from 'modules/user';
 import userRoles from 'modules/userRoles';
 
@@ -22,6 +23,7 @@ const appReducer = combineReducers({
   userRoles,
   passwordReset,
   socialAuth,
+  trips,
 });
 
 const rootReducer = (state, action) => {

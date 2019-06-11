@@ -1304,10 +1304,10 @@ svg.mdc-button__icon {
 }
 
 .mdc-card {
-  border-radius: 4px;
+  border-radius: 8px;
   background-color: #fff;
   background-color: var(--mdc-theme-surface, #fff);
-  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  border: 1px solid #dadce0;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;

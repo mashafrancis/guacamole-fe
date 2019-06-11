@@ -57,7 +57,7 @@ export const registerUser = user => (dispatch, getState, http) => {
   return http.post('users/register', user)
     .then((response) => {
       dispatch(registerSuccess(response.data.response));
-      const message = response.data.response.data.message;
+      const message = response.data.response.message;
       dispatch(displaySnackMessage(`${message}`));
     })
     .catch((errors) => {
@@ -89,7 +89,7 @@ const reducer = (state = userRegistrationState, action) => {
       return {
         ...state,
         user: action.payload,
-        error: null,
+        errors: null,
         isLoading: false,
       };
     case REGISTER_FAILURE:

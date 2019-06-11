@@ -307,7 +307,7 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
           >
             <Button
               type="button"
-              name={isLoading ? 'Loading...' : 'Login'}
+              name={isLoading ? 'Please wait...' : 'Login'}
               id="cc-register"
               disabled={!this.formIsReady()}
               onClick={this.onSubmit}

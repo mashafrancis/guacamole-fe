@@ -2,6 +2,7 @@ const cssNano = require('cssnano');
 const merge = require('webpack-merge');
 const optimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const uglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const javaScriptObfuscator = require('webpack-obfuscator');
 const config = require('./webpack.config.js');
 
 module.exports = merge(config, {
@@ -43,4 +44,9 @@ module.exports = merge(config, {
       },
     },
   },
+  plugins: [
+      new javaScriptObfuscator ({
+        rotateUnicodeArray: true
+    },)
+  ],
 });

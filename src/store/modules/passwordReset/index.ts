@@ -1,5 +1,6 @@
 // thunks
 import { displaySnackMessage } from 'modules/snack';
+import { authService } from 'utils/auth';
 
 // interfaces
 import {
@@ -99,9 +100,11 @@ export const resetPassword = (user, token) => (dispatch, getState, http) => {
   return http.put(`users/reset_password/${token}`, user)
     .then((response) => {
       dispatch(resetPasswordSuccess(response.data.response));
-      const message = `${response.data.success}`;
+      const message = `${response.data.message}`;
       dispatch(displaySnackMessage(`${message}`));
-      window.location.replace('/profile');
+      authService.isAuthenticated()
+        ? window.location.replace('/dashboard/explore')
+        : window.location.replace('/login/email');
     })
     .catch((errors) => {
       const errorMessage = `${errors.response.error}`;
