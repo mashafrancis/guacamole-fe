@@ -1,7 +1,7 @@
 export interface ButtonProps {
   size?: string;
   type?: string;
-  icon?: string;
+  icon?: any;
   name: string;
   disabled?: boolean;
   onClick?: any;

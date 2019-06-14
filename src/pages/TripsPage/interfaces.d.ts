@@ -1,5 +1,5 @@
-export interface ExplorePageProps {
+export interface TripsPageProps {
 }
 
-export interface ExplorePageState {
+export interface TripsPageState {
 }

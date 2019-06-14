@@ -11,6 +11,7 @@ import Card, {
   CardMedia,
   CardPrimaryContent
 } from '@material/react-card';
+import Fab from '@material/react-fab';
 import {
   Cell,
 } from '@material/react-layout-grid';
@@ -45,21 +46,16 @@ const TripCard: React.SFC<TripCardProps> = props => (
           <Button
             classes="mdc-button button-title"
             type="button"
-            name="View"
+            name="Request"
           />
         </CardActionButtons>
-
         <CardActionIcons>
-          <MaterialIcon
-            role="button"
-            icon="edit"
-            hasRipple={true}
-            initRipple={null}/>
-          <MaterialIcon
-            role="button"
-            icon="delete"
-            hasRipple={true}
-            initRipple={null}/>
+          <Button
+            type="button"
+            name="arrow_forward"
+            classes="mdc-icon-button material-icons"
+            aria_label="Go forward"
+          />
         </CardActionIcons>
       </CardActions>
     </Card>
