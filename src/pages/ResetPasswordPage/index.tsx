@@ -32,6 +32,7 @@ export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, R
       fields: {},
       errors: {},
       isPasswordHidden: true,
+      isConfirmPasswordHidden: true,
       token: window.location.search && new URLSearchParams(window.location.search).getAll('token')[0],
     };
   }
@@ -57,6 +58,12 @@ export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, R
   toggleHidePassword = () => {
     this.setState(prevState => ({
       isPasswordHidden: !prevState.isPasswordHidden,
+    }));
+  }
+
+  toggleHideConfirmPassword = () => {
+    this.setState(prevState => ({
+      isConfirmPasswordHidden: !prevState.isConfirmPasswordHidden,
     }));
   }
 
@@ -157,7 +164,7 @@ export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, R
   }
 
   renderResetPasswordForm = () => {
-    const { fields, errors, isPasswordHidden } = this.state;
+    const { fields, errors, isPasswordHidden, isConfirmPasswordHidden } = this.state;
 
     return (
       <React.Fragment>
@@ -186,7 +193,7 @@ export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, R
               value={fields.password}
               name="password"
               id="7"
-              type="password"
+              type={isPasswordHidden ? 'password' : 'text'}
               required={true}
               onBlur={this.validateSingleField}
               onChange={this.handleInputChange}/>
@@ -197,11 +204,11 @@ export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, R
             className="mdc-text-field--fullwidth"
             outlined
             label="Confirm New Password"
-            onLeadingIconSelect={this.toggleHidePassword}
+            onLeadingIconSelect={this.toggleHideConfirmPassword}
             leadingIcon={
               <MaterialIcon
                 role="button"
-                icon={isPasswordHidden ? 'lock' : 'lock_open'}
+                icon={isConfirmPasswordHidden ? 'lock' : 'lock_open'}
                 hasRipple={true}
                 initRipple={null}/>}
             helperText={
@@ -217,7 +224,7 @@ export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, R
               value={fields.confirmPassword}
               name="confirmPassword"
               id="8"
-              type="password"
+              type={isConfirmPasswordHidden ? 'password' : 'text'}
               required={true}
               onBlur={this.validateConfirmationPassword}
               onChange={this.handleInputChange}/>
@@ -269,9 +276,9 @@ export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, R
           >
             <Button
               type="button"
-              name="Confirm New Password"
+              name={this.state.isLoading ? 'Loading...' : 'Confirm New Password'}
               id="cc-register"
-              disabled={!this.formIsReady() || this.state.isLoading}
+              disabled={!this.formIsReady()}
               onClick={this.onSubmit}
               classes="mdc-button big-round-corner-button mdc-button--raised"
             />
