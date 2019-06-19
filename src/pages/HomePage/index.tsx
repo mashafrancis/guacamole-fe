@@ -101,7 +101,7 @@ export class HomePage extends React.Component<HomePageProps, HomePageState> {
 
   renderGoToDashboard = () => (
     <React.Fragment>
-      <NavLink to={'/dashboard/explore'}>
+      <NavLink to={'/explore'}>
         <button className="mdc-button mdc-button--raised">
           <span className="mdc-button__label">Go to dashboard</span>
         </button>
@@ -163,5 +163,4 @@ export const mapDispatchToProps = dispatch => ({
   logoutUser: () => dispatch(logoutUser()),
 });
 
-// export default HomePage;
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

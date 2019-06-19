@@ -6,6 +6,10 @@ export interface ExplorePageProps {
   displaySnackMessage?: (message) => Promise<any>;
   error?: object;
   getAllTrips: () => Promise<any>;
+  history: {
+    dateObject: object;
+    push: (path: string, state?: object) => void;
+  };
 }
 
 export interface ExplorePageState {

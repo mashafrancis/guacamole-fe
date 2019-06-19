@@ -1,0 +1,77 @@
+//@import 'sass-rem';
+@import '../../assets/scss/variables';
+
+.tbl-header,
+.tbl-row {
+  padding-right: 40px;
+  padding-left: 40px;
+
+  &__column {
+    flex: 1;
+
+    @for $i from 5 through 150 {
+      &--#{$i} {
+        flex-basis: $i * 1%;
+      }
+    }
+
+    &--center-text {
+      text-align: center;
+    }
+  }
+}
+
+.tbl-header {
+  display: flex;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-radius: 0.25rem;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 21px;
+  color: grey;
+}
+
+.tbl-row {
+  position: relative;
+  display: flex;
+  background-color: grey;
+  margin-bottom: rem(8px);
+  padding-top: rem(15px);
+  padding-bottom: rem(15px);
+  border-radius: rem(4px);
+  font-size: rem(15px);
+  font-weight: 300;
+  line-height: rem(20px);
+
+  &:hover {
+    box-shadow: rem(0 1px 4px) 0 rgba(0, 0, 0, 0.1);
+  }
+}
+
+.clickable-asset-tag {
+  cursor: pointer;
+  color: #3499ff;
+}
+
+.edit-asset-tag,
+.delete-asset-tag {
+  text-decoration: none;
+  cursor: pointer;
+  color: #3499ff;
+}
+
+.delete-asset-tag {
+  display: inline-block;
+  margin-left: rem(20px);
+}
+
+.single-category-group {
+  .tbl-header,
+  .tbl-row {
+    &__column--action {
+      width: rem(90px);
+      text-align: left;
+    }
+  }
+}

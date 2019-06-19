@@ -1,14 +1,6 @@
-import TripCard from 'components/TripCard';
 import * as React from 'react';
 
 // third-party libraries
-import Card, {
-  CardActionButtons,
-  CardActionIcons,
-  CardActions,
-  CardMedia,
-  CardPrimaryContent
-} from '@material/react-card';
 import {
   Cell,
   Grid,
@@ -16,12 +8,11 @@ import {
 } from '@material/react-layout-grid';
 import MaterialIcon from '@material/react-material-icon';
 import TextField, { Input } from '@material/react-text-field';
-import * as moment from 'moment';
 import { connect } from 'react-redux';
 
 // components
-import Button from 'components/Button';
 import Loader from 'components/Loader';
+import TripCard from 'components/TripCard';
 
 // thunks
 import { displaySnackMessage } from 'modules/snack';
@@ -44,6 +35,10 @@ export class ExplorePage extends React.Component<ExplorePageProps, ExplorePageSt
   componentDidMount() {
     this.props.getAllTrips()
       .then(() => this.setState({ isLoading: false }));
+  }
+
+  redirectToSingleTrip = (trip_id) => {
+    this.props.history.push(`/trips/${trip_id}`);
   }
 
   renderSearchField = () => (
@@ -107,6 +102,7 @@ export class ExplorePage extends React.Component<ExplorePageProps, ExplorePageSt
                 <TripCard
                   key={trip.id}
                   trip={trip}
+                  redirect={this.redirectToSingleTrip}
                 />
               );
             })
