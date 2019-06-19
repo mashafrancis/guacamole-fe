@@ -16,6 +16,7 @@ import ResetPasswordPage from 'pages/ResetPasswordPage';
 import SocialLoginPage from 'pages/SocialLoginPage';
 import SocialRegisterPage from 'pages/SocialRegisterPage';
 import TripsPage from 'pages/TripsPage';
+import TripsPageForm from 'pages/TripsPageForm';
 
 const Routes = () => (
   <Route>
@@ -30,6 +31,7 @@ const Routes = () => (
         <Route exact path="/dashboard/explore" component={ExplorePage} />
         <Route exact path="/dashboard/trips" component={TripsPage} />
         <Route exact path="/dashboard/preferences" component={PreferencePage} />
+        <Route exact path="/dashboard/trips/new-trip" component={TripsPageForm} />
         <Route path="/404" component={PageNotFound} />
         <Redirect to="/404" />
       </Switch>
