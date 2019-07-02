@@ -2,7 +2,7 @@
 import * as React from 'react';
 
 // style
-import './ButtonLoader.scss';
+import './Loader.scss';
 
 const Loader = () => (
   <div className="loading">

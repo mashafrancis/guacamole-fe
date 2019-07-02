@@ -81,6 +81,7 @@
     "jspdf": "^1.5.3",
     "jwt-decode": "^2.2.0",
     "material-components-web": "^2.2.0",
+    "material-table": "^1.40.1",
     "moment": "^2.24.0",
     "moxios": "^0.4.0",
     "popper.js": "^1.15.0",

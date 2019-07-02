@@ -29,7 +29,8 @@ const TripCard: React.SFC<TripCardProps> = props => (
     tabletColumns={4}
     phoneColumns={2}
   >
-    <Card>
+    <div onClick={() => { props.redirect(props.trip.id); }}>
+    <Card outlined>
       <CardPrimaryContent>
         <CardMedia contentClassName="card-media" wide imageUrl={img}>
           <div className="card-header">
@@ -51,6 +52,7 @@ const TripCard: React.SFC<TripCardProps> = props => (
         </CardActionButtons>
         <CardActionIcons>
           <Button
+            onClick={() => { props.redirect(props.trip.id); }}
             type="button"
             name="arrow_forward"
             classes="mdc-icon-button material-icons"
@@ -59,6 +61,7 @@ const TripCard: React.SFC<TripCardProps> = props => (
         </CardActionIcons>
       </CardActions>
     </Card>
+    </div>
   </Cell>
 );
 

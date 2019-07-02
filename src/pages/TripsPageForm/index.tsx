@@ -7,7 +7,6 @@ import Select from '@material/react-select';
 import TextField, { HelperText, Input } from '@material/react-text-field';
 import { Calendar } from 'react-date-range';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 
 // components
 import AuthHeader from 'components/AuthHeader';
@@ -15,7 +14,7 @@ import Button from 'components/Button';
 
 // thunks
 import { displaySnackMessage } from 'modules/snack';
-import { addNewtrip } from 'modules/trips';
+import { addNewTrip } from 'modules/trips';
 
 // interfaces
 import { TripsPageFormProps, TripsPageFormState } from './interfaces';
@@ -194,7 +193,7 @@ export class TripsPageForm extends React.Component<TripsPageFormProps, TripsPage
           forwardButtonName="Home"
           backwardButtonName="Back"
           forwardLink={'/'}
-          backwardLink={'/dashboard/trips'}
+          backwardLink={'/trips'}
         />
         <Grid>
           <Row>
@@ -251,7 +250,7 @@ export const mapStateToProps = state => ({
 });
 
 export const mapDispatchToProps = dispatch => ({
-  addNewTrip: trip => dispatch(addNewtrip(trip)),
+  addNewTrip: trip => dispatch(addNewTrip(trip)),
   displaySnackMessage: message => dispatch(displaySnackMessage(message)),
 });
 

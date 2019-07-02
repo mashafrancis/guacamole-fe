@@ -62,7 +62,7 @@ export const loginUser = user => (dispatch, getState, http) => {
       dispatch(loginSuccess(response.data.response));
       const message = `${response.data.response.data.username} logged in successfully`;
       dispatch(displaySnackMessage(`${message}`));
-      window.location.replace('/dashboard/explore');
+      window.location.replace('/explore');
     })
     .catch((errors) => {
       const errorMessage = errors.response.data.errors.error[0];

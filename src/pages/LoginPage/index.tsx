@@ -229,7 +229,7 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
             leadingIcon={
               <MaterialIcon
                 role="button"
-                icon={isPasswordHidden ? 'lock' : 'lock_open'}
+                icon={isPasswordHidden ? 'visibility' : 'visibility_off'}
                 hasRipple={true}
                 initRipple={null}/>}
             helperText={

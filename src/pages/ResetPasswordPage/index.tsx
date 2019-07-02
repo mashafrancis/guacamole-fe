@@ -177,7 +177,7 @@ export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, R
             leadingIcon={
               <MaterialIcon
                 role="button"
-                icon={isPasswordHidden ? 'lock' : 'lock_open'}
+                icon={isPasswordHidden ? 'visibility' : 'visibility_off'}
                 hasRipple={true}
                 initRipple={null}/>}
             helperText={
@@ -208,7 +208,7 @@ export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, R
             leadingIcon={
               <MaterialIcon
                 role="button"
-                icon={isConfirmPasswordHidden ? 'lock' : 'lock_open'}
+                icon={isConfirmPasswordHidden ? 'visibility' : 'visibility_off'}
                 hasRipple={true}
                 initRipple={null}/>}
             helperText={

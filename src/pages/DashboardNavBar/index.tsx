@@ -32,11 +32,18 @@ import './DashboardNavBar.scss';
 import authorize from 'utils/helpers/authorize';
 
 const DashboardNavBar: React.SFC<DashboardNavBarProps> = (props) => {
+  const mainContentEl = React.createRef();
   const [isDrawerOpen, setDrawerOpen] = React.useState<boolean>(false);
   const [isMenuOpen, setMenuOpen] = React.useState<boolean>(false);
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
   const menuAnchorEl = React.useRef<any>(null);
+
   const onDrawerClose = () => {
     setDrawerOpen(false);
+  };
+
+  const onSelectedIndex = () => {
+    setSelectedIndex(1);
   };
 
   /**
@@ -115,22 +122,22 @@ const DashboardNavBar: React.SFC<DashboardNavBarProps> = (props) => {
     </div>
   );
 
-  const drawerContent = url => (
+  const drawerContent = () => (
     <React.Fragment>
-      <List>
-        <NavLink to={`${url}/explore`}>
+      <List singleSelection selectedIndex={selectedIndex}>
+        <NavLink to={'/explore'}>
           <ListItem onClick={() => setDrawerOpen(false)}>
             <ListItemGraphic graphic={<MaterialIcon icon="explore" initRipple={null}/>}/>
             <ListItemText primaryText="Explore"/>
           </ListItem>
         </NavLink>
-        <NavLink to={`${url}/trips`}>
+        <NavLink to={'/trips'}>
           <ListItem onClick={() => setDrawerOpen(false)}>
             <ListItemGraphic graphic={<MaterialIcon icon="flight" initRipple={null}/>}/>
             <ListItemText primaryText="Trips"/>
           </ListItem>
         </NavLink>
-        <NavLink to={`${url}/preferences`}>
+        <NavLink to={'/preferences'}>
           <ListItem onClick={() => setDrawerOpen(false)}>
             <ListItemGraphic graphic={<MaterialIcon icon="settings" initRipple={null}/>}/>
             <ListItemText primaryText="Preferences"/>
@@ -154,7 +161,7 @@ const DashboardNavBar: React.SFC<DashboardNavBarProps> = (props) => {
           </div>
         </DrawerHeader>
         <DrawerContent>
-          {drawerContent('/dashboard')}
+          {drawerContent()}
         </DrawerContent>
       </Drawer>
       {topBar()}
