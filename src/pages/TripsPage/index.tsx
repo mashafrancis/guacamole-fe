@@ -4,7 +4,6 @@ import * as React from 'react';
 import Fab from '@material/react-fab';
 import { Cell, Grid, Row } from '@material/react-layout-grid';
 import MaterialIcon from '@material/react-material-icon';
-import TextField, { Input } from '@material/react-text-field';
 import MaterialTable from 'material-table';
 
 // pages
@@ -14,11 +13,13 @@ import { NavLink } from 'react-router-dom';
 
 // components
 import Loader from 'components/Loader';
-import TripCard from 'components/TripCard';
 
 // thunks
 import { displaySnackMessage } from 'modules/snack';
-import { getAllUserTrips } from 'modules/trips';
+import {
+  deleteSingleTrip,
+  getAllUserTrips
+} from 'modules/trips';
 
 import { TripsPageProps, TripsPageState } from './interfaces';
 
@@ -35,10 +36,12 @@ export class TripsPage extends React.Component<TripsPageProps, TripsPageState> {
 
   state = {
     isLoading: true,
+    trips: [],
   };
 
   componentDidMount() {
     this.props.getAllUserTrips()
+      .then(() => this.setState({ trips: this.props.trips }))
       .then(() => this.setState({ isLoading: false }));
   }
 
@@ -60,7 +63,7 @@ export class TripsPage extends React.Component<TripsPageProps, TripsPageState> {
 
   renderUserTrips = () => {
     const { isLoading } = this.state;
-    const trips = this.props.trips.map(trip => ({
+    const trips = this.state.trips.map(trip => ({
       ...trip,
     }));
 
@@ -72,35 +75,37 @@ export class TripsPage extends React.Component<TripsPageProps, TripsPageState> {
           title="Recent Trips"
           columns={this.tableHeaders}
           data={trips}
-          // editable={{
-          //   onRowAdd: newData =>
-          //     new Promise(resolve => {
-          //       setTimeout(() => {
-          //         resolve();
-          //         const data = [...state.data];
-          //         data.push(newData);
-          //         setState({ ...state, data });
-          //       }, 600);
-          //     }),
-          //   onRowUpdate: (newData, oldData) =>
-          //     new Promise(resolve => {
-          //       setTimeout(() => {
-          //         resolve();
-          //         const data = [...state.data];
-          //         data[data.indexOf(oldData)] = newData;
-          //         setState({ ...state, data });
-          //       }, 600);
-          //     }),
-          //   onRowDelete: oldData =>
-          //     new Promise(resolve => {
-          //       setTimeout(() => {
-          //         resolve();
-          //         const data = [...state.data];
-          //         data.splice(data.indexOf(oldData), 1);
-          //         setState({ ...state, data });
-          //       }, 600);
-          //     }),
-          // }}
+          // icons={{ Delete: <MaterialIcon role="button" icon="email" initRipple={null}/> }}
+          editable={{
+            // onRowAdd: newData =>
+            //   new Promise(resolve => {
+            //     setTimeout(() => {
+            //       resolve();
+            //       const data = [...state.data];
+            //       data.push(newData);
+            //       setState({ ...state, data });
+            //     }, 600);
+            //   }),
+            // onRowUpdate: (newData, oldData) =>
+            //   new Promise(resolve => {
+            //     setTimeout(() => {
+            //       resolve();
+            //       const data = [...state.data];
+            //       data[data.indexOf(oldData)] = newData;
+            //       setState({ ...state, data });
+            //     }, 600);
+            //   }),
+            onRowDelete: oldData =>
+              new Promise((resolve) => {
+                setTimeout(() => {
+                  resolve();
+                  const data = [...this.state.trips];
+                  data.splice(data.indexOf(oldData), 1);
+                  this.setState({ trips: data });
+                  this.props.deleteSingleTrip(oldData.id);
+                },         600);
+              }),
+          }}
         />
         <NavLink to={'/trips/new-trip'}>
           <Fab className="create-trip-button" icon={<MaterialIcon icon="add" initRipple={null}/>}
@@ -111,7 +116,7 @@ export class TripsPage extends React.Component<TripsPageProps, TripsPageState> {
   }
 
   renderBodyContent = () => {
-    const { trips } = this.props;
+    const { trips } = this.state;
 
     return (
       trips.length > 0
@@ -163,11 +168,12 @@ export class TripsPage extends React.Component<TripsPageProps, TripsPageState> {
 }
 
 export const mapStateToProps = state => ({
-  trips: state.trips.data,
+  trips: state.trips.user_trips,
 });
 
 export const mapDispatchToProps = dispatch => ({
   getAllUserTrips: () => dispatch(getAllUserTrips()),
+  deleteSingleTrip: id => dispatch(deleteSingleTrip(id)),
   displaySnackMessage: message => dispatch(displaySnackMessage(message)),
 });
 

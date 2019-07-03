@@ -21,6 +21,7 @@ import { AppProps, AppState } from './interfaces';
 
 // helpers
 import { authService } from 'utils/auth';
+import { initializeGA, logPageView } from 'utils/helpers/googleAnalytics';
 
 export class App extends React.Component<AppProps, AppState> {
   state = {
@@ -29,6 +30,8 @@ export class App extends React.Component<AppProps, AppState> {
   };
 
   async componentDidMount() {
+    initializeGA();
+    logPageView(window.location.pathname);
     // const { user } = this.props;
     const user = authService.getUser();
 

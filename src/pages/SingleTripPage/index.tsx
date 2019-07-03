@@ -2,13 +2,6 @@ import Button from 'components/Button';
 import * as React from 'react';
 
 // third-party libraries
-import Card, {
-  CardActionButtons,
-  CardActionIcons,
-  CardActions,
-  CardMedia,
-  CardPrimaryContent
-} from '@material/react-card';
 import { Cell, Grid, Row } from '@material/react-layout-grid';
 import MaterialIcon from '@material/react-material-icon';
 import * as moment from 'moment';
@@ -16,13 +9,11 @@ import { connect } from 'react-redux';
 
 // pages
 import DashboardPage from 'pages/DashboardPage';
-import { NavLink } from 'react-router-dom';
 
 // components
 import Loader from 'components/Loader';
 
 // thunks
-import { displaySnackMessage } from 'modules/snack';
 import { getSingleTrip } from 'modules/trips';
 
 // styles

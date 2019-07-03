@@ -5,6 +5,9 @@ import {
   ADD_TRIPS_FAILURE,
   ADD_TRIPS_REQUEST,
   ADD_TRIPS_SUCCESS,
+  DELETE_TRIP_FAILURE,
+  DELETE_TRIP_REQUEST,
+  DELETE_TRIP_SUCCESS,
   GET_SINGLE_TRIP_FAILURE,
   GET_SINGLE_TRIP_REQUEST,
   GET_SINGLE_TRIP_SUCCESS,
@@ -69,6 +72,20 @@ export interface GetUserTripsActionSuccess {
 
 export interface GetUserTripsActionFailure {
   type: GET_USER_TRIPS_FAILURE;
+  errors: any;
+}
+
+export interface DeleteTripActionRequest {
+  type: DELETE_TRIP_REQUEST;
+}
+
+export interface DeleteTripActionSuccess {
+  id: string;
+  type: DELETE_TRIP_SUCCESS;
+}
+
+export interface DeleteTripActionFailure {
+  type: DELETE_TRIP_FAILURE;
   errors: any;
 }
 

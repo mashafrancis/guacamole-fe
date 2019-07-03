@@ -5,7 +5,7 @@ import { displaySnackMessage } from 'modules/snack';
 import {
   AddTripActionRequest,
   AddTripActionSuccess,
-  AddTripsActionFailure,
+  AddTripsActionFailure, DeleteTripActionFailure, DeleteTripActionRequest, DeleteTripActionSuccess,
   GetAllTripsActionFailure,
   GetAllTripsActionRequest,
   GetAllTripsActionSuccess,
@@ -22,7 +22,7 @@ import {
 import {
   ADD_TRIPS_FAILURE,
   ADD_TRIPS_REQUEST,
-  ADD_TRIPS_SUCCESS,
+  ADD_TRIPS_SUCCESS, DELETE_TRIP_FAILURE, DELETE_TRIP_REQUEST, DELETE_TRIP_SUCCESS,
   GET_SINGLE_TRIP_FAILURE,
   GET_SINGLE_TRIP_REQUEST,
   GET_SINGLE_TRIP_SUCCESS,
@@ -154,6 +154,36 @@ export const getUserTripsFailure = (errors): GetUserTripsActionFailure => ({
   type: GET_USER_TRIPS_FAILURE,
 });
 
+/**
+ * Delete single trip request
+ *
+ * @returns {DeleteTripActionRequest}
+ */
+export const deleteSingleTripRequest = (): DeleteTripActionRequest => ({
+  type: DELETE_TRIP_REQUEST,
+});
+
+/**
+ * Delete single trip success
+ *
+ * @returns {DeleteTripActionSuccess}
+ * @param id
+ */
+export const deleteSingleTripSuccess = (id): DeleteTripActionSuccess => ({
+  id,
+  type: DELETE_TRIP_SUCCESS,
+});
+
+/**
+ * Delete single trip failure
+ *
+ * @returns {DeleteTripActionFailure}
+ */
+export const deleteSingleTripFailure = (errors): DeleteTripActionFailure => ({
+  errors,
+  type: DELETE_TRIP_FAILURE,
+});
+
 // actions
 /**
  * Thunk action creator
@@ -223,17 +253,32 @@ export const getSingleTrip = tripId => (dispatch, getState, http) => {
  * @returns {Function} action type and payload
  */
 export const getAllUserTrips = () => (dispatch, getState, http) => {
-  dispatch(getTripsRequest());
+  dispatch(getUserTripsRequest());
   return http.get('user_trips', { cache: true })
     .then((response) => {
       const { data: { data } } = response;
-      dispatch(getTripsSuccess(data));
+      dispatch(getUserTripsSuccess(data));
       return data;
     })
     .catch((errors) => {
       const error = errors.response.data.errors;
       dispatch(displaySnackMessage(`${error}`));
-      dispatch(getTripsFailure(errors));
+      dispatch(getUserTripsFailure(errors));
+    });
+};
+
+export const deleteSingleTrip = id => (dispatch, getState, http) => {
+  dispatch(deleteSingleTripRequest());
+  return http.delete(`trips/${id}`)
+    .then((response) => {
+      const message = response.data.data.message;
+      dispatch(deleteSingleTripSuccess(id));
+      dispatch(displaySnackMessage(message, true));
+    })
+    .catch((errors) => {
+      const error = errors.response.data.message;
+      dispatch(deleteSingleTripFailure(errors));
+      dispatch(displaySnackMessage(`${error}`));
     });
 };
 
@@ -309,11 +354,29 @@ const reducer = (state = tripsInitialState, action) => {
     case GET_USER_TRIPS_SUCCESS:
       return {
         ...state,
-        user_trips: action.trips,
+        user_trips: action.user_trips,
         errors: null,
         isLoading: false,
       };
     case GET_USER_TRIPS_FAILURE:
+      return {
+        ...state,
+        errors: action.errors,
+        isLoading: false,
+      };
+    case DELETE_TRIP_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case DELETE_TRIP_SUCCESS:
+      return {
+        ...state,
+        trip: action.trip,
+        errors: null,
+        isLoading: false,
+      };
+    case DELETE_TRIP_FAILURE:
       return {
         ...state,
         errors: action.errors,
