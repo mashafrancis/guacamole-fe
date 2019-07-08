@@ -42,3 +42,12 @@ export type DELETE_TRIP_SUCCESS = typeof DELETE_TRIP_SUCCESS;
 
 export const DELETE_TRIP_FAILURE = 'kari4me-web/trips/DELETE_TRIP_FAILURE';
 export type DELETE_TRIP_FAILURE = typeof DELETE_TRIP_FAILURE;
+
+export const EDIT_TRIP_REQUEST = 'kari4me-web/trips/EDIT_TRIPS_REQUEST';
+export type EDIT_TRIP_REQUEST = typeof EDIT_TRIP_REQUEST;
+
+export const EDIT_TRIP_SUCCESS = 'kari4me-web/trips/EDIT_TRIP_SUCCESS';
+export type EDIT_TRIP_SUCCESS = typeof EDIT_TRIP_SUCCESS;
+
+export const EDIT_TRIP_FAILURE = 'kari4me-web/trips/EDIT_TRIP_FAILURE';
+export type EDIT_TRIP_FAILURE = typeof EDIT_TRIP_FAILURE;

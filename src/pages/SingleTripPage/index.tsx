@@ -1,4 +1,3 @@
-import Button from 'components/Button';
 import * as React from 'react';
 
 // third-party libraries
@@ -11,6 +10,7 @@ import { connect } from 'react-redux';
 import DashboardPage from 'pages/DashboardPage';
 
 // components
+import Button from 'components/Button';
 import Loader from 'components/Loader';
 
 // thunks
@@ -66,7 +66,7 @@ export class SingleTripPage extends React.Component<SingleTripPageProps, SingleT
                     <h4 className="trip-title">Overview</h4>
                     <div className="trip-row-content__details">
                       <div className="trip-content-places">
-                        <h3>NBO</h3>
+                        <h3>{trip.origin}</h3>
                           <MaterialIcon
                             className="trip-flight-icon__origin"
                             role="button"
@@ -80,7 +80,7 @@ export class SingleTripPage extends React.Component<SingleTripPageProps, SingleT
                             icon="place"
                             hasRipple={true}
                             initRipple={null}/>
-                        <h3>NYC</h3>
+                        <h3>{trip.destination}</h3>
                       </div>
                       <div className="trip-card">
                         <div className="trip-card__details">

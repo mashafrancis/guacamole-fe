@@ -5,7 +5,13 @@ import { displaySnackMessage } from 'modules/snack';
 import {
   AddTripActionRequest,
   AddTripActionSuccess,
-  AddTripsActionFailure, DeleteTripActionFailure, DeleteTripActionRequest, DeleteTripActionSuccess,
+  AddTripsActionFailure,
+  DeleteTripActionFailure,
+  DeleteTripActionRequest,
+  DeleteTripActionSuccess,
+  EditTripActionFailure,
+  EditTripActionRequest,
+  EditTripActionSuccess,
   GetAllTripsActionFailure,
   GetAllTripsActionRequest,
   GetAllTripsActionSuccess,
@@ -22,7 +28,13 @@ import {
 import {
   ADD_TRIPS_FAILURE,
   ADD_TRIPS_REQUEST,
-  ADD_TRIPS_SUCCESS, DELETE_TRIP_FAILURE, DELETE_TRIP_REQUEST, DELETE_TRIP_SUCCESS,
+  ADD_TRIPS_SUCCESS,
+  DELETE_TRIP_FAILURE,
+  DELETE_TRIP_REQUEST,
+  DELETE_TRIP_SUCCESS,
+  EDIT_TRIP_FAILURE,
+  EDIT_TRIP_REQUEST,
+  EDIT_TRIP_SUCCESS,
   GET_SINGLE_TRIP_FAILURE,
   GET_SINGLE_TRIP_REQUEST,
   GET_SINGLE_TRIP_SUCCESS,
@@ -184,6 +196,36 @@ export const deleteSingleTripFailure = (errors): DeleteTripActionFailure => ({
   type: DELETE_TRIP_FAILURE,
 });
 
+/**
+ * Edit a trip request
+ *
+ * @returns {AddTripActionRequest}
+ */
+export const editTripRequest = (): EditTripActionRequest => ({
+  type: EDIT_TRIP_REQUEST,
+});
+
+/**
+ * Add new trip success
+ *
+ * @param {Trip} trip
+ * @returns {AddTripActionSuccess}
+ */
+export const editTripSuccess = (trip: Trip): EditTripActionSuccess => ({
+  trip,
+  type: EDIT_TRIP_SUCCESS,
+});
+
+/**
+ * Add new trip failure
+ *
+ * @returns {AddTripsActionFailure}
+ */
+export const editTripFailure = (errors): EditTripActionFailure => ({
+  errors,
+  type: EDIT_TRIP_FAILURE,
+});
+
 // actions
 /**
  * Thunk action creator
@@ -276,9 +318,29 @@ export const deleteSingleTrip = id => (dispatch, getState, http) => {
       dispatch(displaySnackMessage(message, true));
     })
     .catch((errors) => {
-      const error = errors.response.data.message;
+      const error = errors.response.message;
       dispatch(deleteSingleTripFailure(errors));
       dispatch(displaySnackMessage(`${error}`));
+    });
+};
+
+/**
+ * Thunk action creator
+ * Add a new trips
+ *
+ * @returns {Function} action type and payload
+ */
+export const editTrip = trip => (dispatch, getState, http) => {
+  dispatch(editTripRequest());
+  return http.put('trips', trip)
+    .then((response) => {
+      dispatch(editTripSuccess(response.data.data));
+      dispatch(displaySnackMessage('Your trip had been updated successfully.'));
+      window.location.replace('/trips');
+    })
+    .catch((errors) => {
+      dispatch(editTripFailure(errors));
+      dispatch(displaySnackMessage('Sorry! Something went wrong. Kindly try again'));
     });
 };
 
@@ -377,6 +439,24 @@ const reducer = (state = tripsInitialState, action) => {
         isLoading: false,
       };
     case DELETE_TRIP_FAILURE:
+      return {
+        ...state,
+        errors: action.errors,
+        isLoading: false,
+      };
+    case EDIT_TRIP_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case EDIT_TRIP_SUCCESS:
+      return {
+        ...state,
+        data: action.data,
+        errors: null,
+        isLoading: false,
+      };
+    case EDIT_TRIP_FAILURE:
       return {
         ...state,
         errors: action.errors,

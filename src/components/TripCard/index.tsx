@@ -19,10 +19,10 @@ import MaterialIcon from '@material/react-material-icon';
 import * as moment from 'moment';
 
 // interfaces
-import { TripCardProps } from 'components/TripCard/interfaces';
 import { Typography } from '@material-ui/core';
+import { TripCardProps } from 'components/TripCard/interfaces';
 
-const img = 'https://res.cloudinary.com/mashafrancis/image/upload/v1560362903/kari4me/runway_1080.png';
+const img = 'https://res.cloudinary.com/almondgreen/image/upload/v1570631064/Mobilities/connected_world_auu3ui.svg';
 
 const TripCard: React.SFC<TripCardProps> = props => (
   <Cell

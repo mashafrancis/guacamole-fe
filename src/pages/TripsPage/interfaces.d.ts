@@ -10,9 +10,17 @@ export interface TripsPageProps {
     dateObject: object;
     push: (path: string, state?: object) => void;
   };
+  match: {
+    url: string
+  };
 }
 
 export interface TripsPageState {
   isLoading: boolean;
+  isEditMode: boolean;
+  isDeleteModal: boolean;
   trips: Trip[];
+  action: string;
+  trip?: Trip;
+  trip_id: any;
 }

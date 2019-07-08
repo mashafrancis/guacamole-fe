@@ -23,22 +23,25 @@ import { SelectCountryRegionBox } from 'components/SelectBox';
 
 // thunks
 import { displaySnackMessage } from 'modules/snack';
-import { addNewTrip } from 'modules/trips';
+import { editTrip } from 'modules/trips';
+
+// interfaces
+import {
+  EditSingleTripPageProps,
+  EditSingleTripPageState
+} from './interfaces';
 
 // styles
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
+import '../TripsPageForm/TripsPageForm.scss';
 
-// interfaces
-import { TripsPageFormProps, TripsPageFormState } from './interfaces';
-import './TripsPageForm.scss';
-
-export const TripsPageForm: React.FunctionComponent<TripsPageFormProps> = (props) => {
-  const [state, setState] = React.useState<TripsPageFormState>({
-    fields: {},
+export const EditSingleTripPage: React.FunctionComponent<EditSingleTripPageProps> = (props) => {
+  const [state, setState] = React.useState<EditSingleTripPageState>({
     isLoading: false,
     isValid: true,
     focused: false,
+    fields: {},
     locations: {
       origin: {
         country: 'Kenya',
@@ -49,12 +52,24 @@ export const TripsPageForm: React.FunctionComponent<TripsPageFormProps> = (props
         region: '',
       },
     },
-    dates: {},
     errors: {},
+    dates: {},
+    tripToEdit: {
+      origin: '',
+      destination: '',
+      departure_date: '',
+      arrival_date: '',
+    },
   });
 
-  const [selectedDepartureDate, handleDepartureDateChange] = React.useState(new Date());
-  const [selectedArrivalDate, handleArrivalDateChange] = React.useState(new Date());
+  const tripId = window.location.pathname
+    .replace('http://', '')
+    .split('/');
+
+  const tripValue = props.trips.filter(res => res.id.includes(tripId[3]));
+
+  const [selectedDepartureDate, handleDepartureDateChange] = React.useState(tripValue[0].departure_date);
+  const [selectedArrivalDate, handleArrivalDateChange] = React.useState(tripValue[0].arrival_date);
 
   /**
    * Handles the submission on successful validation
@@ -75,11 +90,11 @@ export const TripsPageForm: React.FunctionComponent<TripsPageFormProps> = (props
 
     setState({ ...state, isLoading: true });
 
-    props.addNewTrip(trip)
+    props.editTrip(trip)
       .then(() => {
         setState({ ...state, isLoading: false });
       });
-  };
+  }
 
   const handleOnSelect = (location: string, field: string) => (event) => {
     setState({ ...state, locations: {
@@ -89,6 +104,7 @@ export const TripsPageForm: React.FunctionComponent<TripsPageFormProps> = (props
 
   const renderTripsForm = () => {
     const { locations, dates, errors } = state;
+
     return (
       <React.Fragment>
         <div >
@@ -175,7 +191,7 @@ export const TripsPageForm: React.FunctionComponent<TripsPageFormProps> = (props
         <Container maxWidth="sm">
           <Grid container direction="column" spacing={2}>
             <Grid item xs>
-              <h1 className="headline-2">Add a new trip</h1>
+              <h1 className="headline-2">Edit your trip</h1>
             </Grid>
             <Grid container direction="row" spacing={2}>
               <Grid item xs>
@@ -185,7 +201,7 @@ export const TripsPageForm: React.FunctionComponent<TripsPageFormProps> = (props
             <Grid item xs >
               <Button
                   type="button"
-                  name={isLoading ? 'Please wait...' : 'Add new trip'}
+                  name={isLoading ? 'Please wait...' : 'Edit your trip'}
                   id="cc-register"
                   onClick={onSubmit}
                   classes="mdc-button big-round-corner-button mdc-button--raised"
@@ -200,11 +216,12 @@ export const TripsPageForm: React.FunctionComponent<TripsPageFormProps> = (props
 
 export const mapStateToProps = state => ({
   error: state.error,
+  trips: state.trips.user_trips,
 });
 
 export const mapDispatchToProps = dispatch => ({
-  addNewTrip: trip => dispatch(addNewTrip(trip)),
+  editTrip: trip => dispatch(editTrip(trip)),
   displaySnackMessage: message => dispatch(displaySnackMessage(message)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TripsPageForm);
+export default connect(mapStateToProps, mapDispatchToProps)(EditSingleTripPage);

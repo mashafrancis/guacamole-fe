@@ -23,7 +23,7 @@ import TopAppBar, {
 import { NavLink, Redirect } from 'react-router-dom';
 
 // interfaces
-import { DashboardNavBarProps } from './interfaces';
+import { DashboardNavBarProps, DashboardNavBarState } from './interfaces';
 
 // styles
 import './DashboardNavBar.scss';
@@ -32,18 +32,26 @@ import './DashboardNavBar.scss';
 import authorize from 'utils/helpers/authorize';
 
 const DashboardNavBar: React.SFC<DashboardNavBarProps> = (props) => {
+  const [state, setState] = React.useState<DashboardNavBarState>({
+    isDrawerOpen: false,
+    isMenuOpen: false,
+    selectedIndex: 0,
+    isLoading: true,
+  });
+
   const mainContentEl = React.createRef();
-  const [isDrawerOpen, setDrawerOpen] = React.useState<boolean>(false);
-  const [isMenuOpen, setMenuOpen] = React.useState<boolean>(false);
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
   const menuAnchorEl = React.useRef<any>(null);
 
-  const onDrawerClose = () => {
-    setDrawerOpen(false);
+  const onDrawerOpenClose = () => {
+    setState({ ...state, isDrawerOpen: false });
+  };
+
+  const onMenuOpenClose = () => {
+    setState({ ...state, isMenuOpen: !state.isMenuOpen });
   };
 
   const onSelectedIndex = () => {
-    setSelectedIndex(1);
+    setState({ ...state, selectedIndex: 1 });
   };
 
   /**
@@ -72,20 +80,20 @@ const DashboardNavBar: React.SFC<DashboardNavBarProps> = (props) => {
         <TopAppBarSection align="start">
           <TopAppBarIcon navIcon tabIndex={0}>
             <MaterialIcon
-              onClick={() => setDrawerOpen(true)}
+              onClick={() => setState({ ...state, isDrawerOpen: true })}
               hasRipple icon="menu"
               initRipple={null}
             />
           </TopAppBarIcon>
           <TopAppBarTitle>
-            <NavLink to={'/'}>Kari4me</NavLink>
+            <NavLink to={'/'}>Mobilities</NavLink>
           </TopAppBarTitle>
         </TopAppBarSection>
         <TopAppBarSection align="end" role="toolbar">
           <div className="companion-nav">
           <TopAppBarIcon navIcon tabIndex={0}>
             <MaterialIcon
-              onClick={() => setDrawerOpen(true)}
+              onClick={() => setState({ ...state, isDrawerOpen: true })}
               hasRipple icon="notifications"
               initRipple={null}
             />
@@ -94,7 +102,7 @@ const DashboardNavBar: React.SFC<DashboardNavBarProps> = (props) => {
             <div role="tablist"
                  ref={e => menuAnchorEl.current = e}
                  className="mdc-tab-bar"
-                 onClick={() => setMenuOpen(true)}
+                 onClick={() => setState({ ...state, isDrawerOpen: true })}
             >
               <span className="mini-account-menu__image">
               <img
@@ -109,36 +117,27 @@ const DashboardNavBar: React.SFC<DashboardNavBarProps> = (props) => {
     </TopAppBar>
   );
 
-  const sideNav = () => (
-    <div className="side-nav">
-      <div className="side-nav__top">
-        <List twoLine>
-          <ListItem onClick={() => setDrawerOpen(false)}>
-            <ListItemGraphic graphic={<MaterialIcon icon="explore" initRipple={null}/>}/>
-            <ListItemText secondaryText="Explore"/>
-          </ListItem>
-        </List>
-      </div>
-    </div>
-  );
-
   const drawerContent = () => (
     <React.Fragment>
-      <List singleSelection selectedIndex={selectedIndex}>
+      <List
+        singleSelection
+        selectedIndex={state.selectedIndex}
+        handleSelect={onSelectedIndex}
+      >
         <NavLink to={'/explore'}>
-          <ListItem onClick={() => setDrawerOpen(false)}>
+          <ListItem className="mdc-list-item" onClick={onDrawerOpenClose}>
             <ListItemGraphic graphic={<MaterialIcon icon="explore" initRipple={null}/>}/>
             <ListItemText primaryText="Explore"/>
           </ListItem>
         </NavLink>
         <NavLink to={'/trips'}>
-          <ListItem onClick={() => setDrawerOpen(false)}>
+          <ListItem className="mdc-list-item" onClick={onDrawerOpenClose}>
             <ListItemGraphic graphic={<MaterialIcon icon="flight" initRipple={null}/>}/>
             <ListItemText primaryText="Trips"/>
           </ListItem>
         </NavLink>
         <NavLink to={'/preferences'}>
-          <ListItem onClick={() => setDrawerOpen(false)}>
+          <ListItem className="mdc-list-item" onClick={onDrawerOpenClose}>
             <ListItemGraphic graphic={<MaterialIcon icon="settings" initRipple={null}/>}/>
             <ListItemText primaryText="Preferences"/>
           </ListItem>
@@ -151,13 +150,13 @@ const DashboardNavBar: React.SFC<DashboardNavBarProps> = (props) => {
     <div className="dashboard">
       <Drawer
         modal
-        open={isDrawerOpen}
-        onClose={onDrawerClose}
+        open={state.isDrawerOpen}
+        onClose={onDrawerOpenClose}
         // innerRef={this.drawerEl}
       >
         <DrawerHeader>
           <div className="drawer-logo">
-            <h2 className="mdc-typography--headline6">Kari4me</h2>
+            <h2 className="mdc-typography--headline6">Mobilities</h2>
           </div>
         </DrawerHeader>
         <DrawerContent>
@@ -166,9 +165,9 @@ const DashboardNavBar: React.SFC<DashboardNavBarProps> = (props) => {
       </Drawer>
       {topBar()}
         <MenuSurface
-          open={isMenuOpen}
+          open={state.isMenuOpen}
           anchorCorner={Corner.BOTTOM_LEFT}
-          onClose={() => setMenuOpen(false)}
+          onClose={onMenuOpenClose}
           anchorElement={menuAnchorEl.current}
         >
           <UserModal
