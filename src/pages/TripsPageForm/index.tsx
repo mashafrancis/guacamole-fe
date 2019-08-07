@@ -1,5 +1,4 @@
 // third-party libraries
-import { Cell, Grid, Row } from '@material/react-layout-grid';
 import MaterialIcon from '@material/react-material-icon';
 import TextField, { HelperText, Input } from '@material/react-text-field';
 // components
@@ -17,16 +16,24 @@ import { connect } from 'react-redux';
 import { TripsPageFormProps, TripsPageFormState } from './interfaces';
 import './TripsPageForm.scss';
 import { SelectCountryRegionBox } from 'components/SelectBox';
+import { Grid, Container, InputAdornment, createMuiTheme  } from '@material-ui/core';
 
 export const TripsPageForm:React.FunctionComponent<TripsPageFormProps> = (props) => {
   const [ state, setState] = React.useState<TripsPageFormState>({
-    isLoading: false,
+      isLoading: false,
       isValid: true,
       focused: false,
-      fields: {
-        country: "Kenya",
-        region:''
+      locations: {
+        origin: {
+          country: "Kenya",
+          region: "",
+        },
+        destination: {
+          country: "Kenya",
+          region: ""
+        }
       },
+      dates: {},
       errors: {},
   })
 
@@ -39,12 +46,11 @@ export const TripsPageForm:React.FunctionComponent<TripsPageFormProps> = (props)
    */
   const handleInputChange = (event) => {
     const { name: field, value } = event.target;
-
     setState(prevState => ({
-      ...state, fields: {
-        ...prevState.fields,
+      ...state, dates: {
+        ...prevState.dates,
         [field]: value,
-      },
+      }
     }));
   }
 
@@ -57,12 +63,12 @@ export const TripsPageForm:React.FunctionComponent<TripsPageFormProps> = (props)
    */
   const onSubmit = (event) => {
     event.preventDefault();
-    const { fields } = state;
+    const { locations, dates } = state;
     const trip = {
-      origin: fields.country as string,
-      destination: fields.region as string,
-      departure_date: fields.departure_date as string,
-      arrival_date: fields.arrival_date as string,
+      origin: `${Object.values(locations.origin).join(',')}` as string,
+      destination: `${Object.values(locations.destination).join(',')}` as string,
+      departure_date: dates.departure_date as string,
+      arrival_date: dates.arrival_date as string,
     };
 
     setState({...state, isLoading: true });
@@ -72,18 +78,29 @@ export const TripsPageForm:React.FunctionComponent<TripsPageFormProps> = (props)
         setState({...state, isLoading: false });
       });
   }
-  const handleOnSelect = (field:string) => (event) =>{
-    setState({ ...state, fields:{
-      ...state.fields, [field]: event.target.value
+  const handleOnSelect = (location:string, field:string) => (event) =>{
+    setState({ ...state, locations:{
+      ...state.locations, [location]: {...state.locations[location], [field]: event.target.value}
     }})
   }
 
   const renderTripsForm = () => {
-    const { fields, errors } = state;
+    const { locations, dates, errors } = state;
     return (
       <React.Fragment>
+        <div >
+          <SelectCountryRegionBox 
+            fields={locations.origin}
+            location="origin"
+            updateField={handleOnSelect}
+          />
+        </div>
         <div className="form-cell">
-          <SelectCountryRegionBox fields={fields} updateField={handleOnSelect}/>
+          <SelectCountryRegionBox 
+            fields={locations.destination}
+            location="destination" 
+            updateField={handleOnSelect}
+          />
         </div>
         <div className="form-cell">
           <TextField
@@ -101,7 +118,7 @@ export const TripsPageForm:React.FunctionComponent<TripsPageFormProps> = (props)
               </HelperText>}
           >
             <Input
-              value={fields.departure_date}
+              value={dates.departure_date}
               name="departure_date"
               id="12"
               type="text"
@@ -125,7 +142,7 @@ export const TripsPageForm:React.FunctionComponent<TripsPageFormProps> = (props)
               </HelperText>}
           >
             <Input
-              value={fields.arrival_date}
+              value={dates.arrival_date}
               name="arrival_date"
               id="12"
               type="text"
@@ -148,51 +165,27 @@ export const TripsPageForm:React.FunctionComponent<TripsPageFormProps> = (props)
           forwardLink={'/'}
           backwardLink={'/trips'}
         />
-        <Grid>
-          <Row>
-            <Cell
-              className="mdc-layout-grid__cell grid-start-5
-                      mdc-layout-grid__cell--align-middle"
-              columns={4}
-              desktopColumns={4}
-              tabletColumns={8}
-              phoneColumns={4}
-            >
+        <Container maxWidth="sm">
+          <Grid container direction="column" spacing={2}>
+            <Grid item xs>
               <h1 className="headline-2">Add a new trip</h1>
-            </Cell>
-          </Row>
-          <Row>
-          <Cell
-            className="mdc-layout-grid__cell grid-start-5 register__section mdc-layout-grid__cell--align-middle"
-            align="middle"
-            order={5}
-            columns={4}
-            desktopColumns={4}
-            tabletColumns={8}
-            phoneColumns={4}
-          >
-            {renderTripsForm()}
-          </Cell>
-        </Row>
-          <Row>
-            <Cell
-            className="mdc-layout-grid__cell grid-start-5 mdc-layout-grid__cell--span-2-desktop-hd"
-            desktopColumns={2}
-            order={1}
-            phoneColumns={2}
-            tabletColumns={2}
-            align="middle"
-          >
-            <Button
-              type="button"
-              name={isLoading ? 'Please wait...' : 'Add new trip'}
-              id="cc-register"
-              onClick={onSubmit}
-              classes="mdc-button big-round-corner-button mdc-button--raised"
-            />
-          </Cell>
-          </Row>
-        </Grid>
+            </Grid>
+            <Grid container direction="row" spacing={2}>
+              <Grid item xs>
+                {renderTripsForm()}
+              </Grid>
+            </Grid>
+            <Grid item xs >
+              <Button
+                  type="button"
+                  name={isLoading ? 'Please wait...' : 'Add new trip'}
+                  id="cc-register"
+                  onClick={onSubmit}
+                  classes="mdc-button big-round-corner-button mdc-button--raised"
+                />
+            </Grid>
+          </Grid>
+        </Container>
       </div>
     );
   })()

@@ -7,11 +7,15 @@ import { CountryRegionData } from "react-country-region-selector";
 import { countries } from "countries-list";
 import Icon from '@material-ui/core/Icon'
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import Typography from '@material-ui/core/Typography';
 
 // style
 import './SelectBox.scss'
 import { SelectBoxProps } from './interfaces';
+import { Grid, ListItemText, 
+  ListItem, Theme, 
+  makeStyles, createStyles, createMuiTheme
+} from '@material-ui/core';
+import { ThemeProvider } from '@material-ui/styles';
 
 
 const formatCountriesData = (countries:object) =>{
@@ -57,7 +61,8 @@ const formatCountriesData = (countries:object) =>{
 
 
 export const SelectCountryRegionBox:React.FunctionComponent<SelectBoxProps> =  props =>{
-  const { fields, updateField } = props
+  const { fields, updateField, location } = props
+  const label = location === "origin" ? "Origin" : "Destination"
   const countriesData = formatCountriesData(countries)
   const regionsData = React.useMemo(
     ()=> function (name:string):Array<string> {
@@ -66,68 +71,117 @@ export const SelectCountryRegionBox:React.FunctionComponent<SelectBoxProps> =  p
       ).regions
       }(fields['country']), [fields['country']]
   )
-  
-  
+  const useStyles = makeStyles((theme: Theme) => createStyles({
+    focused: {},
+    listItemPadding: {
+      paddingTop: 0,
+      paddingBottom: 0,
+    },
+    selectHeight: {
+      height: "1.25em"
+    },
+    labelColor: {
+      '&$focused': {
+        color: `rgba(${25},${103},${210},${0.87})`
+      }
+    }
+  }));
+  const theme = createMuiTheme({
+    overrides: {
+      MuiOutlinedInput: {
+        root: {
+          '&.Mui-focused fieldset': {
+            borderColor: `rgba(${25},${103},${210},${0.87}) !important`,
+          },
+        }
+      },
+      MuiIcon: {
+        colorPrimary: {
+          color: `rgba(${0}, ${0}, ${0}, ${0.54})`
+        }
+      },
+      MuiListItem: {
+        root: {
+          top: -5
+        }
+      }
+    }
+  })
+  const styles = useStyles(props)
   return (
-    <React.Fragment>
-      <TextField
-        select
-        className="mdc-text-field--fullwidth"
-        variant="outlined"
-        label="Country"
-        value={fields['country']}
-        onChange={updateField("country")}
-        helperText={<span
-          className="mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg 
-          mdc-text-field-helper-text--persistent 
-          mdc-text-field-helper-text--validation-msg"></span>} 
-        InputProps={{
-          startAdornment: <InputAdornment position="start">
-            <MaterialIcon 
-              role="button" 
-              icon="place" 
-              className="location-icon" 
-              initRipple={null}/>
-          </InputAdornment>
-        }}>
-        {countriesData.map(country => (
-          <MenuItem key={country.name} value={country.name}>
-            <ListItemIcon>
-              <Icon>{country.emoji}</Icon>
-            </ListItemIcon>
-            <Typography variant="inherit">{country.name}</Typography>
-          </MenuItem>
-        ))}
-      </TextField>
-      <TextField
-        select
-        className="mdc-text-field--fullwidth"
-        variant="outlined"  
-        label="City"
-        value={fields['region']}
-        onChange={updateField("region")}
-        helperText={<span
-          className="mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg 
-          mdc-text-field-helper-text--persistent 
-          mdc-text-field-helper-text--validation-msg"></span>} 
-        InputProps={{
-          startAdornment: <InputAdornment position="start">
-            <MaterialIcon 
-              role="button" 
-              icon="place" 
-              className="location-icon" 
-              initRipple={null}/>
-          </InputAdornment>
-        }}>
-        {regionsData.map(
-          region=>(
-            <MenuItem key={region} value={region}>
-              {region}
-          </MenuItem>
-          )
-        )}
-      </TextField>
-    </React.Fragment>
+      <Grid container spacing={2} direction="row">
+        <ThemeProvider theme={theme}>
+          <Grid item xs>
+            <TextField
+              select
+              variant="outlined"
+              label={label}
+              fullWidth
+              value={fields['country']}
+              onChange={updateField(location, "country")}
+              helperText={<span
+                className="mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg 
+                mdc-text-field-helper-text--persistent 
+                mdc-text-field-helper-text--validation-msg"></span>} 
+              SelectProps={{
+                classes: {
+                  selectMenu: styles.selectHeight
+                }
+              }}
+              InputLabelProps={{
+                classes: {
+                  focused: styles.focused,
+                  root: styles.labelColor
+                }
+              }}
+              InputProps={{
+                startAdornment: <InputAdornment position="start">
+                  <Icon color="primary">place</Icon>
+                </InputAdornment>,
+              }}>
+              {countriesData.map(country => (
+                  <MenuItem key={country.name} value={country.name}>
+                    <ListItem component="div" classes={{root:styles.listItemPadding}} alignItems="center">
+                      <ListItemText primary={country.name} />
+                    </ListItem>
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+          <Grid item xs>
+            <TextField
+              select
+              fullWidth
+              variant="outlined"  
+              label="City"
+              value={fields['region']}
+              onChange={updateField(location, "region")}
+              helperText={<span
+                className="mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg 
+                mdc-text-field-helper-text--persistent 
+                mdc-text-field-helper-text--validation-msg"></span>}
+              InputLabelProps={{
+                classes: {
+                  focused: styles.focused,
+                  root: styles.labelColor
+                }
+              }}
+              InputProps={{
+                startAdornment: <InputAdornment position="start">
+                  <Icon color="primary">place</Icon>
+                </InputAdornment>,
+              }}>
+              {regionsData.map(
+                region=>(
+                  <MenuItem key={region} value={region}>
+                    {region}
+                </MenuItem>
+                )
+              )}
+            </TextField>
+          </Grid>
+        </ThemeProvider>
+      </Grid>
   );
 }
 
