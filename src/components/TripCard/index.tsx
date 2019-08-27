@@ -20,6 +20,7 @@ import * as moment from 'moment';
 
 // interfaces
 import { TripCardProps } from 'components/TripCard/interfaces';
+import { Typography } from '@material-ui/core';
 
 const img = 'https://res.cloudinary.com/mashafrancis/image/upload/v1560362903/kari4me/runway_1080.png';
 
@@ -34,7 +35,9 @@ const TripCard: React.SFC<TripCardProps> = props => (
       <CardPrimaryContent>
         <CardMedia contentClassName="card-media" wide imageUrl={img}>
           <div className="card-header">
-            <h4 className="card-header__main">{`${props.trip.origin} to ${props.trip.destination}`}</h4>
+            <Typography variant='h4' noWrap={true} className="card-header__main">
+              {`${props.trip.origin} to ${props.trip.destination}`}
+            </Typography>
             <h5 className="card-header__sub">
               {`${moment(props.trip.departure_date).format('LL')} - ${moment(props.trip.arrival_date).format('LL')}`}
             </h5>

@@ -1,40 +1,41 @@
-import * as React from 'react';
-
 // third-party libraries
-import { Cell, Grid, Row } from '@material/react-layout-grid';
 import MaterialIcon from '@material/react-material-icon';
-import Select from '@material/react-select';
 import TextField, { HelperText, Input } from '@material/react-text-field';
-import { Calendar } from 'react-date-range';
-import { connect } from 'react-redux';
-
 // components
 import AuthHeader from 'components/AuthHeader';
 import Button from 'components/Button';
-
 // thunks
 import { displaySnackMessage } from 'modules/snack';
 import { addNewTrip } from 'modules/trips';
-
-// interfaces
-import { TripsPageFormProps, TripsPageFormState } from './interfaces';
-
+import * as React from 'react';
 // styles
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
+import { connect } from 'react-redux';
+// interfaces
+import { TripsPageFormProps, TripsPageFormState } from './interfaces';
 import './TripsPageForm.scss';
+import { SelectCountryRegionBox } from 'components/SelectBox';
+import { Grid, Container, InputAdornment, createMuiTheme  } from '@material-ui/core';
 
-export class TripsPageForm extends React.Component<TripsPageFormProps, TripsPageFormState> {
-  constructor(props) {
-    super(props);
-    this.state = {
+export const TripsPageForm:React.FunctionComponent<TripsPageFormProps> = (props) => {
+  const [ state, setState] = React.useState<TripsPageFormState>({
       isLoading: false,
       isValid: true,
       focused: false,
-      fields: {},
+      locations: {
+        origin: {
+          country: "Kenya",
+          region: "",
+        },
+        destination: {
+          country: "Kenya",
+          region: ""
+        }
+      },
+      dates: {},
       errors: {},
-    };
-  }
+  })
 
   /**
    * Handles text field input change
@@ -43,14 +44,13 @@ export class TripsPageForm extends React.Component<TripsPageFormProps, TripsPage
    *
    * @returns {void}
    */
-  handleInputChange = (event) => {
+  const handleInputChange = (event) => {
     const { name: field, value } = event.target;
-
-    this.setState(prevState => ({
-      fields: {
-        ...prevState.fields,
+    setState(prevState => ({
+      ...state, dates: {
+        ...prevState.dates,
         [field]: value,
-      },
+      }
     }));
   }
 
@@ -61,76 +61,46 @@ export class TripsPageForm extends React.Component<TripsPageFormProps, TripsPage
    *
    * @returns {void}
    */
-  onSubmit = (event) => {
+  const onSubmit = (event) => {
     event.preventDefault();
-    const { fields } = this.state;
+    const { locations, dates } = state;
     const trip = {
-      origin: fields.origin as string,
-      destination: fields.destination as string,
-      departure_date: fields.departure_date as string,
-      arrival_date: fields.arrival_date as string,
+      origin: `${Object.values(locations.origin).join(',')}` as string,
+      destination: `${Object.values(locations.destination).join(',')}` as string,
+      departure_date: dates.departure_date as string,
+      arrival_date: dates.arrival_date as string,
     };
 
-    this.setState({ isLoading: true });
+    setState({...state, isLoading: true });
 
-    this.props.addNewTrip(trip)
+    props.addNewTrip(trip)
       .then(() => {
-        this.setState({ isLoading: false });
+        setState({...state, isLoading: false });
       });
   }
+  const handleOnSelect = (location:string, field:string) => (event) =>{
+    setState({ ...state, locations:{
+      ...state.locations, [location]: {...state.locations[location], [field]: event.target.value}
+    }})
+  }
 
-  renderTripsForm = () => {
-    const { fields, errors } = this.state;
-
+  const renderTripsForm = () => {
+    const { locations, dates, errors } = state;
     return (
       <React.Fragment>
-        <div className="form-cell">
-          <TextField
-            className="mdc-text-field--fullwidth"
-            outlined
-            label="Origin"
-            leadingIcon={<MaterialIcon role="button" icon="trip_origin" initRipple={null}/>}
-            helperText={
-              <HelperText
-                className="mdc-text-field-helper-text--validation-msg"
-                isValidationMessage={true}
-                persistent={true}
-                validation={true}>
-                {''}
-              </HelperText>}
-          >
-            <Input
-              value={fields.origin}
-              name="origin"
-              id="10"
-              type="text"
-              onChange={this.handleInputChange}
-            />
-          </TextField>
+        <div >
+          <SelectCountryRegionBox 
+            fields={locations.origin}
+            location="origin"
+            updateField={handleOnSelect}
+          />
         </div>
         <div className="form-cell">
-          <TextField
-            className="mdc-text-field--fullwidth"
-            outlined
-            label="Destination"
-            leadingIcon={<MaterialIcon role="button" icon="place" initRipple={null}/>}
-            helperText={
-              <HelperText
-                className="mdc-text-field-helper-text--validation-msg"
-                isValidationMessage={true}
-                persistent={true}
-                validation={true}>
-                {''}
-              </HelperText>}
-          >
-            <Input
-              value={fields.destination}
-              name="destination"
-              id="11"
-              type="text"
-              onChange={this.handleInputChange}
-            />
-          </TextField>
+          <SelectCountryRegionBox 
+            fields={locations.destination}
+            location="destination" 
+            updateField={handleOnSelect}
+          />
         </div>
         <div className="form-cell">
           <TextField
@@ -148,11 +118,11 @@ export class TripsPageForm extends React.Component<TripsPageFormProps, TripsPage
               </HelperText>}
           >
             <Input
-              value={fields.departure_date}
+              value={dates.departure_date}
               name="departure_date"
               id="12"
               type="text"
-              onChange={this.handleInputChange}
+              onChange={handleInputChange}
             />
           </TextField>
         </div>
@@ -172,11 +142,11 @@ export class TripsPageForm extends React.Component<TripsPageFormProps, TripsPage
               </HelperText>}
           >
             <Input
-              value={fields.arrival_date}
+              value={dates.arrival_date}
               name="arrival_date"
               id="12"
               type="text"
-              onChange={this.handleInputChange}
+              onChange={handleInputChange}
             />
           </TextField>
         </div>
@@ -184,8 +154,8 @@ export class TripsPageForm extends React.Component<TripsPageFormProps, TripsPage
     );
   }
 
-  render() {
-    const { isLoading } = this.state;
+  return (() => {
+    const { isLoading } = state;
 
     return (
       <div className="register">
@@ -195,54 +165,30 @@ export class TripsPageForm extends React.Component<TripsPageFormProps, TripsPage
           forwardLink={'/'}
           backwardLink={'/trips'}
         />
-        <Grid>
-          <Row>
-            <Cell
-              className="mdc-layout-grid__cell grid-start-5
-                      mdc-layout-grid__cell--align-middle"
-              columns={4}
-              desktopColumns={4}
-              tabletColumns={8}
-              phoneColumns={4}
-            >
+        <Container maxWidth="sm">
+          <Grid container direction="column" spacing={2}>
+            <Grid item xs>
               <h1 className="headline-2">Add a new trip</h1>
-            </Cell>
-          </Row>
-          <Row>
-          <Cell
-            className="mdc-layout-grid__cell grid-start-5 register__section mdc-layout-grid__cell--align-middle"
-            align="middle"
-            order={5}
-            columns={4}
-            desktopColumns={4}
-            tabletColumns={8}
-            phoneColumns={4}
-          >
-            {this.renderTripsForm()}
-          </Cell>
-        </Row>
-          <Row>
-            <Cell
-            className="mdc-layout-grid__cell grid-start-5 mdc-layout-grid__cell--span-2-desktop-hd"
-            desktopColumns={2}
-            order={1}
-            phoneColumns={2}
-            tabletColumns={2}
-            align="middle"
-          >
-            <Button
-              type="button"
-              name={isLoading ? 'Please wait...' : 'Add new trip'}
-              id="cc-register"
-              onClick={this.onSubmit}
-              classes="mdc-button big-round-corner-button mdc-button--raised"
-            />
-          </Cell>
-          </Row>
-        </Grid>
+            </Grid>
+            <Grid container direction="row" spacing={2}>
+              <Grid item xs>
+                {renderTripsForm()}
+              </Grid>
+            </Grid>
+            <Grid item xs >
+              <Button
+                  type="button"
+                  name={isLoading ? 'Please wait...' : 'Add new trip'}
+                  id="cc-register"
+                  onClick={onSubmit}
+                  classes="mdc-button big-round-corner-button mdc-button--raised"
+                />
+            </Grid>
+          </Grid>
+        </Container>
       </div>
     );
-  }
+  })()
 }
 
 export const mapStateToProps = state => ({

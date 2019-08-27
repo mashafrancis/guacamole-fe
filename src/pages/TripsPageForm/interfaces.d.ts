@@ -4,13 +4,22 @@ export interface TripsPageFormProps {
   error?: object;
 }
 
+interface Location {
+  country: string;
+  region: string;
+}
+
 export interface TripsPageFormState {
   isLoading: boolean;
   isValid: boolean;
   focused: boolean;
-  fields: {
-    [key: string]: string | number
+  locations: {
+    origin: Location,
+    destination: Location,
   };
+  dates: {
+    [key: string]: string | number
+  }
   errors: {
     [key: string]: string
   };
