@@ -227,7 +227,7 @@
     flex-direction: column;
     -webkit-justify-content: space-between;
     justify-content: space-between;
-    padding-top: 35%;
+    padding-top: 25%;
   }
 
   .card-header {
@@ -254,7 +254,7 @@
 
   @media (max-width: 539px) {
     .card-media {
-      padding-top: 23%;
+      padding-top: 13%;
     }
 
     .button-title {
@@ -280,7 +280,7 @@
 
     .mdc-card__actions {
       padding: 0 0 0 8px !important;
-      min-height: 22px !important;
+      min-height: 2px !important;
     }
   }
 }
@@ -349,7 +349,7 @@
   right: 24px;
   width: 56px;
   height: 56px;
-  color: #5f6368;
+  //color: #5f6368;
   border: none;
   border-radius: 50%;
   -webkit-transition-duration: 0.25s;
@@ -432,8 +432,8 @@
     border: 1px solid #fff;
     color: #fff;
     &:hover {
-      background: #3499ff;
-      border: 2px solid #3499ff;
+      background: #1967d2;
+      border: 2px solid #1967d2;
     }
   }
 }

@@ -116,7 +116,7 @@ export class HomePage extends React.Component<HomePageProps, HomePageState> {
           <div className="mdc-top-app-bar__row">
             <section className="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
               <span className="mdc-top-app-bar__title">
-                  <NavLink to={'/'} className="router-link-exact-active mdc-tab--active">kari4me</NavLink>
+                  <NavLink to={'/'} className="router-link-exact-active mdc-tab--active">Mobilities</NavLink>
               </span>
               <div className="mdc-tab-scroller mdc-tab-scroller--align-center carryforme-navigation">
                 <div className="mdc-tab-scroller__scroll-area mdc-tab-scroller__scroll-area--scroll">
@@ -144,7 +144,7 @@ export class HomePage extends React.Component<HomePageProps, HomePageState> {
           <Particles className="particles" params={particlesOptions}/>
           <div className="hero-container">
             <div className="hero-info">
-              <h1>You Fly, We Connect</h1>
+              <h1>You Travel, We Connect</h1>
               <h2>Fly anywhere and share your space.</h2>
               {authService.isAuthenticated() ? this.renderGoToDashboard() : this.renderJoinCommunity()}
             </div>

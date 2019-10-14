@@ -6,14 +6,14 @@ module.exports = {
   ],
   "globals": {
     "ts-jest": {
-      "useBabelrc": true
+      "babelConfig": true,
+      "tsConfig": '<rootDir>tsconfig.json',
     }
   },
   'transform': {
     '^.+\\.tsx?$': 'ts-jest'
   },
   'testRegex': '(roots/.*|(\\.|/)(test))\\.(ts|tsx)?$',
-  'moduleDirectories': ['utils', 'modules', 'node_modules'],
   'moduleFileExtensions': [
     'ts',
     'tsx',
@@ -51,5 +51,5 @@ module.exports = {
   ],
   'coveragePathIgnorePatterns': ['/node_modules', '<rootDir>/src/index.tsx', 'src/store/index.ts|rootReducer.ts'],
   'snapshotSerializers': ['enzyme-to-json/serializer'],
-  'setupTestFrameworkScriptFile': '<rootDir>/src/setupEnzyme.ts',
-};
+  'setupFilesAfterEnv': ['<rootDir>/src/setupEnzyme.ts'],
+}

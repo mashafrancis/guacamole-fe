@@ -6,6 +6,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 // pages
 import PageNotFound from 'components/PageNotFound';
+import EditSingleTripPage from 'pages/EditSingleTripPage';
 import ExplorePage from 'pages/ExplorePage';
 import ForgotPasswordPage from 'pages/ForgotPasswordPage';
 import HomePage from 'pages/HomePage';
@@ -33,6 +34,7 @@ const Routes = () => (
         <Route exact path="/trips" component={TripsPage} />
         <Route exact path="/preferences" component={PreferencePage} />
         <Route exact path="/trips/new-trip" component={TripsPageForm} />
+        <Route exact path="/trips/edit/:id" component={EditSingleTripPage} />
         <Route exatc path="/trips/:id" component={SingleTripPage} />
         <Route path="/404" component={PageNotFound} />
         <Redirect to="/404" />

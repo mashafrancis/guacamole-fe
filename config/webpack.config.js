@@ -43,7 +43,6 @@ const materialExternals = getMaterialExternals();
 module.exports = {
   entry: {
     main: path.join(__dirname, '..', 'src', 'index.tsx'),
-    styleGlobals: path.join(__dirname, '..', 'src/assets/scss/globals.scss')
   },
   output: {
     path: path.join(__dirname, '..', 'dist'),

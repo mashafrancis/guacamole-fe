@@ -8,6 +8,9 @@ import {
   DELETE_TRIP_FAILURE,
   DELETE_TRIP_REQUEST,
   DELETE_TRIP_SUCCESS,
+  EDIT_TRIP_FAILURE,
+  EDIT_TRIP_REQUEST,
+  EDIT_TRIP_SUCCESS,
   GET_SINGLE_TRIP_FAILURE,
   GET_SINGLE_TRIP_REQUEST,
   GET_SINGLE_TRIP_SUCCESS,
@@ -89,12 +92,26 @@ export interface DeleteTripActionFailure {
   errors: any;
 }
 
+export interface EditTripActionRequest {
+  type: EDIT_TRIP_REQUEST;
+}
+
+export interface EditTripActionSuccess {
+  trip: NewTrip;
+  type: EDIT_TRIP_SUCCESS;
+}
+
+export interface EditTripActionFailure {
+  type: EDIT_TRIP_FAILURE;
+  errors: any;
+}
+
 export interface Trip {
   id: string;
   origin: string;
   destination: string;
-  departure_date: string;
-  arrival_date: string;
+  departure_date: string | any;
+  arrival_date: string | any;
   traveller?: UserDetails;
 }
 

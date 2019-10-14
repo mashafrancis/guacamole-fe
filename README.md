@@ -6,7 +6,7 @@
 An online travel community to share luggage spaces onboard. (frontend)
 
 <br />
-<img width="1440" alt="Activo-Web-screenshot" src="https://res.cloudinary.com/mashafrancis/image/upload/v1551120929/kari4me/kari4me.png">
+<img width="1440" alt="Activo-Web-screenshot" src="https://res.cloudinary.com/mashafrancis/image/upload/v1562663927/kari4me/Screenshot_2019-07-09_at_12.17.50.png">
 <br />
 
 ## Description

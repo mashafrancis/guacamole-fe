@@ -8,9 +8,9 @@ body {
 }
 
 a {
-  color: #3499ff;
+  color: #1967d2;;
   &:hover, &:active, &:focus {
-    color: #3499ff;
+    color: #1967d2;;
     outline: none;
     text-decoration: none;
   }
@@ -60,7 +60,7 @@ h1, h2, h3, h4, h5, h6 {
     outline: none;
   }
   &:hover {
-    background: #3499ff;
+    background: #1967d2;;
     color: #fff;
   }
 }
@@ -199,8 +199,8 @@ h1, h2, h3, h4, h5, h6 {
     border: 1px solid #fff;
     color: #fff;
     &:hover {
-      background: #3499ff;
-      border: 2px solid #3499ff;
+      background: #1967d2;;
+      border: 2px solid #1967d2;;
     }
   }
 
@@ -335,7 +335,7 @@ h1, h2, h3, h4, h5, h6 {
       height: 2px;
       bottom: 0;
       left: 0;
-      background-color: #3499ff;
+      background-color: #1967d2;
       visibility: hidden;
       -webkit-transform: scaleX(0);
       transform: scaleX(0);
@@ -364,7 +364,7 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 13px;
         text-transform: none;
         &:hover {
-          background: #3499ff;
+          background: #1967d2;;
           color: #fff;
         }
       }
@@ -446,11 +446,11 @@ h1, h2, h3, h4, h5, h6 {
       cursor: pointer;
       color: #fff;
       &.fa-chevron-up {
-        color: #3499ff;
+        color: #1967d2;;
       }
     }
     .menu-item-active {
-      color: #3499ff;
+      color: #1967d2;;
     }
   }
 }
@@ -540,9 +540,9 @@ body.mobile-nav-active {
         flex-direction: column;
         text-align: center;
         border-radius: 50%;
-        border: 2px solid #3499ff;
+        border: 2px solid #1967d2;
         i {
-          color: #3499ff;
+          color: #1967d2;
           font-size: 24px;
         }
       }
@@ -581,7 +581,7 @@ body.mobile-nav-active {
     span {
       font-size: 48px;
       display: block;
-      color: #3499ff;
+      color: #1967d2;
     }
     p {
       padding: 0;
@@ -622,7 +622,7 @@ body.mobile-nav-active {
     text-align: center;
     width: 72px;
     height: 72px;
-    background: #3499ff;
+    background: #1967d2;
     a {
       display: inline-block;
     }
@@ -633,9 +633,9 @@ body.mobile-nav-active {
   }
   .box:hover .icon {
     background: #fff;
-    border: 2px solid #3499ff;
+    border: 2px solid #1967d2;;
     i, a {
-      color: #3499ff;
+      color: #1967d2;;
     }
   }
   .title {
@@ -657,7 +657,7 @@ body.mobile-nav-active {
 --------------------------------*/
 
 #contact {
-  background: #f7f7f7;
+  background: #1967d2;;
   padding: 80px 0 40px 0;
   #google-map {
     height: 300px;
@@ -667,7 +667,7 @@ body.mobile-nav-active {
     color: #333333;
     i {
       font-size: 32px;
-      color: #3499ff;
+      color: #1967d2;;
       float: left;
     }
     p {
