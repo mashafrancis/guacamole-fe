@@ -1,0 +1,40 @@
+{
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "description": "An online travel community to share luggage spaces onboard.",
+  "env": {
+    "APP_ENV": {
+      "required": true
+    },
+    "FIREBASE_API_KEY": {
+      "required": true
+    },
+    "FIREBASE_AUTH_DOMAIN": {
+      "required": true
+    },
+    "GUACAMOLE_API": {
+      "required": true
+    },
+    "NODE_ENV": {
+      "required": true
+    },
+    "SASS_PATH": {
+      "required": true
+    },
+    "TRACKING_ID": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "name": "mobilities",
+  "scripts": {
+  },
+  "stack": "heroku-18"
+}
