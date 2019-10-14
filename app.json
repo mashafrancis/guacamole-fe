@@ -1,13 +1,7 @@
 {
-  "addons": [
-
-  ],
-  "buildpacks": [
-    {
-      "url": "heroku/nodejs"
-    }
-  ],
+  "name": "mobilities",
   "description": "An online travel community to share luggage spaces onboard.",
+  "scripts": {},
   "env": {
     "APP_ENV": {
       "required": true
@@ -31,10 +25,12 @@
       "required": true
     }
   },
-  "formation": {
-  },
-  "name": "mobilities",
-  "scripts": {
-  },
+  "formation": {},
+  "addons": [],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
   "stack": "heroku-18"
 }

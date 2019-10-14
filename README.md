@@ -6,7 +6,7 @@
 An online travel community to share luggage spaces onboard. (frontend)
 
 <br />
-<img width="1440" alt="Activo-Web-screenshot" src="https://res.cloudinary.com/mashafrancis/image/upload/v1562663927/kari4me/Screenshot_2019-07-09_at_12.17.50.png">
+<img width="1440" alt="Mobilities-Screenshot" src="https://res.cloudinary.com/almondgreen/image/upload/v1571069023/Mobilities/Screenshot_2019-10-14_at_19.02.53_btvc2o.png">
 <br />
 
 ## Description
@@ -15,10 +15,10 @@ This is a travel tour luggage space sharing app for assisting different tourists
 ### Application Heroku Links
 
 -   Backend (Swagger Documentation):
-    [swagger-documentation](https://kari4me-api.herokuapp.com/)
+    [swagger-documentation](https://mobilities-api.herokuapp.com/)
 
 -   Frontend (Kari4me App Hosting):
-    [kari4me react web app](https://kari4me.herokuapp.com/)
+    [mobilities react web app](https://mobilities-staging.herokuapp.com/)
 
 -   Postman collection
     <br />

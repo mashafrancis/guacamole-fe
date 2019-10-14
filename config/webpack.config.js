@@ -1,44 +1,18 @@
 const path = require('path');
-const autoprefixer = require('autoprefixer');
-const {readMaterialPackages} = require('../scripts/package-json-reader');
-const {convertToImportMDCWebPaths} = require('../scripts/package-name-converter');
-const {getDirectories} = require('../scripts/directory-reader');
 const {importer} = require('./webpack.util');
 const {
   cleanWebpack,
-  environmentPlugin,
   htmlWebpack,
   miniCssExtract,
   miniCssExtractPlugin,
   hashedPlugin,
-  // definePlugin,
-  terserPlugin,
-  noEmitOnErrorsPlugin,
+  manifestPlugin,
+  swPlugin,
+  copyPlugin
 } = require('./webpack.plugins');
 
-const isDevMode = process.env.NODE_ENV !== 'production';
-
-function getReactMaterialExternals() {
-  return getDirectories('./node_modules/@material').map((directory) => (
-    `react-${path.parse(directory).name}`
-  ));
-}
-
-function getMaterialExternals() {
-  const externals = {};
-  const importPaths = convertToImportMDCWebPaths(readMaterialPackages());
-  importPaths.forEach((importPath) => {
-    externals[importPath] = `${importPath}.js`;
-  });
-
-  getReactMaterialExternals().forEach((path) => {
-    externals[`@material/${path}`] = `@material/${path}/dist/index.js`;
-  });
-
-  return externals;
-}
-
-const materialExternals = getMaterialExternals();
+const isDevMode = process.env.APP_ENV !== 'production';
+const PUBLIC_PATH = process.env.PUBLIC_URL;
 
 module.exports = {
   entry: {
@@ -47,14 +21,11 @@ module.exports = {
   output: {
     path: path.join(__dirname, '..', 'dist'),
     filename: '[name].[hash:8].js',
-    publicPath: '/'
+    publicPath: PUBLIC_PATH
   },
-  stats: {
-   entrypoints: false,
-   children: false
-  },
-  externals: {
-    materialExternals,
+  optimization: {
+    noEmitOnErrors: true,
+    namedChunks: true,
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
@@ -88,7 +59,7 @@ module.exports = {
             loader: 'postcss-loader',
             options: {
               plugins: () => [require('autoprefixer')({
-                'browsers': ['> 1%', 'last 2 versions']
+                'overrideBrowserslist': ['> 1%', 'last 2 versions']
               })],
             }
           },
@@ -126,13 +97,12 @@ module.exports = {
     ]
   },
   plugins: [
-    environmentPlugin,
     htmlWebpack,
     hashedPlugin,
-    // definePlugin,
     cleanWebpack,
     miniCssExtract,
-    terserPlugin,
-    noEmitOnErrorsPlugin
+    manifestPlugin,
+    swPlugin,
+    copyPlugin
   ]
 };

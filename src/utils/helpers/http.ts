@@ -11,7 +11,7 @@ const headers = {
 };
 
 const http = axios.create({
-  baseURL: 'https://kari4me-api.herokuapp.com/api/',
+  baseURL: 'https://mobilities-api.herokuapp.com/',
   headers: authService.isAuthenticated() ? headers : '',
 });
 

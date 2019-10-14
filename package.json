@@ -4,7 +4,7 @@
   "description": "An online travel community to share luggage spaces onboard.",
   "main": "index.js",
   "scripts": {
-    "start:dev": "webpack-dev-server --config config/webpack.dev.js --mode development --host kari4me.com",
+    "start:dev": "webpack-dev-server --config config/webpack.dev.js --mode development --host mobilities.com",
     "start:prod": "node server.js",
     "start": "node server.js",
     "start:heroku": "node --optimize_for_size --max_old_space_size=920 --gc_interval=100 server.js",
@@ -63,6 +63,7 @@
     "classnames": "^2.2.6",
     "codecov": "^3.5.0",
     "cookies-js": "^1.2.3",
+    "cors": "^2.8.5",
     "countries-list": "^2.4.3",
     "cross-env": "^5.2.0",
     "cssnano": "^4.1.10",
