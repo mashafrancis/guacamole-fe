@@ -6,30 +6,54 @@ const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const miniCssExtractPlugin = require('mini-css-extract-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
+const PUBLIC_PATH = process.env.PUBLIC_URL;
 
 // instantiating webpack dependencies
 const cleanWebpack = new CleanWebpackPlugin();
 const htmlWebpack = new htmlWebpackPlugin({
-  template: 'src/index.html',
-  title: 'kari4me',
+  template: './public/index.html',
+  filename: 'index.html',
+  inject: 'body',
+  title: 'Mobilities',
+  favicon: './public/favicon.png',
   minify: {
     removeComments: true,
     collapseWhitespace: true
   },
 });
-const noEmitOnErrorsPlugin = new webpack.NoEmitOnErrorsPlugin();
-const namedModulesPlugin = new webpack.NamedModulesPlugin();
 const hotModuleReplacementPlugin = new webpack.HotModuleReplacementPlugin();
 const miniCssExtract = new miniCssExtractPlugin();
-const progressPlugin = new webpack.ProgressPlugin();
 const hashedPlugin = new webpack.HashedModuleIdsPlugin();
-const terserPlugin = new TerserPlugin({
-  parallel: true,
-  terserOptions: {
-    ecma: 6,
-  },
+const manifestPlugin = new ManifestPlugin({
+  fileName: './public/asset-manifest.json', // Not to confuse with manifest.json
 });
+
+const swPlugin = new SWPrecacheWebpackPlugin({
+  // By default, a cache-busting query parameter is appended to requests
+  // used to populate the caches, to ensure the responses are fresh.
+  // If a URL is already hashed by Webpack, then there is no concern
+  // about it being stale, and the cache-busting can be skipped.
+  dontCacheBustUrlsMatching: /\.\w{8}\./,
+  filename: 'service-worker.js',
+  logger(message) {
+    if (message.indexOf('Total precache size is') === 0) {
+      // This message occurs for every build and is a bit too noisy.
+      return;
+    }
+    console.log(message);
+  },
+  minify: true, // minify and uglify the script
+  navigateFallback: PUBLIC_PATH + 'index.html',
+  staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
+});
+
+const copyPlugin = new CopyWebpackPlugin([
+  { from: 'src/pwa' }, // define the path of the files to be copied
+]);
 
 // const dotEnv = new DotEnv();
 const environmentPlugin = new webpack.EnvironmentPlugin();
@@ -46,15 +70,14 @@ const env = dotenv.config().parsed;
 // const definePlugin = new webpack.DefinePlugin(envKeys);
 
 module.exports = {
-  progressPlugin,
   cleanWebpack,
-  environmentPlugin,
+  // definePlugin,
   htmlWebpack,
-  namedModulesPlugin,
-  hotModuleReplacementPlugin,
   miniCssExtract,
   miniCssExtractPlugin,
+  hotModuleReplacementPlugin,
   hashedPlugin,
-  terserPlugin,
-  noEmitOnErrorsPlugin,
+  manifestPlugin,
+  swPlugin,
+  copyPlugin,
 };
