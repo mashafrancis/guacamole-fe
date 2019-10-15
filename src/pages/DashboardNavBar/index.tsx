@@ -7,9 +7,12 @@ import Drawer, {
   DrawerHeader,
 } from '@material/react-drawer';
 import List, {
+  ListDivider,
+  ListGroup,
+  ListGroupSubheader,
   ListItem,
   ListItemGraphic,
-  ListItemText
+  ListItemText,
 } from '@material/react-list';
 import MaterialIcon from '@material/react-material-icon';
 import MenuSurface, { Corner } from '@material/react-menu-surface';
@@ -30,6 +33,9 @@ import './DashboardNavBar.scss';
 
 // helpers
 import authorize from 'utils/helpers/authorize';
+
+const avatar = 'https://res.cloudinary.com/mashafrancis/image/upload/v1552641620/kari4me/nan.jpg';
+const viewPort = window.innerWidth;
 
 const DashboardNavBar: React.SFC<DashboardNavBarProps> = (props) => {
   const [state, setState] = React.useState<DashboardNavBarState>({
@@ -53,6 +59,8 @@ const DashboardNavBar: React.SFC<DashboardNavBarProps> = (props) => {
   const onSelectedIndex = () => {
     setState({ ...state, selectedIndex: 1 });
   };
+
+  const { user, logoutUser } = props;
 
   /**
    * Checks the permissions and redirects users
@@ -119,6 +127,8 @@ const DashboardNavBar: React.SFC<DashboardNavBarProps> = (props) => {
 
   const drawerContent = () => (
     <React.Fragment>
+      <ListGroup>
+        <ListDivider tag="div" />
       <List
         singleSelection
         selectedIndex={state.selectedIndex}
@@ -132,8 +142,8 @@ const DashboardNavBar: React.SFC<DashboardNavBarProps> = (props) => {
         </NavLink>
         <NavLink to={'/trips'}>
           <ListItem className="mdc-list-item" onClick={onDrawerOpenClose}>
-            <ListItemGraphic graphic={<MaterialIcon icon="flight" initRipple={null}/>}/>
-            <ListItemText primaryText="Trips"/>
+            <ListItemGraphic graphic={<MaterialIcon icon="card_travel" initRipple={null}/>}/>
+            <ListItemText primaryText="Travels"/>
           </ListItem>
         </NavLink>
         <NavLink to={'/preferences'}>
@@ -143,6 +153,56 @@ const DashboardNavBar: React.SFC<DashboardNavBarProps> = (props) => {
           </ListItem>
         </NavLink>
       </List>
+        <ListDivider tag="div" />
+        <NavLink to={'/settings'}>
+          <ListItem className="mdc-list-item" onClick={onDrawerOpenClose}>
+            <ListItemText primaryText="Kenya"/>
+          </ListItem>
+        </NavLink>
+        <NavLink to={'/notifications'}>
+          <ListItem onClick={onDrawerOpenClose}>
+            <ListItemText primaryText="East Africa"/>
+          </ListItem>
+        </NavLink>
+        <NavLink to={'/notifications'}>
+          <ListItem onClick={onDrawerOpenClose}>
+            <ListItemText primaryText="World"/>
+          </ListItem>
+        </NavLink>
+
+        <ListDivider tag="div" />
+        <NavLink to={'/settings'}>
+          <ListItem className="mdc-list-item" onClick={onDrawerOpenClose}>
+            <ListItemText primaryText="Settings"/>
+          </ListItem>
+        </NavLink>
+        <NavLink to={'/notifications'}>
+          <ListItem onClick={onDrawerOpenClose}>
+            <ListItemText primaryText="Send feedback"/>
+            <ListItemGraphic graphic={<MaterialIcon className="drawer-more-info"  icon="launch"/>} />
+          </ListItem>
+        </NavLink>
+        <NavLink to={'/notifications'}>
+          <ListItem onClick={onDrawerOpenClose}>
+            <ListItemText primaryText="Help"/>
+            <ListItemGraphic graphic={<MaterialIcon className="drawer-more-info"  icon="launch"/>} />
+          </ListItem>
+        </NavLink>
+        <ListItem onClick={props.logoutUser}>
+          <ListItemText primaryText="Logout"/>
+          <ListItemGraphic graphic={<MaterialIcon className="drawer-more-info"  icon="exit_to_app"/>} />
+        </ListItem>
+      </ListGroup>
+    </React.Fragment>
+  );
+
+  const drawerHeader = () => (
+    <React.Fragment>
+      <DrawerHeader>
+        <div className="drawer-logo">
+          <h2 className="mdc-typography--headline6">Mobilities</h2>
+        </div>
+      </DrawerHeader>
     </React.Fragment>
   );
 
@@ -154,11 +214,7 @@ const DashboardNavBar: React.SFC<DashboardNavBarProps> = (props) => {
         onClose={onDrawerOpenClose}
         // innerRef={this.drawerEl}
       >
-        <DrawerHeader>
-          <div className="drawer-logo">
-            <h2 className="mdc-typography--headline6">Mobilities</h2>
-          </div>
-        </DrawerHeader>
+        {drawerHeader()}
         <DrawerContent>
           {drawerContent()}
         </DrawerContent>

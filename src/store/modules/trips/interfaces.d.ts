@@ -112,6 +112,7 @@ export interface Trip {
   destination: string;
   departure_date: string | any;
   arrival_date: string | any;
+  space_available: string;
   traveller?: UserDetails;
 }
 
@@ -120,4 +121,5 @@ export interface NewTrip {
   destination: string;
   departure_date: string;
   arrival_date: string;
+  space_available?: string;
 }

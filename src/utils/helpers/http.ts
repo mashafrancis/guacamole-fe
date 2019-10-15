@@ -11,7 +11,8 @@ const headers = {
 };
 
 const http = axios.create({
-  baseURL: 'https://mobilities-api.herokuapp.com/',
+  // baseURL: 'http://localhost:8000/api/',
+  baseURL: 'https://mobilities-api.herokuapp.com/api/',
   headers: authService.isAuthenticated() ? headers : '',
 });
 

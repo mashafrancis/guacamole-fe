@@ -1,0 +1,84 @@
+.user-trip-card {
+  margin-bottom: 8px;
+  border-radius: 8px;
+  background-color: rgba(241, 241, 241, 0.45);
+  border: 1px solid #dadce0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2), 0 0 0 0 rgba(0, 0, 0, 0.14), 0 0 0 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2), 0 0 0 0 rgba(0, 0, 0, 0.14), 0 0 0 0 rgba(0, 0, 0, 0.12);
+
+  .mdc-card {
+    border-radius: 8px;
+    border: 0.4px solid #dadce0;
+
+  }
+
+  .card-header {
+    background: rgba(244, 249, 255, 0);
+    padding: 14px 14px 2px;
+
+    &__head {
+      color: #000000;
+      font: 500 16px/18px 'Google Sans', Roboto, Arial, sans-serif;
+      letter-spacing: normal;
+      padding-bottom: 7px;
+    }
+
+    &__subhead {
+      color: #202020;
+      font-size: 14px;
+      font-weight: 300;
+
+      h5 {
+        margin: 0;
+      }
+    }
+  }
+
+  .card-header__main {
+    color: #202020;
+    font: 500 20px/24px 'Google Sans', Roboto, Arial, sans-serif;
+    letter-spacing: normal;
+    padding-bottom: 7px;
+  }
+}
+
+@media (max-width: 539px) {
+  .card-media {
+    padding-top: 18%;
+  }
+
+  .button-title {
+    font-size: 14px;
+  }
+
+  .card-header {
+    background: black;
+    padding: 16px;
+
+    &__main {
+      color: white;
+      font: 500 16px/18px 'Google Sans', Roboto, Arial, sans-serif;
+      letter-spacing: normal;
+      padding-bottom: 7px;
+    }
+
+    &__sub {
+      color: white;
+      font-size: 12px;
+    }
+  }
+
+  .mdc-card__actions {
+    padding: 0 0 0 8px !important;
+    min-height: 2px !important;
+  }
+}

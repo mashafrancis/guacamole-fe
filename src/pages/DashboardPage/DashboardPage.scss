@@ -27,7 +27,7 @@
   }
 
   .mdc-list-item {
-    height: 48px !important;
+    height: 40px !important;
   }
 
   .mdc-layout-grid {
@@ -42,6 +42,14 @@
   .mdc-card {
     border-radius: 8px;
     border: 1px solid #dadce0;
+  }
+
+  .MuiTypography-body1 {
+    font-size: 0.9rem;
+    font-family: "Google Sans", Roboto, Arial, sans-serif !important;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.00938em;
   }
 
   .dashboard-nav {
@@ -231,7 +239,7 @@
   }
 
   .card-header {
-    background: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.7));
+    background: linear-gradient(rgba(0,0,0,0), rgb(0, 0, 0));
     padding: 16px;
 
     &__main {
@@ -254,7 +262,11 @@
 
   @media (max-width: 539px) {
     .card-media {
-      padding-top: 13%;
+      padding-top: 18%;
+    }
+
+    .user-trip-cards {
+      margin-top: 60px
     }
 
     .button-title {
@@ -262,7 +274,7 @@
     }
 
     .card-header {
-      background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .7));
+      background: linear-gradient(rgba(0, 0, 0, 0), rgb(0, 0, 0));
       padding: 16px;
 
       &__main {
