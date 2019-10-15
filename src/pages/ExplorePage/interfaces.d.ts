@@ -10,6 +10,7 @@ export interface ExplorePageProps {
     dateObject: object;
     push: (path: string, state?: object) => void;
   };
+  requestTrip: (tripId: string) => Promise<any>;
 }
 
 export interface ExplorePageState {

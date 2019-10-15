@@ -16,7 +16,7 @@ import TripCard from 'components/TripCard';
 
 // thunks
 import { displaySnackMessage } from 'modules/snack';
-import { getAllTrips } from 'modules/trips';
+import { getAllTrips, requestTrip } from 'modules/trips';
 
 // pages
 import DashboardPage from 'pages/DashboardPage';
@@ -39,6 +39,11 @@ export class ExplorePage extends React.Component<ExplorePageProps, ExplorePageSt
 
   redirectToSingleTrip = (trip_id) => {
     this.props.history.push(`/trips/${trip_id}`);
+  }
+
+  handleSubmitTripRequest = (tripId) => {
+    this.setState({ isLoading: false });
+    this.props.requestTrip(tripId);
   }
 
   renderSearchField = () => (
@@ -103,6 +108,7 @@ export class ExplorePage extends React.Component<ExplorePageProps, ExplorePageSt
                   key={trip.id}
                   trip={trip}
                   redirect={this.redirectToSingleTrip}
+                  requestTrip={this.handleSubmitTripRequest}
                 />
               );
             })
@@ -134,6 +140,7 @@ export const mapStateToProps = state => ({
 export const mapDispatchToProps = dispatch => ({
   getAllTrips: () => dispatch(getAllTrips()),
   displaySnackMessage: message => dispatch(displaySnackMessage(message)),
+  requestTrip: tripId => dispatch(requestTrip(tripId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExplorePage);

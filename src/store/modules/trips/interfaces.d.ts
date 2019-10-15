@@ -20,6 +20,8 @@ import {
   GET_USER_TRIPS_FAILURE,
   GET_USER_TRIPS_REQUEST,
   GET_USER_TRIPS_SUCCESS,
+  REQUEST_TRIP_REQUEST,
+  REQUEST_TRIP_SUCCESS,
 } from './types';
 
 export interface GetAllTripsActionRequest {
@@ -122,4 +124,17 @@ export interface NewTrip {
   departure_date: string;
   arrival_date: string;
   space_available?: string;
+}
+
+export interface RequestTripActionRequest {
+  type: REQUEST_TRIP_REQUEST;
+}
+
+export interface RequestTripActionSuccess {
+  type: REQUEST_TRIP_SUCCESS;
+}
+
+export interface RequestTripActionFailure {
+  type: REQUEST_TRIP_FAILURE;
+  errors: any;
 }

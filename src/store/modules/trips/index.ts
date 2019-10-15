@@ -21,6 +21,9 @@ import {
   GetUserTripsActionFailure,
   GetUserTripsActionRequest,
   GetUserTripsActionSuccess,
+  RequestTripActionFailure,
+  RequestTripActionRequest,
+  RequestTripActionSuccess,
   Trip,
 } from './interfaces';
 
@@ -44,6 +47,9 @@ import {
   GET_USER_TRIPS_FAILURE,
   GET_USER_TRIPS_REQUEST,
   GET_USER_TRIPS_SUCCESS,
+  REQUEST_TRIP_FAILURE,
+  REQUEST_TRIP_REQUEST,
+  REQUEST_TRIP_SUCCESS
 } from './types';
 
 /**
@@ -226,6 +232,36 @@ export const editTripFailure = (errors): EditTripActionFailure => ({
   type: EDIT_TRIP_FAILURE,
 });
 
+/**
+ * Request a trip request
+ *
+ * @returns {RequestTripActionRequest}
+ */
+const requestTripRequest = (): RequestTripActionRequest => ({
+  type: REQUEST_TRIP_REQUEST,
+});
+
+/**
+ * Request a trip success
+ *
+ * @param {tripId} string
+ * @returns {RequestTripActionSuccess}
+ */
+const requestTripSuccess = (): RequestTripActionSuccess => ({
+  type: REQUEST_TRIP_SUCCESS,
+});
+
+/**
+ * Request a trip failure
+ *
+ * @param {errors} any
+ * @returns {RequestTripActionFailure}
+ */
+const requestTripFailure = (errors: any): RequestTripActionFailure => ({
+  errors,
+  type: REQUEST_TRIP_FAILURE,
+});
+
 // actions
 /**
  * Thunk action creator
@@ -340,6 +376,25 @@ export const editTrip = trip => (dispatch, getState, http) => {
     })
     .catch((errors) => {
       dispatch(editTripFailure(errors));
+      dispatch(displaySnackMessage('Sorry! Something went wrong. Kindly try again'));
+    });
+};
+
+/**
+ * Thunk action creator
+ * Add a new trips
+ *
+ * @returns {Function} action type and payload
+ */
+export const requestTrip = tripId => (dispatch, getState, http) => {
+  dispatch(requestTripRequest());
+  return http.put(`trips/${tripId}/request`)
+    .then((response) => {
+      dispatch(requestTripSuccess());
+      dispatch(displaySnackMessage(response.data.message));
+    })
+    .catch((error) => {
+      dispatch(requestTripFailure(error));
       dispatch(displaySnackMessage('Sorry! Something went wrong. Kindly try again'));
     });
 };
@@ -461,6 +516,22 @@ const reducer = (state = tripsInitialState, action) => {
         ...state,
         errors: action.errors,
         isLoading: false,
+      };
+    case REQUEST_TRIP_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case REQUEST_TRIP_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+      };
+    case REQUEST_TRIP_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        errors: action.errors,
       };
     default:
       return state;
