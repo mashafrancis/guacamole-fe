@@ -25,12 +25,7 @@ export interface EditSingleTripPageState {
     origin: Location,
     destination: Location,
   };
-  tripToEdit: {
-    origin: string;
-    destination: string;
-    departure_date: string;
-    arrival_date: string;
-  };
+  trip: Trip;
 }
 
 interface Location {

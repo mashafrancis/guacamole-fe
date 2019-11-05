@@ -7,9 +7,12 @@ import Drawer, {
   DrawerHeader,
 } from '@material/react-drawer';
 import List, {
+  ListDivider,
+  ListGroup,
+  ListGroupSubheader,
   ListItem,
   ListItemGraphic,
-  ListItemText
+  ListItemText,
 } from '@material/react-list';
 import MaterialIcon from '@material/react-material-icon';
 import MenuSurface, { Corner } from '@material/react-menu-surface';
@@ -30,6 +33,9 @@ import './DashboardNavBar.scss';
 
 // helpers
 import authorize from 'utils/helpers/authorize';
+
+const avatar = 'https://res.cloudinary.com/mashafrancis/image/upload/v1552641620/kari4me/nan.jpg';
+const viewPort = window.innerWidth;
 
 const DashboardNavBar: React.SFC<DashboardNavBarProps> = (props) => {
   const [state, setState] = React.useState<DashboardNavBarState>({
@@ -53,6 +59,12 @@ const DashboardNavBar: React.SFC<DashboardNavBarProps> = (props) => {
   const onSelectedIndex = () => {
     setState({ ...state, selectedIndex: 1 });
   };
+
+  const onDrawerOpen = () => {
+    setState({ ...state, isDrawerOpen: true });
+  };
+
+  const { user, logoutUser } = props;
 
   /**
    * Checks the permissions and redirects users
@@ -78,13 +90,10 @@ const DashboardNavBar: React.SFC<DashboardNavBarProps> = (props) => {
     <TopAppBar className="dashboard-nav">
       <TopAppBarRow>
         <TopAppBarSection align="start">
+          {(viewPort < 539) &&
           <TopAppBarIcon navIcon tabIndex={0}>
-            <MaterialIcon
-              onClick={() => setState({ ...state, isDrawerOpen: true })}
-              hasRipple icon="menu"
-              initRipple={null}
-            />
-          </TopAppBarIcon>
+            <MaterialIcon onClick={onDrawerOpen} hasRipple icon="menu" initRipple={null}/>
+          </TopAppBarIcon>}
           <TopAppBarTitle>
             <NavLink to={'/'}>Mobilities</NavLink>
           </TopAppBarTitle>
@@ -119,6 +128,8 @@ const DashboardNavBar: React.SFC<DashboardNavBarProps> = (props) => {
 
   const drawerContent = () => (
     <React.Fragment>
+      <ListGroup>
+        {(viewPort < 539) && <ListDivider tag="div" />}
       <List
         singleSelection
         selectedIndex={state.selectedIndex}
@@ -132,8 +143,8 @@ const DashboardNavBar: React.SFC<DashboardNavBarProps> = (props) => {
         </NavLink>
         <NavLink to={'/trips'}>
           <ListItem className="mdc-list-item" onClick={onDrawerOpenClose}>
-            <ListItemGraphic graphic={<MaterialIcon icon="flight" initRipple={null}/>}/>
-            <ListItemText primaryText="Trips"/>
+            <ListItemGraphic graphic={<MaterialIcon icon="card_travel" initRipple={null}/>}/>
+            <ListItemText primaryText="Travels"/>
           </ListItem>
         </NavLink>
         <NavLink to={'/preferences'}>
@@ -143,22 +154,72 @@ const DashboardNavBar: React.SFC<DashboardNavBarProps> = (props) => {
           </ListItem>
         </NavLink>
       </List>
+        <ListDivider tag="div" />
+        <NavLink to={'/settings'}>
+          <ListItem className="mdc-list-item" onClick={onDrawerOpenClose}>
+            <ListItemGraphic graphic={<MaterialIcon icon="flag" initRipple={null}/>}/>
+            <ListItemText primaryText="Kenya"/>
+          </ListItem>
+        </NavLink>
+        <NavLink to={'/notifications'}>
+          <ListItem onClick={onDrawerOpenClose}>
+            <ListItemGraphic graphic={<MaterialIcon icon="outlined_flag" initRipple={null}/>}/>
+            <ListItemText primaryText="East Africa"/>
+          </ListItem>
+        </NavLink>
+        <NavLink to={'/notifications'}>
+          <ListItem onClick={onDrawerOpenClose}>
+            <ListItemGraphic graphic={<MaterialIcon icon="public" initRipple={null}/>}/>
+            <ListItemText primaryText="World"/>
+          </ListItem>
+        </NavLink>
+
+        <ListDivider tag="div" />
+        <NavLink to={'/settings'}>
+          <ListItem className="mdc-list-item" onClick={onDrawerOpenClose}>
+            <ListItemGraphic graphic={<MaterialIcon className="drawer-more-info"  icon="settings_applications"/>} />
+            <ListItemText primaryText="Settings"/>
+          </ListItem>
+        </NavLink>
+        <NavLink to={'/notifications'}>
+          <ListItem onClick={onDrawerOpenClose}>
+            <ListItemGraphic graphic={<MaterialIcon className="drawer-more-info"  icon="launch"/>} />
+            <ListItemText primaryText="Send feedback"/>
+          </ListItem>
+        </NavLink>
+        <NavLink to={'/notifications'}>
+          <ListItem onClick={onDrawerOpenClose}>
+            <ListItemGraphic graphic={<MaterialIcon className="drawer-more-info"  icon="launch"/>} />
+            <ListItemText primaryText="Help"/>
+          </ListItem>
+        </NavLink>
+        <ListItem onClick={props.logoutUser}>
+          <ListItemGraphic graphic={<MaterialIcon className="drawer-more-info"  icon="exit_to_app"/>} />
+          <ListItemText primaryText="Logout"/>
+        </ListItem>
+      </ListGroup>
+    </React.Fragment>
+  );
+
+  const drawerHeader = () => (
+    <React.Fragment>
+      <DrawerHeader>
+        <div className="drawer-logo">
+          <h2 className="mdc-typography--headline6">Mobilities</h2>
+        </div>
+      </DrawerHeader>
     </React.Fragment>
   );
 
   return (
     <div className="dashboard">
       <Drawer
-        modal
+        modal = {(viewPort < 539)}
         open={state.isDrawerOpen}
         onClose={onDrawerOpenClose}
         // innerRef={this.drawerEl}
       >
-        <DrawerHeader>
-          <div className="drawer-logo">
-            <h2 className="mdc-typography--headline6">Mobilities</h2>
-          </div>
-        </DrawerHeader>
+        {drawerHeader()}
         <DrawerContent>
           {drawerContent()}
         </DrawerContent>

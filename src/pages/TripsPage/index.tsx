@@ -18,8 +18,9 @@ import { Link, NavLink } from 'react-router-dom';
 import DashboardPage from 'pages/DashboardPage';
 
 // components
-import Loader from 'components/Loader';
+import LazyLoader from 'components/LazyLoader';
 import Table from 'components/Table';
+import UserTripCard from 'components/UserTripCard';
 
 // thunks
 import { displaySnackMessage } from 'modules/snack';
@@ -42,6 +43,7 @@ export const TripsPage: React.FunctionComponent<TripsPageProps> = (props) => {
       destination: '',
       departure_date: '',
       arrival_date: '',
+      space_available: '',
     },
     action: '',
     trip_id: '',
@@ -135,6 +137,27 @@ export const TripsPage: React.FunctionComponent<TripsPageProps> = (props) => {
     </div>
   );
 
+  const renderUserTripsMobile = trips => (
+    <React.Fragment>
+      <LazyLoader height={110}>
+        <div className="user-trip-cards">
+        {
+          trips.map((trip) => {
+            return (
+             <UserTripCard
+               key={trip.id}
+               trip={trip}
+               match={props.match}
+               onDelete={() => setState({ ...state, trip_id: trip.id, isDeleteModal: true })}
+             />
+            );
+          })
+        }
+        </div>
+      </LazyLoader>
+    </React.Fragment>
+  );
+
   const renderUserTrips = (trips) => {
     const tableHeaders = {
       Origin: { valueKey: 'origin', colWidth: '30' },
@@ -154,12 +177,17 @@ export const TripsPage: React.FunctionComponent<TripsPageProps> = (props) => {
     }));
 
     return (
-      <div className="user-trips-table">
-        <Table
-          keys={tableHeaders}
-          values={tableValues}
-        />
-      </div>
+      (window.innerWidth < 539)
+        ? renderUserTripsMobile(trips)
+        :
+        <LazyLoader height={110}>
+        <div className="user-trips-table">
+          <Table
+            keys={tableHeaders}
+            values={tableValues}
+          />
+        </div>
+        </LazyLoader>
     );
   };
 
@@ -176,10 +204,10 @@ export const TripsPage: React.FunctionComponent<TripsPageProps> = (props) => {
     </React.Fragment>
   );
 
-  const renderBodyContent = () => {
+  const renderTripsComponent = () => {
     return (
       <Grid>
-          <Row>
+        <Row>
             <Cell
               className="mdc-layout-grid__cell grid-start-5
                       mdc-layout-grid__cell--align-middle"
@@ -199,14 +227,15 @@ export const TripsPage: React.FunctionComponent<TripsPageProps> = (props) => {
           </Row>
         <Row>
           <Cell
-              className="mdc-layout-grid__cell grid-start-3
-                      mdc-layout-grid__cell--align-middle"
-              columns={4}
-              desktopColumns={8}
-              tabletColumns={8}
-              phoneColumns={4}
-            >
-        {props.trips.length < 1 || undefined ? blankContent() : renderUserTrips(props.trips)}
+            columns={12}
+            desktopColumns={12}
+            tabletColumns={8}
+            phoneColumns={4}
+          >
+            {DeleteModal()}
+            {!props.trips.length || undefined
+              ? blankContent()
+              : renderUserTrips(props.trips)}
           </Cell>
         </Row>
         <Row>
@@ -215,24 +244,6 @@ export const TripsPage: React.FunctionComponent<TripsPageProps> = (props) => {
               <Fab className="create-trip-button" icon={<MaterialIcon icon="add" initRipple={null}/>}
               />
             </NavLink>
-          </Cell>
-        </Row>
-      </Grid>
-    );
-  };
-
-  const renderTripsComponent = () => {
-    return (
-      <Grid>
-        <Row>
-          <Cell
-            columns={12}
-            desktopColumns={12}
-            tabletColumns={8}
-            phoneColumns={4}
-          >
-            {DeleteModal()}
-            {renderBodyContent()}
           </Cell>
         </Row>
       </Grid>

@@ -6,3 +6,23 @@
   border-radius: rem(10px);
   box-shadow: rem(1px) rem(1px) rem(81px) rgba(41, 60, 74, 0.18);
 }
+
+.MuiTypography-body1 {
+  font-size: 0.9rem;
+  font-family: "Google Sans", Roboto, Arial, sans-serif !important;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+}
+
+.MuiInputBase-input {
+  font-family: "Google Sans", Roboto, Arial, sans-serif !important;
+}
+
+.MuiIconButton-root {
+    padding: 12px 12px 12px 0 !important;
+}
+
+.makeStyles-formControl-2481 {
+  margin: 8px 8px 8px 0 !important;
+}

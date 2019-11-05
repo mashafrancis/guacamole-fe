@@ -16,4 +16,3 @@ export interface DashboardNavBarState {
   selectedIndex: number;
   isLoading: boolean;
 }
-

@@ -6,13 +6,12 @@ import {
   Container,
   Grid,
   IconButton,
-  InputAdornment
+  InputAdornment,
 } from '@material-ui/core';
 import {
   DatePicker,
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
-import { Cell, Row } from '@material/react-layout-grid';
 import MaterialIcon from '@material/react-material-icon';
 import { connect } from 'react-redux';
 
@@ -20,6 +19,7 @@ import { connect } from 'react-redux';
 import AuthHeader from 'components/AuthHeader';
 import Button from 'components/Button';
 import { SelectCountryRegionBox } from 'components/SelectBox';
+import { SelectLuggageSpace } from 'components/SelectLuggageSpace';
 
 // thunks
 import { displaySnackMessage } from 'modules/snack';
@@ -28,10 +28,10 @@ import { addNewTrip } from 'modules/trips';
 // styles
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
+import './TripsPageForm.scss';
 
 // interfaces
 import { TripsPageFormProps, TripsPageFormState } from './interfaces';
-import './TripsPageForm.scss';
 
 export const TripsPageForm: React.FunctionComponent<TripsPageFormProps> = (props) => {
   const [state, setState] = React.useState<TripsPageFormState>({
@@ -56,6 +56,10 @@ export const TripsPageForm: React.FunctionComponent<TripsPageFormProps> = (props
   const [selectedDepartureDate, handleDepartureDateChange] = React.useState(new Date());
   const [selectedArrivalDate, handleArrivalDateChange] = React.useState(new Date());
 
+  const [selectedSpace, setSpace] = React.useState({
+    space: '',
+  });
+
   /**
    * Handles the submission on successful validation
    *
@@ -71,6 +75,7 @@ export const TripsPageForm: React.FunctionComponent<TripsPageFormProps> = (props
       destination: `${Object.values(locations.destination).join(',')}` as string,
       departure_date: selectedDepartureDate,
       arrival_date: selectedArrivalDate,
+      space_available: selectedSpace.space,
     };
 
     setState({ ...state, isLoading: true });
@@ -85,6 +90,13 @@ export const TripsPageForm: React.FunctionComponent<TripsPageFormProps> = (props
     setState({ ...state, locations: {
       ...state.locations, [location]: { ...state.locations[location], [field]: event.target.value },
     }});
+  };
+
+  const handleSpaceChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
+    setSpace(oldSpace => ({
+      ...oldSpace,
+      [event.target.name as string]: event.target.value,
+    }));
   };
 
   const renderTripsForm = () => {
@@ -106,11 +118,14 @@ export const TripsPageForm: React.FunctionComponent<TripsPageFormProps> = (props
           />
         </div>
         <div className="form-cell">
+          <Grid container spacing={2} direction="row">
+            <Grid item xs>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <DatePicker
               className="mdc-text-field--fullwidth"
               name="arrival_date"
               inputVariant="outlined"
+              label="Departure Date"
               openTo="date"
               format="dd/MM/yyyy"
               value={selectedDepartureDate}
@@ -119,7 +134,7 @@ export const TripsPageForm: React.FunctionComponent<TripsPageFormProps> = (props
                 startAdornment: (
                   <InputAdornment position="start">
                     <IconButton>
-                      <MaterialIcon role="button" icon="calendar_today" initRipple={null}/>
+                      <MaterialIcon role="button" icon="date_range" initRipple={null}/>
                     </IconButton>
                   </InputAdornment>
                 ),
@@ -130,13 +145,14 @@ export const TripsPageForm: React.FunctionComponent<TripsPageFormProps> = (props
             className="mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg
             mdc-text-field-helper-text--persistent mdc-text-field-helper-text--validation-msg"
             aria-hidden="false" />
-        </div>
-        <div className="form-cell">
+            </Grid>
+            <Grid item xs>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <DatePicker
               className="mdc-text-field--fullwidth"
               name="arrival_date"
               inputVariant="outlined"
+              label="Arrival Date"
               openTo="date"
               format="dd/MM/yyyy"
               value={selectedArrivalDate}
@@ -145,17 +161,25 @@ export const TripsPageForm: React.FunctionComponent<TripsPageFormProps> = (props
                 startAdornment: (
                   <InputAdornment position="start">
                     <IconButton>
-                      <MaterialIcon role="button" icon="calendar_today" initRipple={null}/>
+                      <MaterialIcon role="button" icon="date_range" initRipple={null}/>
                     </IconButton>
                   </InputAdornment>
                 ),
               }}
             />
+            </MuiPickersUtilsProvider>
           <p
             className="mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg
             mdc-text-field-helper-text--persistent mdc-text-field-helper-text--validation-msg"
             aria-hidden="false" />
-          </MuiPickersUtilsProvider>
+            </Grid>
+          </Grid>
+        </div>
+        <div className="form-cell">
+          <SelectLuggageSpace
+            updateField={handleSpaceChange}
+            fields={selectedSpace.space}
+          />
         </div>
       </React.Fragment>
     );

@@ -17,55 +17,67 @@ import {
 } from '@material/react-layout-grid';
 import MaterialIcon from '@material/react-material-icon';
 import * as moment from 'moment';
+import { Link } from 'react-router-dom';
 
 // interfaces
 import { Typography } from '@material-ui/core';
-import { TripCardProps } from 'components/TripCard/interfaces';
+import { UserTripCardProps } from 'components/UserTripCard/interfaces';
 
-const img = 'https://res.cloudinary.com/almondgreen/image/upload/v1570631064/Mobilities/connected_world_auu3ui.svg';
+// styles
+import './UserTripCard.scss';
 
-const TripCard: React.SFC<TripCardProps> = props => (
+const UserTripCard: React.SFC<UserTripCardProps> = (props) => {
+  const { trip, match, onDelete } = props;
+  return (
+  <div className="user-trip-card">
   <Cell
     desktopColumns={3}
     tabletColumns={4}
-    phoneColumns={2}
+    phoneColumns={4}
   >
-    <div onClick={() => { props.redirect(props.trip.id); }}>
     <Card outlined>
       <CardPrimaryContent>
-        <CardMedia contentClassName="card-media" wide imageUrl={img}>
           <div className="card-header">
-            <Typography variant="h4" noWrap={true} className="card-header__main">
-              {`${props.trip.origin} to ${props.trip.destination}`}
+            <Typography variant="h4" noWrap={true} className="card-header__head">
+              {`${trip.origin} to ${trip.destination}`}
             </Typography>
-            <h5 className="card-header__sub">
-              {`${moment(props.trip.departure_date).format('LL')} - ${moment(props.trip.arrival_date).format('LL')}`}
+            <h5 className="card-header__subhead">
+              {`${moment(trip.departure_date).format('LL')} - ${moment(trip.arrival_date).format('LL')}`}
             </h5>
           </div>
-        </CardMedia>
       </CardPrimaryContent>
-
       <CardActions>
         <CardActionButtons>
+          <Link to={`${match.url}/edit/${trip.id}`}>
+            <Button
+              classes="mdc-button button-title"
+              type="button"
+              name="Edit"
+            />
+          </Link>
+        </CardActionButtons>
+        <CardActionButtons>
           <Button
+            onClick={onDelete}
             classes="mdc-button button-title"
             type="button"
-            name="Request"
+            name="Delete"
           />
         </CardActionButtons>
         <CardActionIcons>
           <Button
-            onClick={() => { props.redirect(props.trip.id); }}
+            onClick={() => { props.redirect(trip.id); }}
             type="button"
-            name="arrow_forward"
+            name="share"
             classes="mdc-icon-button material-icons"
-            aria_label="Go forward"
+            aria_label="Share"
           />
         </CardActionIcons>
       </CardActions>
     </Card>
-    </div>
   </Cell>
-);
+  </div>
+  );
+};
 
-export default TripCard;
+export default UserTripCard;

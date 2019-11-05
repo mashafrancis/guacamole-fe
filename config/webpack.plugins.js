@@ -67,11 +67,19 @@ const env = dotenv.config().parsed;
 //   return prev;
 // }, {});
 //
-// const definePlugin = new webpack.DefinePlugin(envKeys);
+const definePlugin = new webpack.DefinePlugin({
+  'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+  'process.env.APP_ENV': JSON.stringify(process.env.APP_ENV),
+  'process.env.GUACAMOLE_API': JSON.stringify(process.env.GUACAMOLE_API),
+  'process.env.SASS_PATH': JSON.stringify(process.env.SASS_PATH),
+  'process.env.FIREBASE_API_KEY': JSON.stringify(process.env.FIREBASE_API_KEY),
+  'process.env.FIREBASE_AUTH_DOMAIN': JSON.stringify(process.env.FIREBASE_AUTH_DOMAIN),
+  'process.env.TRACKING_ID': JSON.stringify(process.env.TRACKING_ID),
+});
 
 module.exports = {
   cleanWebpack,
-  // definePlugin,
+  definePlugin,
   htmlWebpack,
   miniCssExtract,
   miniCssExtractPlugin,
