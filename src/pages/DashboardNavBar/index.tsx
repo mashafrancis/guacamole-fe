@@ -1,4 +1,3 @@
-import UserModal from 'components/UserModal';
 import * as React from 'react';
 
 // third-party libraries
@@ -9,7 +8,6 @@ import Drawer, {
 import List, {
   ListDivider,
   ListGroup,
-  ListGroupSubheader,
   ListItem,
   ListItemGraphic,
   ListItemText,
@@ -25,6 +23,9 @@ import TopAppBar, {
 } from '@material/react-top-app-bar';
 import { NavLink, Redirect } from 'react-router-dom';
 
+// components
+import UserModal from '@components/UserModal';
+
 // interfaces
 import { DashboardNavBarProps, DashboardNavBarState } from './interfaces';
 
@@ -32,12 +33,12 @@ import { DashboardNavBarProps, DashboardNavBarState } from './interfaces';
 import './DashboardNavBar.scss';
 
 // helpers
-import authorize from 'utils/helpers/authorize';
+import authorize from '@utils/helpers/authorize';
 
 const avatar = 'https://res.cloudinary.com/mashafrancis/image/upload/v1552641620/kari4me/nan.jpg';
 const viewPort = window.innerWidth;
 
-const DashboardNavBar: React.SFC<DashboardNavBarProps> = (props) => {
+const DashboardNavBar: React.FunctionComponent<DashboardNavBarProps> = (props) => {
   const [state, setState] = React.useState<DashboardNavBarState>({
     isDrawerOpen: false,
     isMenuOpen: false,

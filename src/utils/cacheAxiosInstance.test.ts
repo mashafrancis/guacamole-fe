@@ -1,5 +1,5 @@
 // helpers
-import cacheAxiosInstance from 'utils/cacheAxiosInstance';
+import cacheAxiosInstance from '@utils/cacheAxiosInstance';
 import CacheHandler from './helpers/CacheHandler';
 
 describe('The cacheAxiosInstance util', () => {

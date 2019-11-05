@@ -31,10 +31,11 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
     alias: {
-      pages: path.resolve(__dirname, '..', 'src/pages/'),
-      components: path.resolve(__dirname, '..', 'src/components/'),
-      modules: path.resolve(__dirname, '../src/store/modules'),
-      utils: path.resolve(__dirname, '../src/utils'),
+      '@pages': path.resolve(__dirname, '..', 'src/pages/'),
+      '@components': path.resolve(__dirname, '..', 'src/components/'),
+      '@placeholders': path.resolve(__dirname, '..', 'src/placeholders/'),
+      '@modules': path.resolve(__dirname, '..', 'src/store/modules'),
+      '@utils': path.resolve(__dirname, '..', 'src/utils')
     },
     modules: [path.resolve(__dirname, 'src'), 'node_modules']
   },
@@ -68,14 +69,18 @@ module.exports = {
             loader: 'sass-loader',
             options: {
               sourceMap: true,
-              importer
+              importer,
+              includePaths: ['../node_modules'],
             }
           },
         ]
       },
       {
         test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
+        exclude: [
+          /node_modules/,
+          /node_modules\/@material/
+        ],
         use: {
           loader: 'babel-loader',
           options: {
@@ -94,6 +99,9 @@ module.exports = {
         enforce: 'pre',
         test: /\.js$/,
         loader: 'source-map-loader',
+        exclude: [
+          /node_modules\/@material/
+        ],
       },
     ]
   },

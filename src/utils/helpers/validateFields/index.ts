@@ -1,4 +1,4 @@
-import { ValidationArguments } from 'utils/helpers/validateFields/interfaces';
+import { ValidationArguments } from '@utils/helpers/validateFields/interfaces';
 
 export const doValidation = (value, doValidationArguments: ValidationArguments) => {
   const validator = /^[a-zA-Z0-9]+(([' .-:";'?,.!\-\()&][a-zA-Z0-9])?([a-zA-Z0-9' .-:";'?,.!\-\()&#]))*.$/;

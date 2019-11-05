@@ -1,5 +1,5 @@
 // helpers
-import CacheHandler from 'utils/helpers/CacheHandler';
+import CacheHandler from '@utils/helpers/CacheHandler';
 
 /**
  * Wraps an axios instance and caches it's get requests

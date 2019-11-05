@@ -4,10 +4,10 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 // thunks
-import { logoutUser } from 'modules/user';
+import { logoutUser } from '@modules/user';
 
 // pages
-import DashboardNavBar from 'pages/DashboardNavBar';
+import DashboardNavBar from '@pages/DashboardNavBar';
 
 // interfaces
 import { DashboardPageProps } from './interfaces';

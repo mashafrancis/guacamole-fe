@@ -15,19 +15,19 @@ import { connect } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 
 // pages
-import DashboardPage from 'pages/DashboardPage';
+import DashboardPage from '@pages/DashboardPage';
 
 // components
-import LazyLoader from 'components/LazyLoader';
-import Table from 'components/Table';
-import UserTripCard from 'components/UserTripCard';
+import LazyLoader from '@components/LazyLoader';
+import Table from '@components/Table';
+import UserTripCard from '@components/UserTripCard';
 
 // thunks
-import { displaySnackMessage } from 'modules/snack';
+import { displaySnackMessage } from '@modules/snack';
 import {
   deleteSingleTrip,
   getAllUserTrips
-} from 'modules/trips';
+} from '@modules/trips';
 
 import { TripsPageProps, TripsPageState } from './interfaces';
 

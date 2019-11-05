@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 // components
-import Button from 'components/Button';
+import Button from '@components/Button';
 import { NavLink } from 'react-router-dom';
 
 // interfaces

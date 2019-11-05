@@ -1,18 +1,18 @@
-import { displaySnackMessage } from 'modules/snack';
+import { displaySnackMessage } from '@modules/snack';
 import {
   SocialAuthActionFailure,
   SocialAuthActionRequest,
   SocialAuthActionSuccess
-} from 'modules/socialAuth/interfaces';
+} from '@modules/socialAuth/interfaces';
 
 import {
   SOCIAL_AUTH_FAILURE,
   SOCIAL_AUTH_REQUEST,
   SOCIAL_AUTH_SUCCESS
-} from 'modules/socialAuth/types';
+} from '@modules/socialAuth/types';
 
 // helpers
-import { authService } from 'utils/auth';
+import { authService } from '@utils/auth';
 
 /**
  * Social authentication request

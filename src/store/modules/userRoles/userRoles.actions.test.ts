@@ -5,7 +5,7 @@ import { createUserRole, deleteUserRole, editUserRole, getUserRoles } from '.';
 import { axiosMock, dispatchMethodMock, reduxMockStore } from '../../../testHelpers';
 
 // types
-import { DISPLAY_SNACK_MESSAGE } from 'modules/snack/types';
+import { DISPLAY_SNACK_MESSAGE } from '@modules/snack/types';
 import {
   CREATE_USER_ROLES_SUCCESS,
   DELETE_USER_ROLES_SUCCESS,

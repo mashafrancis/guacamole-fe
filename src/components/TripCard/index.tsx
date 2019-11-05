@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 // components
-import Button from 'components/Button';
+import Button from '@components/Button';
 
 // third-party libraries
 import Card, {
@@ -11,17 +11,15 @@ import Card, {
   CardMedia,
   CardPrimaryContent
 } from '@material/react-card';
-import Fab from '@material/react-fab';
 import {
   Cell,
 } from '@material/react-layout-grid';
-import MaterialIcon from '@material/react-material-icon';
 import * as moment from 'moment';
 
 // interfaces
+import TripsModal from '@components/TripsModal';
 import { Typography } from '@material-ui/core';
-import { TripCardProps } from 'components/TripCard/interfaces';
-import TripsModal from 'components/TripsModal';
+import { TripCardProps } from './interfaces';
 
 const img = 'https://res.cloudinary.com/almondgreen/image/upload/v1570631064/Mobilities/connected_world_auu3ui.svg';
 

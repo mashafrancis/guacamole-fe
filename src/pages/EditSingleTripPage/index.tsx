@@ -16,14 +16,14 @@ import MaterialIcon from '@material/react-material-icon';
 import { connect } from 'react-redux';
 
 // components
-import AuthHeader from 'components/AuthHeader';
-import Button from 'components/Button';
-import { SelectCountryRegionBox } from 'components/SelectBox';
-import { SelectLuggageSpace } from 'components/SelectLuggageSpace';
+import AuthHeader from '@components/AuthHeader';
+import Button from '@components/Button';
+import { SelectCountryRegionBox } from '@components/SelectBox';
+import { SelectLuggageSpace } from '@components/SelectLuggageSpace';
 
 // thunks
-import { displaySnackMessage } from 'modules/snack';
-import { editTrip } from 'modules/trips';
+import { displaySnackMessage } from '@modules/snack';
+import { editTrip } from '@modules/trips';
 
 // interfaces
 import {

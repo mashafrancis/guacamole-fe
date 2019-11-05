@@ -7,12 +7,12 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 
 // thunk action creators
-import { getUserDetails } from 'modules/user';
+import { getUserDetails } from '@modules/user';
 
 // components
-import InternalServerErrorMessage from 'components/InternalServerErrorMessage';
-import Loader from 'components/Loader';
-import SnackBar from 'components/SnackBar';
+import InternalServerErrorMessage from '@components/InternalServerErrorMessage';
+import Loader from '@components/Loader';
+import SnackBar from '@components/SnackBar';
 import Routes from '../routes';
 
 // styles
@@ -20,8 +20,8 @@ import '../assets/scss/textfield.scss';
 import { AppProps, AppState } from './interfaces';
 
 // helpers
-import { authService } from 'utils/auth';
-import { initializeGA, logPageView } from 'utils/helpers/googleAnalytics';
+import { authService } from '@utils/auth';
+import { initializeGA, logPageView } from '@utils/helpers/googleAnalytics';
 
 export class App extends React.Component<AppProps, AppState> {
   state = {

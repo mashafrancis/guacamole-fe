@@ -5,7 +5,7 @@ import * as React from 'react';
 import { shallow } from 'enzyme';
 
 // components
-import Table from 'components/Table';
+import Table from '@components/Table';
 
 describe('Table component', () => {
   const props = {

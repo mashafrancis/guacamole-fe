@@ -7,31 +7,31 @@ import * as moment from 'moment';
 import { connect } from 'react-redux';
 
 // pages
-import DashboardPage from 'pages/DashboardPage';
+import DashboardPage from '@pages/DashboardPage';
 
 // components
-import Button from 'components/Button';
-import Loader from 'components/Loader';
+import Button from '@components/Button';
+import Loader from '@components/Loader';
 
 // thunks
-import { getSingleTrip, requestTrip } from 'modules/trips';
+import { getSingleTrip, requestTrip } from '@modules/trips';
 
 // styles
 import './SingleTripPage.scss';
 
 // interfaces
+import TripsModal from '@components/TripsModal';
 import { SingleTripPageProps, SingleTripPageState } from './interfaces';
-import TripsModal from 'components/TripsModal';
 
 export class SingleTripPage extends React.Component<SingleTripPageProps, SingleTripPageState> {
   constructor(props) {
     super(props);
     this.state = {
       isLoading: true,
-      modalOpen: false
+      modalOpen: false,
     };
   }
-  
+
   handleModalOpen = () => {
     this.setState({modalOpen: true});
   };
@@ -132,7 +132,10 @@ export class SingleTripPage extends React.Component<SingleTripPageProps, SingleT
                 classes="mdc-button big-round-corner-button mdc-button--raised"
                 onClick={this.handleModalOpen}
               />
-              <TripsModal open={this.state.modalOpen} handleClose={this.handleModalClose} handleSubmitRequest={this.handleRequestTrip} />
+              <TripsModal
+                open={this.state.modalOpen}
+                handleClose={this.handleModalClose}
+                handleSubmitRequest={this.handleRequestTrip} />
             </Cell>
           </Row>
         </Grid>

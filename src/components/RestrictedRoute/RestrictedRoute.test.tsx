@@ -9,7 +9,7 @@ import * as React from 'react';
 import { shallow } from 'enzyme';
 
 // components
-import RestrictedRoute from 'components/RestrictedRoute';
+import RestrictedRoute from '@components/RestrictedRoute';
 
 describe.skip('The RestrictedRoute component', () => {
   let wrapper;

@@ -5,11 +5,11 @@ import * as React from 'react';
 import { Snackbar } from '@material/react-snackbar';
 import { connect } from 'react-redux';
 
-// styles
-// import './SnackBar.scss';
-
 // interfaces
-import { SnackMessageProps, SnackMessageState } from './interfaces';
+import {
+  SnackMessageProps,
+  SnackMessageState
+} from './interfaces';
 
 export class SnackBar extends React.Component<
   SnackMessageProps,

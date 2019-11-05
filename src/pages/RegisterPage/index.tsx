@@ -1,27 +1,31 @@
 import * as React from 'react';
 
 // third-party libraries
-import { Cell, Grid, Row } from '@material/react-layout-grid';
+import {
+  Cell,
+  Grid,
+  Row
+} from '@material/react-layout-grid';
 import MaterialIcon from '@material/react-material-icon';
 import TextField, { HelperText, Input } from '@material/react-text-field';
 import { connect } from 'react-redux';
 
 // components
-import AuthHeader from 'components/AuthHeader';
-import Button from 'components/Button';
+import AuthHeader from '@components/AuthHeader';
+import Button from '@components/Button';
 
 // thunks
-import { registerUser } from 'modules/register';
-import { displaySnackMessage } from 'modules/snack';
+import { registerUser } from '@modules/register';
+import { displaySnackMessage } from '@modules/snack';
 
 // interfaces
 import { RegisterPageProps, RegisterPageState } from './interfaces';
 
 // helpers
-import { applyValidation } from 'utils/helpers/validationUtils';
+import { applyValidation } from '@utils/helpers/validationUtils';
 
 // resources
-import { validationConfig } from 'utils/helpers/resources';
+import { validationConfig } from '@utils/helpers/resources';
 
 // styles
 // import '@material/react-layout-grid/dist/layout-grid.css';

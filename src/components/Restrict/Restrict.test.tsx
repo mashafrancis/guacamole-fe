@@ -8,7 +8,7 @@ import * as React from 'react';
 import { mount } from 'enzyme';
 
 // components
-import { Restrict } from 'components/Restrict';
+import { Restrict } from '@components/Restrict';
 
 describe.skip('The Restrict component', () => {
   it('should render children prop if user has required access', () => {

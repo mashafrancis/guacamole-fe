@@ -11,7 +11,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 
 // interfaces
-import { SelectLuggageSpaceProps } from 'components/SelectLuggageSpace/interfaces';
+import { SelectLuggageSpaceProps } from './interfaces';
 
 export const SelectLuggageSpace: React.FunctionComponent<SelectLuggageSpaceProps> =  (props) => {
   const { fields, updateField } = props;

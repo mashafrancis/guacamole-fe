@@ -4,14 +4,14 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 // components
-import AuthButton from 'components/AuthButton';
+import AuthButton from '@components/AuthButton';
 
 // thunks
-import { displaySnackMessage } from 'modules/snack';
-import { socialAuthentication } from 'modules/socialAuth';
+import { displaySnackMessage } from '@modules/snack';
+import { socialAuthentication } from '@modules/socialAuth';
 
 // types
-import { SOCIAL_FACEBOOK_PROVIDER, SOCIAL_GOOGLE_PROVIDER } from 'modules/socialAuth/types';
+import { SOCIAL_FACEBOOK_PROVIDER, SOCIAL_GOOGLE_PROVIDER } from '@modules/socialAuth/types';
 
 // interfaces
 import { SocialAuthenticationProps, SocialAuthenticationState } from './interfaces';
@@ -21,7 +21,7 @@ import {
   auth,
   FacebookProvider,
   GoogleProvider,
-} from 'utils/helpers/firebase';
+} from '@utils/helpers/firebase';
 
 export class SocialAuthentication extends React.Component<SocialAuthenticationProps, SocialAuthenticationState> {
   constructor(props) {

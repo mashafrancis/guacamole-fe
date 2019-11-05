@@ -11,15 +11,15 @@ import TextField, { Input } from '@material/react-text-field';
 import { connect } from 'react-redux';
 
 // components
-import Loader from 'components/Loader';
-import TripCard from 'components/TripCard';
+import Loader from '@components/Loader';
+import TripCard from '@components/TripCard';
 
 // thunks
-import { displaySnackMessage } from 'modules/snack';
-import { getAllTrips, requestTrip } from 'modules/trips';
+import { displaySnackMessage } from '@modules/snack';
+import { getAllTrips, requestTrip } from '@modules/trips';
 
 // pages
-import DashboardPage from 'pages/DashboardPage';
+import DashboardPage from '@pages/DashboardPage';
 
 // interfaces
 import { ExplorePageProps, ExplorePageState } from './interfaces';

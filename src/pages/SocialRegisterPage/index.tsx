@@ -6,15 +6,15 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 // pages
-import { SocialAuthentication } from 'pages/SocialAuthentication';
+import { SocialAuthentication } from '@pages/SocialAuthentication';
 
 // components
-import AuthButton from 'components/AuthButton';
-import AuthHeader from 'components/AuthHeader';
+import AuthButton from '@components/AuthButton';
+import AuthHeader from '@components/AuthHeader';
 
 // thunks
-import { displaySnackMessage } from 'modules/snack';
-import { socialAuthentication } from 'modules/socialAuth';
+import { displaySnackMessage } from '@modules/snack';
+import { socialAuthentication } from '@modules/socialAuth';
 
 // interfaces
 import { SocialRegisterPageProps, SocialRegisterPageState } from './interfaces';

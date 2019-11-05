@@ -1,9 +1,9 @@
 // interfaces
-import { Permission, UserRole } from 'modules/userRoles/interfaces';
-import { FormattedPermission, FormattedPermissions } from 'utils/helpers/formatPermissions/interfaces';
+import { Permission, UserRole } from '@modules/userRoles/interfaces';
+import { FormattedPermission, FormattedPermissions } from '@utils/helpers/formatPermissions/interfaces';
 
 // helpers
-import camelCase from 'utils/helpers/camelCase';
+import camelCase from '@utils/helpers/camelCase';
 
 // fixtures
 import { fullAccess, noAccess, noAccessPermissions } from './fixtures';

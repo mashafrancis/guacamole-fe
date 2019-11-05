@@ -3,13 +3,13 @@ import * as React from 'react';
 import { Redirect } from 'react-router-dom';
 
 // third party libraries
-import { displaySnackMessage } from 'modules/snack';
+import { displaySnackMessage } from '@modules/snack';
 
 // components
-import RestrictedRoute from 'components/RestrictedRoute';
+import RestrictedRoute from '@components/RestrictedRoute';
 
 // helper functions
-import { authService } from 'utils/auth';
+import { authService } from '@utils/auth';
 
 /**
  * Renders the component if the user is authenticated
@@ -26,7 +26,6 @@ const AuthenticatedRoute = (props) => {
   const { component: Component, ...rest } = props;
 
   if (authService.isAuthenticated()) {
-    console.log('masha');
     localStorage.setItem('locationReferrer', props.location.pathname);
     displaySnackMessage('You need to login to continue');
 

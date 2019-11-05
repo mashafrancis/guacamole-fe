@@ -5,7 +5,7 @@ import * as React from 'react';
 import { RestrictProps } from './interface';
 
 // helpers
-import authorize from 'utils/helpers/authorize';
+import authorize from '@utils/helpers/authorize';
 
 export class Restrict extends React.Component<RestrictProps> {
   static defaultProps = {
