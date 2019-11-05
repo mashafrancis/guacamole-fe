@@ -9,9 +9,13 @@ import { countries } from 'countries-list';
 import { CountryRegionData } from 'react-country-region-selector';
 
 // styles
-import { createMuiTheme, createStyles,
+import {
+  createMuiTheme,
+  createStyles,
   Grid, ListItem,
-  ListItemText, makeStyles, Theme
+  ListItemText,
+  makeStyles,
+  Theme
 } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import { SelectBoxProps } from './interfaces';
@@ -71,6 +75,7 @@ export const SelectCountryRegionBox: React.FunctionComponent<SelectBoxProps> =  
       }(fields.country);
     }, [fields.country]
   );
+
   const useStyles = makeStyles((theme: Theme) => createStyles({
     focused: {},
     listItemPadding: {
@@ -86,6 +91,7 @@ export const SelectCountryRegionBox: React.FunctionComponent<SelectBoxProps> =  
       },
     },
   }));
+
   const theme = createMuiTheme({
     overrides: {
       MuiOutlinedInput: {
@@ -107,6 +113,7 @@ export const SelectCountryRegionBox: React.FunctionComponent<SelectBoxProps> =  
       },
     },
   });
+
   const styles = useStyles(props);
   return (
       <Grid container spacing={2} direction="row">

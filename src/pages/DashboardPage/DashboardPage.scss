@@ -6,8 +6,7 @@
   font-family: "Google Sans", sans-serif !important;
 
   .mdc-top-app-bar {
-    background-color: #1967d2;
-    background-color: var(--mdc-theme-primary,#1967d2);
+    background-color: #fff;
     color: #fff;
     display: flex;
     position: fixed;
@@ -15,14 +14,15 @@
     justify-content: space-between;
     box-sizing: border-box;
     width: 100%;
-    z-index: 4;
+    z-index: 20;
+    border-bottom: 1px solid #dadce0;
 
     &__title {
-      color: rgba(0,0,0,0.87);
+      color: rgba(0, 0, 0, 0.87);
     }
 
     &__navigation-icon {
-      color: rgba(0,0,0,0.87) !important;
+      color: rgba(0, 0, 0, 0.87) !important;
     }
   }
 
@@ -34,9 +34,36 @@
     padding: 0;
   }
 
+  .mdc-drawer__content {
+    height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background-color: rgb(255, 255, 255);
+  }
+
+  .mdc-drawer .mdc-list-item:nth-last-child(1) {
+    margin-bottom: 10px;
+  }
+
+  .mdc-drawer .mdc-list-item:nth-child(1) {
+    margin-top: 6px;
+  }
+
+  .dashboard-title {
+    margin-top: 16px;
+    margin-bottom: 26px;
+
+    h3 {
+      font-weight: 300;
+      font-size: 22px;
+    }
+  }
+
   .mdc-top-app-bar--fixed-adjust {
     padding: 64px 10px 20px;
     width: -webkit-fill-available;
+    margin-bottom: 20px;
+    overflow-y: auto;
   }
 
   .mdc-card {
@@ -108,7 +135,7 @@
 
   .detail {
     color: #1967d2;
-    color: var(--mdc-theme-primary,#1967d2);
+    color: var(--mdc-theme-primary, #1967d2);
   }
 
   .MuiPaper-elevation2 {
@@ -261,6 +288,38 @@
   }
 
   @media (max-width: 539px) {
+    .mdc-top-app-bar {
+      background-color: #fff;;
+      color: #3c4043;
+      display: flex;
+      position: fixed;
+      flex-direction: column;
+      justify-content: space-between;
+      box-sizing: border-box;
+      width: 100%;
+      height: 64px;
+      z-index: 4;
+      border-bottom: none;
+      box-shadow: 0 1px 2px 0 rgba(60,64,67,.3), 0 2px 6px 2px rgba(60,64,67,.15);
+
+      &__title {
+        color: rgba(0, 0, 0, 0.87);
+      }
+
+      &__navigation-icon {
+        color: rgba(0, 0, 0, 0.87) !important;
+      }
+    }
+
+    .mini-account-menu__image {
+      background-size: 36px 36px;
+      //display: none;
+    }
+
+    .drawer-logo__image {
+      height: 44px;
+      margin-top: 10px;
+    }
     .card-media {
       padding-top: 18%;
     }
@@ -304,6 +363,7 @@
 
 .cover-image {
   background-image: url(https://res.cloudinary.com/mashafrancis/image/upload/v1559077974/kari4me/Travel_home_desktop.png);
+  padding-top: 22.43589%;
 }
 
 .cover {

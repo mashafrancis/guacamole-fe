@@ -11,8 +11,7 @@ const headers = {
 };
 
 const http = axios.create({
-  // baseURL: 'http://localhost:8000/api/',
-  baseURL: 'https://mobilities-api.herokuapp.com/api/',
+  baseURL: process.env.GUACAMOLE_API,
   headers: authService.isAuthenticated() ? headers : '',
 });
 
