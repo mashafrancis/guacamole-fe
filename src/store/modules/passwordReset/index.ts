@@ -103,7 +103,7 @@ export const resetPassword = (user, token) => (dispatch, getState, http) => {
       const message = `${response.data.message}`;
       dispatch(displaySnackMessage(`${message}`));
       authService.isAuthenticated()
-        ? window.location.replace('/explore')
+        ? window.location.replace('/dashboard')
         : window.location.replace('/login/email');
     })
     .catch((errors) => {

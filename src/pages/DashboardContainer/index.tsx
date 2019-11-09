@@ -18,6 +18,7 @@ import { DashboardContainerProps, DashboardContainerState } from './interfaces';
 
 // styles
 import './DashboardContainer.scss';
+import { Menus } from '@components/MenusRoutes';
 
 const viewPort = window.innerWidth;
 const avatar = 'https://res.cloudinary.com/almondgreen/image/upload/v1580208660/Mobilities/avatar_ast4yi.jpg';
@@ -26,7 +27,10 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
   const [state, setState] = React.useState<DashboardContainerState>({
     isOpen: false,
     isMenuOpen: false,
-    selectedIndex: 0,
+    selectedIndex: {
+      group: 0,
+      item: 0
+    },
     isLoading: true,
     isFeedbackMenuOpen: false,
     isFeedbackModal: false,
@@ -52,8 +56,8 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
     });
   };
 
-  const setSelectedIndex = () => {
-    setState({ ...state, selectedIndex: 1 });
+  const setSelectedIndex = (selectedIndex: { group: number, item: number }) => {
+    setState({ ...state, selectedIndex: selectedIndex });
   };
 
   const logoutUser = () => {
@@ -64,9 +68,9 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
   const photoImage = () => (
     <TopAppBarIcon actionItem tabIndex={0}>
       <div role="tablist"
-           ref={e => menuAnchorEl.current = e}
-           className="mdc-tab-bar"
-           onClick={() => setState({ ...state, isOpen: true })}
+        ref={e => menuAnchorEl.current = e}
+        className="mdc-tab-bar"
+        onClick={() => setState({ ...state, isOpen: true })}
       >
     <span className="mini-account-menu__image">
     {(viewPort > 539) &&
@@ -90,8 +94,9 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
     },
   ];
 
-  const { component, user } = props;
-  const { isOpen, selectedIndex } = state.menu;
+  const { user, history } = props;
+  const { isOpen } = state.menu;
+  const { selectedIndex } = state
 
   return (
     <MenuContext.Provider
@@ -110,11 +115,15 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
           (viewPort < 539)
             ?
           <div className="page-content">
-            <TopAppBarFixedAdjust>{component}</TopAppBarFixedAdjust>
+            <TopAppBarFixedAdjust className="drawer-content">
+          {React.createElement(Menus[selectedIndex.group][selectedIndex.item].component, {history:history})}
+        </TopAppBarFixedAdjust>
             <PageBottomNavigation />
           </div>
             :
-          <TopAppBarFixedAdjust>{component}</TopAppBarFixedAdjust>
+            <TopAppBarFixedAdjust className="drawer-content">
+            {React.createElement(Menus[selectedIndex.group][selectedIndex.item].component, {history:history})}
+          </TopAppBarFixedAdjust>
         }
       </div>
     </MenuContext.Provider>

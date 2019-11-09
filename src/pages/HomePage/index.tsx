@@ -101,7 +101,7 @@ export class HomePage extends React.Component<HomePageProps, HomePageState> {
 
   renderGoToDashboard = () => (
     <React.Fragment>
-      <NavLink to={'/explore'}>
+      <NavLink to={'/dashboard'}>
         <button className="mdc-button mdc-button--raised">
           <span className="mdc-button__label">Go to dashboard</span>
         </button>

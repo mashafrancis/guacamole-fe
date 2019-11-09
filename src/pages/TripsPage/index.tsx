@@ -18,6 +18,8 @@ import { connect } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 
 import { TripsPageProps, TripsPageState } from './interfaces';
+import Loader from '@components/Loader';
+import { TripsPageForm } from '@pages/TripsPageForm';
 
 export const TripsPage: React.FunctionComponent<TripsPageProps> = (props) => {
   const [state, setState] = React.useState<TripsPageState>({
@@ -36,6 +38,8 @@ export const TripsPage: React.FunctionComponent<TripsPageProps> = (props) => {
     action: '',
     trip_id: '',
   });
+
+  const [showingNewTripForm, setShowingNewTripForm] = React.useState<Boolean>(false)
 
   // React.useEffect(() => {
   //   props.getAllUserTrips()
@@ -115,9 +119,7 @@ export const TripsPage: React.FunctionComponent<TripsPageProps> = (props) => {
   const ActionButtons = trip => (
     <div key={trip.id} className="action-buttons">
       <span onClick={() => setState({ ...state, isEditMode: true })}>
-      <Link to={`${props.match.url}/edit/${trip.id}`}>
-        <MaterialIcon className="action-buttons__edit" role="button" icon="edit" initRipple={null}/>
-      </Link>
+      <MaterialIcon className="action-buttons__edit" role="button" icon="edit" initRipple={null}/>
       </span>
       <span id={trip.id} onClick={() => setState({ ...state, trip_id: trip.id, isDeleteModal: true })}>
       <MaterialIcon id={trip.id} className="action-buttons__delete" role="button" icon="delete" initRipple={null}/>
@@ -151,10 +153,8 @@ export const TripsPage: React.FunctionComponent<TripsPageProps> = (props) => {
       <div className="blank-content">
         <h4>You don't have any trip scheduled</h4>
         <h5>Tap + to create one</h5>
-        <NavLink to={'/trips/new-trip'}>
           <Fab className="create-trip-button" icon={<MaterialIcon icon="add" initRipple={null}/>}
           />
-        </NavLink>
       </div>
     </React.Fragment>
   );
@@ -202,21 +202,15 @@ export const TripsPage: React.FunctionComponent<TripsPageProps> = (props) => {
         </Row>
         <Row>
           <Cell>
-            <NavLink to={'/trips/new-trip'}>
               <Fab className="create-trip-button" icon={<MaterialIcon icon="add" initRipple={null}/>}
               />
-            </NavLink>
           </Cell>
         </Row>
       </Grid>
     );
   };
 
-  return (
-    <React.Fragment>
-      <DashboardContainer component={renderTripsComponent()}/>
-    </React.Fragment>
-  );
+  return state.isLoading ? <Loader /> : showingNewTripForm ? <TripsPageForm setShowingNewTripForm={setShowingNewTripForm} /> : renderTripsComponent();
 };
 
 export const mapStateToProps = state => ({

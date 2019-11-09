@@ -7,9 +7,9 @@ import { NavLink } from 'react-router-dom';
 // interfaces
 import { AuthHeaderProps } from './interfaces';
 
-const forwardArrow = (link, name) => (
+const forwardArrow = (action, name) => (
   <React.Fragment>
-    <NavLink to={link}>
+    {/* <NavLink to={link}> */}
       <span className="register-toolbar-actions">
         <div className="register__logo">
           <span className="product-logo-text">{name}</span>
@@ -17,21 +17,23 @@ const forwardArrow = (link, name) => (
           <Button
             type="button"
             name="arrow_forward"
+            onClick={action}
             classes="mdc-icon-button material-icons"
             aria_label="Go forward"
           />
       </span>
-    </NavLink>
+    {/* </NavLink> */}
   </React.Fragment>
 );
 
-const backArrow = (link, name) => (
+const backArrow = (action, name) => (
   <React.Fragment>
-    <NavLink to={link}>
+    {/* <NavLink to={link}> */}
       <span className="register-toolbar-actions">
         <Button
           type="button"
           name="arrow_back"
+          onClick={action}
           classes="mdc-icon-button material-icons"
           aria_label="Go back"
         />
@@ -39,20 +41,20 @@ const backArrow = (link, name) => (
           <span className="product-logo-text">{name}</span>
         </div>
       </span>
-    </NavLink>
+    {/* </NavLink> */}
   </React.Fragment>
 );
 
 const AuthHeader: React.SFC<AuthHeaderProps> = props => (
   <React.Fragment>
     <header>
-        {backArrow(props.backwardLink, props.backwardButtonName)}
+        {backArrow(props.backwardAction, props.backwardButtonName)}
         <div className="mini-account-menu">
           <div className="mini-account-menu--desktop">
-            {forwardArrow(props.forwardLink, props.forwardButtonName)}
+            {forwardArrow(props.forwardAction, props.forwardButtonName)}
           </div>
           <div className="mini-account-menu--mobile">
-            {forwardArrow(props.forwardLink, props.forwardButtonName)}
+            {forwardArrow(props.forwardAction, props.forwardButtonName)}
           </div>
         </div>
       </header>

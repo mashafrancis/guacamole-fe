@@ -208,14 +208,14 @@ export const EditSingleTripPage: React.FunctionComponent<EditSingleTripPageProps
 
   return (() => {
     const { isLoading } = state;
-
+    const { history } = props
     return (
       <div className="register">
         <AuthHeader
           forwardButtonName="Home"
           backwardButtonName="Back"
-          forwardLink={'/'}
-          backwardLink={'/trips'}
+          forwardAction={ () => history.push('/')}
+          backwardAction={ () => history.push('/trips')}
         />
         <Container maxWidth="sm">
           <Grid container direction="column" spacing={2}>

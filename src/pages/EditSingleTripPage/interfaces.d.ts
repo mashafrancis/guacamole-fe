@@ -6,6 +6,9 @@ export interface EditSingleTripPageProps {
   displaySnackMessage?: (message) => Promise<any>;
   error?: object;
   trips: Trip[];
+  history: {
+    push: (url: string) => void;
+  }
 }
 
 export interface EditSingleTripPageState {

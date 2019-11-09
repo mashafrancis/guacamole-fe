@@ -48,8 +48,9 @@ const TripCard: React.FunctionComponent<TripCardProps> = (props) => {
     trip,
     requestTrip,
     handleDeleteTrip,
-    redirect,
     isOwner,
+    setShowingSingleTrip,
+    setSelectedTrip,
     link,
   } = props;
 
@@ -60,6 +61,11 @@ const TripCard: React.FunctionComponent<TripCardProps> = (props) => {
   const handleModalClose = () => {
     setModalOpen(false);
   };
+
+  const onSelectTripCard = () => {
+    setShowingSingleTrip(true)
+    setSelectedTrip(trip.id)
+  }
 
   const handleRequestTrip = () => {
     handleModalClose();
@@ -97,7 +103,7 @@ const TripCard: React.FunctionComponent<TripCardProps> = (props) => {
         phoneColumns={2}
       >
         <Card className={`${classes.card} trip-card`}>
-          <CardActionArea onClick={() => redirect(trip.id) }>
+          <CardActionArea onClick={onSelectTripCard}>
             <CardMedia
               component="img"
               alt="Request Trip"

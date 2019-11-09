@@ -6,6 +6,9 @@ export interface ResetPasswordPageProps {
   location: {
     search: string;
   };
+  history: {
+    push: (url: string) => void;
+  }
 }
 
 export interface ResetPasswordPageState {

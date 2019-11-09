@@ -22,41 +22,42 @@ import { getAllTrips, requestTrip } from '@modules/trips';
 import DashboardContainer from '@pages/DashboardContainer';
 
 // interfaces
-import { ExplorePageProps, ExplorePageState } from './interfaces';
+import { ExplorePageProps } from './interfaces';
+import SingleTripPage from '@pages/SingleTripPage';
 
-export class ExplorePage extends React.Component<ExplorePageProps, ExplorePageState> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoading: true,
-    };
+export const ExplorePage: React.FunctionComponent<ExplorePageProps> = props => {
+  const [ isLoading, setIsLoading ] = React.useState<Boolean>(false)
+  const { trips, history } = props
+  const [ showingSingleTrip, setShowingSingleTrip ] = React.useState<Boolean>(false)
+  const [ selectedTripId, setSelectedTripId ] = React.useState<string>()
+
+  React.useEffect(()=> {
+    props.getAllTrips()
+      .then(() => setIsLoading(false));
+  }) 
+
+
+  const handleSubmitTripRequest = (tripId) => {
+    setIsLoading(false);
+    props.requestTrip(tripId);
   }
 
-  componentDidMount() {
-    this.props.getAllTrips()
-      .then(() => this.setState({ isLoading: false }));
-  }
-
-  redirectToSingleTrip = (trip_id) => {
-    this.props.history.push(`/trips/${trip_id}`);
-  }
-
-  handleSubmitTripRequest = (tripId) => {
-    this.setState({ isLoading: false });
-    this.props.requestTrip(tripId);
-  }
-
-  isSameUser = (trip) => {
+  const isSameUser = (trip) => {
     const user = authService.getUser();
     return (user.userdata.id && trip.traveller);
   }
+  const renderSearchField = () => (
+    <div className="form-cell">
+      {SearchInput}
+    </div>
+  )
 
   /**
    * @description This method renders the card contents
    *
    * @returns {JSX}
    */
-  renderExploreContent = (trips) => {
+  const renderExploreContent = (trips) => {
     return (
       <Grid>
         <Row>
@@ -79,9 +80,10 @@ export class ExplorePage extends React.Component<ExplorePageProps, ExplorePageSt
                 <TripCard
                   key={trip.id}
                   trip={trip}
-                  redirect={this.redirectToSingleTrip}
                   requestTrip={this.handleSubmitTripRequest}
                   isOwner={!!this.isSameUser(trip)}
+                  setSelectedTrip={setSelectedTripId}
+                  setShowingSingleTrip={setShowingSingleTrip}
                 />
               );
             })
@@ -91,20 +93,13 @@ export class ExplorePage extends React.Component<ExplorePageProps, ExplorePageSt
     );
   }
 
-  render() {
-    const { isLoading } = this.state;
-    const { trips } = this.props;
-    console.log('Class: ExplorePage, Function: render, Line 97 trips():', trips);
-
-    return (
-      isLoading
-      ? <Loader />
-      : <React.Fragment>
-        <DashboardContainer component={this.renderExploreContent(trips)} />
-      </React.Fragment>
-    );
-  }
+  return (
+    isLoading
+    ? <Loader />
+    : showingSingleTrip ? <SingleTripPage history={history} selectedTripId={selectedTripId} setSelectedTripId={setSelectedTripId} setShowingSingleTrip={setShowingSingleTrip} /> : renderExploreContent(trips)
+  );
 }
+
 
 export const mapStateToProps = state => ({
   trips: state.trips.data,

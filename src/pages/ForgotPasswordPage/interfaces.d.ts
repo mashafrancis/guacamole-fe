@@ -5,6 +5,9 @@ export interface ForgotPasswordPageProps {
   location: {
     search: string;
   };
+  history: {
+    push: (url: string) => void;
+  }
 }
 
 export interface ForgotPasswordPageState {

@@ -14,17 +14,17 @@ import List, {
   ListItemText
 } from '@material/react-list';
 import MaterialIcon from '@material/react-material-icon';
-import { NavLink } from 'react-router-dom';
 
 // components
 import { MenuContext } from '@components/Context';
-import { BottomMenus, Menus } from '@pages/MenuRoutes';
 
 // interfaces
 import { MenuContentProps } from './interfaces';
 
 // styles
 import '@pages/DashboardContainer/DashboardNavBar.scss';
+import { Menus } from '@components/MenusRoutes';
+import { TopAppBarFixedAdjust } from '@material/react-top-app-bar';
 
 const avatar = 'https://res.cloudinary.com/mashafrancis/image/upload/v1552641620/kari4me/nan.jpg';
 const viewPort = window.innerWidth;
@@ -48,7 +48,6 @@ const mobileDrawerHeader = (setOpen, name, photo) => {
     <DrawerHeader>
       <div className="drawer-logo">
         <div role="tablist"
-             // ref={e => menuAnchorEl.current = e}
              className="mdc-tab-bar"
              onClick={() => setOpen(false)}
         >
@@ -69,43 +68,24 @@ const drawerContent = (selectedIndex, setSelectedIndex, setOpen, logoutUser) => 
         selectedIndex={selectedIndex}
       >
         {
-          Menus.map((menu, index) => {
-            return (
-              <NavLink key={index} to={menu.navLink}>
-                <ListItem
-                  onClick={() => {
-                    setSelectedIndex(index);
-                    setOpen(false);
-                  }}>
-                  <ListItemGraphic className="drawer-icon" graphic={<MaterialIcon icon={menu.icon}/>} />
-                  <ListItemText tabIndex={0} primaryText={menu.primaryText}/>
-                </ListItem>
-              </NavLink>
-            );
-          })
-        }
-      </List>
-      <ListDivider tag="div" />
-      <ListGroupSubheader tag="h3">Do more with your account</ListGroupSubheader>
-      {
-          BottomMenus.map((item, index) => {
-            return (
-              <NavLink key={index} to={item.navLink}>
-                <ListItem onClick={() => {
-                  setSelectedIndex(index);
-                  setOpen(false);
-                }}>
-                  <ListItemGraphic className="drawer-icon" graphic={<MaterialIcon icon={item.icon}/>} />
-                  <ListItemText primaryText={item.primaryText}/>
-                </ListItem>
-              </NavLink>
-            );
-          })
+          Menus.map((group, groupIndex) => (
+            <React.Fragment key={groupIndex} >
+              {group.map((item, itemIndex) => (
+                <ListItem key={`${groupIndex + '.' + itemIndex}`} className={selectedIndex.group === groupIndex && selectedIndex.item == itemIndex ? 'mdc-list-item--selected' : ''} onClick={() => setSelectedIndex({group: groupIndex, item: itemIndex})} >
+                  <ListItemGraphic graphic={<MaterialIcon icon={item.icon} initRipple={null} />} />
+                  <ListItemText primaryText={item.primaryText} />
+                </ListItem >)
+              )}
+              < ListDivider tag="div" />
+              {groupIndex == 0 ? <ListGroupSubheader tag="h3">Do more with your account</ListGroupSubheader> : null}
+            </React.Fragment>
+          ))
         }
         <ListItem onClick={logoutUser}>
           <ListItemGraphic className="drawer-icon" graphic={<MaterialIcon icon="exit_to_app"/>} />
           <ListItemText primaryText="Logout"/>
         </ListItem>
+      </List>
     </ListGroup>
     <footer className="drawer-footer">
       <a className="footer-text" href="https://www.almond.com/privacy" target="_blank" rel="noopener">Privacy</a> · <a
