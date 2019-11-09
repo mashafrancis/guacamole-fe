@@ -30,6 +30,7 @@ import {
 } from '@modules/trips';
 
 import { TripsPageProps, TripsPageState } from './interfaces';
+import Loader from '@components/Loader';
 
 export const TripsPage: React.FunctionComponent<TripsPageProps> = (props) => {
   const [state, setState] = React.useState<TripsPageState>({
@@ -127,9 +128,7 @@ export const TripsPage: React.FunctionComponent<TripsPageProps> = (props) => {
   const ActionButtons = trip => (
     <div key={trip.id} className="action-buttons">
       <span onClick={() => setState({ ...state, isEditMode: true })}>
-      <Link to={`${props.match.url}/edit/${trip.id}`}>
-        <MaterialIcon className="action-buttons__edit" role="button" icon="edit" initRipple={null}/>
-      </Link>
+      <MaterialIcon className="action-buttons__edit" role="button" icon="edit" initRipple={null}/>
       </span>
       <span id={trip.id} onClick={() => setState({ ...state, trip_id: trip.id, isDeleteModal: true })}>
       <MaterialIcon id={trip.id} className="action-buttons__delete" role="button" icon="delete" initRipple={null}/>
@@ -250,11 +249,7 @@ export const TripsPage: React.FunctionComponent<TripsPageProps> = (props) => {
     );
   };
 
-  return (
-    <React.Fragment>
-      <DashboardPage component={renderTripsComponent()}/>
-    </React.Fragment>
-  );
+  return state.isLoading ? <Loader /> : renderTripsComponent();
 };
 
 export const mapStateToProps = state => ({

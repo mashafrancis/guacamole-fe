@@ -31,7 +31,7 @@ const AuthenticatedRoute = (props) => {
 
     return (
       <React.Fragment>
-        <Redirect to="/dashboard/explore" />
+        <Redirect to="/dashboard" />
       </React.Fragment>
     );
   }

@@ -2,6 +2,9 @@ export interface RegisterPageProps {
   registerUser: (user) => Promise<any>;
   displaySnackMessage?: (message) => Promise<any>;
   error?: object;
+  history: {
+    push: (url: string) => void;
+  }
 }
 
 export interface RegisterPageState {

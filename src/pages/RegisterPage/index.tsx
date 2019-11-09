@@ -287,13 +287,14 @@ export class RegisterPage extends React.Component<RegisterPageProps, RegisterPag
 
   render() {
     const { isLoading } = this.state;
+    const { history } = this.props
     return (
       <div className="register">
         <AuthHeader
           forwardButtonName="Login"
           backwardButtonName="Back"
-          forwardLink={'/login/email'}
-          backwardLink={'/register'}
+          forwardAction={() => history.push('/login/email')}
+          backwardAction={() => history.push('/register')}
         />
         <Grid>
           <Row>

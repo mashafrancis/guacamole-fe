@@ -23,13 +23,14 @@ const emailIco = 'https://res.cloudinary.com/mashafrancis/image/upload/v15597267
 
 export class SocialLoginPage extends React.Component<SocialLoginPageProps, SocialLoginPageState> {
   render() {
+    const { history } = this.props
     return (
       <div className="register">
         <AuthHeader
           forwardButtonName="Register"
           backwardButtonName="Home"
-          forwardLink={'/register'}
-          backwardLink={'/'}
+          forwardAction={() => history.push('/register')}
+          backwardAction={() => history.push('/') }
         />
         <Grid>
           <Row>

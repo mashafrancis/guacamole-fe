@@ -6,12 +6,13 @@ export interface SingleTripPageProps {
   trips: Trip[];
   trip: Trip;
   displaySnackMessage?: (message) => Promise<any>;
-  match: {
-    params: {
-      id: string;
-    };
-  };
   requestTrip: (tripId) => Promise<any>;
+  selectedTripId: string;
+  setSelectedTripId: (tripId: string) => void;
+  setShowingSingleTrip: (showingSingleTrip: Boolean) => void;
+  history: {
+    push: (url: string) => void;
+  }
 }
 
 export interface SingleTripPageState {

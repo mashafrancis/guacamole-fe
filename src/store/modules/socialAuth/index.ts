@@ -59,7 +59,7 @@ export const socialAuthentication = payload => (dispatch, getState, http) => {
       dispatch(socialAuthSuccess(response.data.response));
       const message = response.data.response.message;
       dispatch(displaySnackMessage(`${message}`));
-      window.location.replace('/explore');
+      window.location.replace('/dashboard');
     })
     .catch((errors) => {
       const error = 'Something went wrong with the authentication. Kindly try again.';

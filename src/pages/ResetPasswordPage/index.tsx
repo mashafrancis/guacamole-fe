@@ -235,13 +235,15 @@ export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, R
   }
 
   render() {
+    const { history } = this.props
+
     return (
       <div className="register">
       <AuthHeader
         forwardButtonName="Login"
         backwardButtonName="Home"
-        forwardLink={'/login/email'}
-        backwardLink={'/'}
+        forwardAction={() => history.push('/login/email')}
+        backwardAction={() => history.push('/')}
       />
       <Grid>
         <Row>

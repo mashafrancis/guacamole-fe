@@ -86,6 +86,10 @@ export const TripsPageForm: React.FunctionComponent<TripsPageFormProps> = (props
       });
   };
 
+  const handleNavigationAction = (to: string) => {
+    document.location.href = to
+  }
+
   const handleOnSelect = (location: string, field: string) => (event) => {
     setState({ ...state, locations: {
       ...state.locations, [location]: { ...state.locations[location], [field]: event.target.value },
@@ -193,8 +197,8 @@ export const TripsPageForm: React.FunctionComponent<TripsPageFormProps> = (props
         <AuthHeader
           forwardButtonName="Home"
           backwardButtonName="Back"
-          forwardLink={'/'}
-          backwardLink={'/trips'}
+          forwardAction={() => handleNavigationAction('/')}
+          backwardAction={() => handleNavigationAction('/trips')}
         />
         <Container maxWidth="sm">
           <Grid container direction="column" spacing={2}>
@@ -220,7 +224,7 @@ export const TripsPageForm: React.FunctionComponent<TripsPageFormProps> = (props
       </div>
     );
   })();
-};
+};  
 
 export const mapStateToProps = state => ({
   error: state.error,

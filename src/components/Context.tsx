@@ -2,9 +2,12 @@ import * as React from 'react';
 
 export const MenuContext = React.createContext({
   isOpen: false,
-  selectedIndex: 0,
+  selectedIndex: {
+    group: 0,
+    item: 0
+  },
   setOpen: (_open: boolean) => {},
-  setSelectedIndex: (_selectedIndex: number) => {},
+  setSelectedIndex: (_selectedIndex: {group: number, item: number}) => {},
   logoutUser: () => null,
 });
 

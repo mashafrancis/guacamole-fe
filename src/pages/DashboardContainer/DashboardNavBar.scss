@@ -30,7 +30,9 @@
       &__navigation-icon {
         color: rgba(0, 0, 0, 0.87) !important;
       }
+
     }
+
 
     .topbar-divider {
       margin-left: 16px;
@@ -282,6 +284,11 @@ footer {
     &__navigation-icon {
       color: rgba(99, 99, 99, 0.81) !important;
     }
+  }
+
+  .mdc-list-item--selected {
+    background: '#1967d2' !important;
+    opacity: 0.19
   }
 
   .mdc-drawer .mdc-list-item {

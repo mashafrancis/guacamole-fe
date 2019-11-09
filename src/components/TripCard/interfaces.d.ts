@@ -2,6 +2,7 @@ import { Trip } from '@modules/trips/interfaces';
 
 export interface TripCardProps {
   trip: Trip;
-  redirect?: (tripId: string) => void;
+  setShowingSingleTrip: (showingSingleTrip: boolean) => void;
   requestTrip?: (tripId: string) => void;
+  setSelectedTrip: (tripId: string) => void;
 }

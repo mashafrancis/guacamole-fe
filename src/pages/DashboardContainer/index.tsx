@@ -17,6 +17,7 @@ import { DashboardContainerProps, DashboardContainerState } from './interfaces';
 
 // styles
 import './DashboardContainer.scss';
+import { Menus } from '@components/MenusRoutes';
 
 const viewPort = window.innerWidth;
 
@@ -24,7 +25,10 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
   const [state, setState] = React.useState<DashboardContainerState>({
     isOpen: false,
     isMenuOpen: false,
-    selectedIndex: 0,
+    selectedIndex: {
+      group: 0,
+      item: 0
+    },
     isLoading: true,
     isFeedbackMenuOpen: false,
     isFeedbackModal: false,
@@ -50,8 +54,8 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
     });
   };
 
-  const setSelectedIndex = () => {
-    setState({ ...state, selectedIndex: 1 });
+  const setSelectedIndex = (selectedIndex: { group: number, item: number }) => {
+    setState({ ...state, selectedIndex: selectedIndex });
   };
 
   const logoutUser = () => {
@@ -62,17 +66,17 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
   const photoImage = () => (
     <TopAppBarIcon actionItem tabIndex={0}>
       <div role="tablist"
-           ref={e => menuAnchorEl.current = e}
-           className="mdc-tab-bar"
-           onClick={() => setState({ ...state, isOpen: true })}
+        ref={e => menuAnchorEl.current = e}
+        className="mdc-tab-bar"
+        onClick={() => setState({ ...state, isOpen: true })}
       >
-    <span className="mini-account-menu__image">
-    {(viewPort > 539) &&
-    <img
-      className="mini-account-menu__image"
-      src={props.user.photo}
-      alt="image"/>}
-    </span>
+        <span className="mini-account-menu__image">
+          {(viewPort > 539) &&
+            <img
+              className="mini-account-menu__image"
+              src={props.user.photo}
+              alt="image" />}
+        </span>
       </div>
     </TopAppBarIcon>
   );
@@ -88,8 +92,9 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
     },
   ];
 
-  const { component, user } = props;
-  const { isOpen, selectedIndex } = state.menu;
+  const { user, history } = props;
+  const { isOpen } = state.menu;
+  const { selectedIndex } = state
 
   return (
     <MenuContext.Provider
@@ -102,9 +107,11 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
       }}
     >
       <div className="dashboard">
-        <MenuContent name={user.name} photo={user.photo}/>
-        <TopBar photoImage={photoImage()} topIcons={topIcons}/>
-        <TopAppBarFixedAdjust>{component}</TopAppBarFixedAdjust>
+        <MenuContent name={user.name} photo={user.photo} />
+        <TopBar photoImage={photoImage()} topIcons={topIcons} />
+        <TopAppBarFixedAdjust className="drawer-content">
+          {React.createElement(Menus[selectedIndex.group][selectedIndex.item].component, {history:history})}
+        </TopAppBarFixedAdjust>
       </div>
     </MenuContext.Provider>
   );

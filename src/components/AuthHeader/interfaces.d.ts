@@ -1,6 +1,6 @@
 export interface AuthHeaderProps {
   forwardButtonName: string;
   backwardButtonName: string;
-  forwardLink: string;
-  backwardLink: string;
+  forwardAction: (event: Event) => void;
+  backwardAction: (event: Event) => void;
 }

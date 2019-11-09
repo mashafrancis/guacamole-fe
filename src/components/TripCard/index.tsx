@@ -40,7 +40,7 @@ const img = 'https://res.cloudinary.com/almondgreen/image/upload/v1570631064/Mob
 const TripCard: React.SFC<TripCardProps> = (props) => {
   const classes = useStyles(props);
   const [modalOpen, setModalOpen] = React.useState(false);
-  const { trip, requestTrip } = props;
+  const { trip, requestTrip, setShowingSingleTrip, setSelectedTrip } = props;
   const handleModalOpen = () => {
     setModalOpen(true);
   };
@@ -48,6 +48,11 @@ const TripCard: React.SFC<TripCardProps> = (props) => {
   const handleModalClose = () => {
     setModalOpen(false);
   };
+
+  const onSelectTripCard = () => {
+    setShowingSingleTrip(true)
+    setSelectedTrip(trip.id)
+  }
 
   const handleRequestTrip = () => {
     handleModalClose();
@@ -61,7 +66,7 @@ const TripCard: React.SFC<TripCardProps> = (props) => {
         phoneColumns={2}
       >
         <Card className={`${classes.card} trip-card`}>
-          <CardActionArea onClick={() => { props.redirect(props.trip.id); }}>
+          <CardActionArea onClick={onSelectTripCard}>
             <CardMedia
               component="img"
               alt="Request Trip"
