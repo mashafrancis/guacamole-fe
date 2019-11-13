@@ -9,8 +9,10 @@ export interface SingleTripPageProps {
       id: string;
     };
   };
+  requestTrip: (tripId) => Promise<any>;
 }
 
 export interface SingleTripPageState {
   isLoading: boolean;
+  modalOpen: boolean;
 }

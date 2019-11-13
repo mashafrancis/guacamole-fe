@@ -51,3 +51,12 @@ export type EDIT_TRIP_SUCCESS = typeof EDIT_TRIP_SUCCESS;
 
 export const EDIT_TRIP_FAILURE = 'kari4me-web/trips/EDIT_TRIP_FAILURE';
 export type EDIT_TRIP_FAILURE = typeof EDIT_TRIP_FAILURE;
+
+export const REQUEST_TRIP_REQUEST = 'kari4me-web/trips/REQUEST_TRIP_REQUEST';
+export type REQUEST_TRIP_REQUEST = typeof REQUEST_TRIP_REQUEST;
+
+export const REQUEST_TRIP_SUCCESS = 'kari4me-web/trips/REQUEST_TRIP_SUCCESS';
+export type REQUEST_TRIP_SUCCESS = typeof REQUEST_TRIP_SUCCESS;
+
+export const REQUEST_TRIP_FAILURE = 'kari4me-web/trips/REQUEST_TRIP_FAILURE';
+export type REQUEST_TRIP_FAILURE = typeof REQUEST_TRIP_FAILURE;

@@ -14,21 +14,35 @@ import Button from 'components/Button';
 import Loader from 'components/Loader';
 
 // thunks
-import { getSingleTrip } from 'modules/trips';
+import { getSingleTrip, requestTrip } from 'modules/trips';
 
 // styles
 import './SingleTripPage.scss';
 
 // interfaces
 import { SingleTripPageProps, SingleTripPageState } from './interfaces';
+import TripsModal from 'components/TripsModal';
 
 export class SingleTripPage extends React.Component<SingleTripPageProps, SingleTripPageState> {
   constructor(props) {
     super(props);
     this.state = {
       isLoading: true,
+      modalOpen: false
     };
   }
+  
+  handleModalOpen = () => {
+    this.setState({modalOpen: true});
+  };
+  handleModalClose = () => {
+    this.setState({modalOpen: false});
+  };
+
+  handleRequestTrip = () => {
+    this.handleModalClose();
+    this.props.requestTrip(this.props.trip.id);
+  };
 
   componentDidMount() {
     const tripId = this.props.match.params.id;
@@ -116,7 +130,9 @@ export class SingleTripPage extends React.Component<SingleTripPageProps, SingleT
               <Button
                 name="Request"
                 classes="mdc-button big-round-corner-button mdc-button--raised"
+                onClick={this.handleModalOpen}
               />
+              <TripsModal open={this.state.modalOpen} handleClose={this.handleModalClose} handleSubmitRequest={this.handleRequestTrip} />
             </Cell>
           </Row>
         </Grid>
@@ -161,6 +177,7 @@ export const mapStateToProps = state => ({
 
 export const mapDispatchToProps = dispatch => ({
   getSingleTrip: tripId => dispatch(getSingleTrip(tripId)),
+  requestTrip: tripIp => dispatch(requestTrip(tripIp)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleTripPage);
