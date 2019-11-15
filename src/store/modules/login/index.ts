@@ -1,5 +1,5 @@
 // thunks
-import { displaySnackMessage } from 'modules/snack';
+import { displaySnackMessage } from '@modules/snack';
 
 // interfaces
 import {
@@ -16,7 +16,7 @@ import {
 } from './types';
 
 // helpers
-import { authService } from 'utils/auth';
+import { authService } from '@utils/auth';
 
 /**
  * Login request

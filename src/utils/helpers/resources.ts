@@ -1,4 +1,4 @@
-import { doValidation } from 'utils/helpers/validateFields';
+import { doValidation } from '@utils/helpers/validateFields';
 
 export const validationConfig = {
   username: [

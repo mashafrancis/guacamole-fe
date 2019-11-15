@@ -7,6 +7,7 @@ describe('Tests for the validate fields helper function', () => {
 
   it('should throw an error when invalid data is passed as an argument to the function', () => {
     expect(doValidation('........', {})).toEqual(
+      // tslint:disable-next-line:prefer-template
       'Field must start and end with a letter,\n' +
       '              only contain letters, non-consecutive fullstops,\n' +
       '              hyphens, spaces and apostrophes');

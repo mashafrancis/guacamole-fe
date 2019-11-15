@@ -5,20 +5,20 @@ import * as React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 // pages
-import PageNotFound from 'components/PageNotFound';
-import EditSingleTripPage from 'pages/EditSingleTripPage';
-import ExplorePage from 'pages/ExplorePage';
-import ForgotPasswordPage from 'pages/ForgotPasswordPage';
-import HomePage from 'pages/HomePage';
-import LoginPage from 'pages/LoginPage';
-import PreferencePage from 'pages/PreferencePage';
-import RegisterPage from 'pages/RegisterPage';
-import ResetPasswordPage from 'pages/ResetPasswordPage';
-import SingleTripPage from 'pages/SingleTripPage';
-import SocialLoginPage from 'pages/SocialLoginPage';
-import SocialRegisterPage from 'pages/SocialRegisterPage';
-import TripsPage from 'pages/TripsPage';
-import TripsPageForm from 'pages/TripsPageForm';
+import PageNotFound from '@components/PageNotFound';
+import EditSingleTripPage from '@pages/EditSingleTripPage';
+import ExplorePage from '@pages/ExplorePage';
+import ForgotPasswordPage from '@pages/ForgotPasswordPage';
+import HomePage from '@pages/HomePage';
+import LoginPage from '@pages/LoginPage';
+import PreferencePage from '@pages/PreferencePage';
+import RegisterPage from '@pages/RegisterPage';
+import ResetPasswordPage from '@pages/ResetPasswordPage';
+import SingleTripPage from '@pages/SingleTripPage';
+import SocialLoginPage from '@pages/SocialLoginPage';
+import SocialRegisterPage from '@pages/SocialRegisterPage';
+import TripsPage from '@pages/TripsPage';
+import TripsPageForm from '@pages/TripsPageForm';
 
 const Routes = () => (
   <Route>

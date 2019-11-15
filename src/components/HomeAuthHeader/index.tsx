@@ -1,9 +1,11 @@
 import * as React from 'react';
+
+// third party
+import { authService } from '@utils/auth';
 import { NavLink } from 'react-router-dom';
-import { authService } from 'utils/auth';
 
 // components
-import Button from 'components/Button';
+import Button from '@components/Button';
 
 // interfaces
 import { HomeAuthHeaderProps } from './interfaces';

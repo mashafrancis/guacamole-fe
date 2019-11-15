@@ -1,4 +1,4 @@
-import CacheHandler from 'utils/helpers/CacheHandler';
+import CacheHandler from '@utils/helpers/CacheHandler';
 
 describe('CacheHandler class', () => {
   describe('The extractUrlEndpoint function', () => {

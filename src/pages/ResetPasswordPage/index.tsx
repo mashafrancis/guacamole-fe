@@ -7,14 +7,14 @@ import TextField, { HelperText, Input } from '@material/react-text-field';
 import { connect } from 'react-redux';
 
 // components
-import AuthHeader from 'components/AuthHeader';
-import Button from 'components/Button';
-import { validationConfig } from 'utils/helpers/resources';
-import { applyValidation } from 'utils/helpers/validationUtils';
+import AuthHeader from '@components/AuthHeader';
+import Button from '@components/Button';
+import { validationConfig } from '@utils/helpers/resources';
+import { applyValidation } from '@utils/helpers/validationUtils';
 
 // thunks
-import { resetPassword } from 'modules/passwordReset';
-import { displaySnackMessage } from 'modules/snack';
+import { resetPassword } from '@modules/passwordReset';
+import { displaySnackMessage } from '@modules/snack';
 
 // interfaces
 import { ResetPasswordPageProps, ResetPasswordPageState } from './interfaces';

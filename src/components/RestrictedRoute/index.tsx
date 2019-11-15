@@ -5,12 +5,12 @@ import * as React from 'react';
 import { Redirect, Route } from 'react-router';
 
 // interfaces
-import { RestrictedRouteProps } from 'components/RestrictedRoute/interface';
+import { RestrictedRouteProps } from '@components/RestrictedRoute/interface';
 
 // helpers
-import authorize from 'utils/helpers/authorize';
+import authorize from '@utils/helpers/authorize';
 
-const RestrictedRoute: React.SFC<RestrictedRouteProps> = (props) => {
+const RestrictedRoute: React.FunctionComponent<RestrictedRouteProps> = (props) => {
   if (!props.authorize || authorize(props.authorize, { strict: props.strict })) {
     return (
       <Route { ...props } />

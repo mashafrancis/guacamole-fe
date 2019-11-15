@@ -6,20 +6,20 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 // thunk
-import { displaySnackMessage } from 'modules/snack';
-import { logoutUser } from 'modules/user';
+import { displaySnackMessage } from '@modules/snack';
+import { logoutUser } from '@modules/user';
 
 // interfaces
-import { HomePageProps, HomePageState } from 'pages/HomePage/interfaces';
+import { HomePageProps, HomePageState } from '@pages/HomePage/interfaces';
 
 // components
-import HomeHeader from 'components/HomeAuthHeader';
+import HomeHeader from '@components/HomeAuthHeader';
 
 // styles
 import './HomePage.scss';
 
 // helpers
-import { authService } from 'utils/auth';
+import { authService } from '@utils/auth';
 
 const particlesOptions = {
   particles: {

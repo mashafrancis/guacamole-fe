@@ -1,6 +1,6 @@
 // thunks
-import { displaySnackMessage } from 'modules/snack';
-import { authService } from 'utils/auth';
+import { displaySnackMessage } from '@modules/snack';
+import { authService } from '@utils/auth';
 
 // interfaces
 import {

@@ -1,32 +1,29 @@
 import * as React from 'react';
 
 // components
-import Button from 'components/Button';
+import Button from '@components/Button';
 
 // third-party libraries
 import Card, {
   CardActionButtons,
   CardActionIcons,
   CardActions,
-  CardMedia,
   CardPrimaryContent
 } from '@material/react-card';
-import Fab from '@material/react-fab';
 import {
   Cell,
 } from '@material/react-layout-grid';
-import MaterialIcon from '@material/react-material-icon';
 import * as moment from 'moment';
 import { Link } from 'react-router-dom';
 
 // interfaces
 import { Typography } from '@material-ui/core';
-import { UserTripCardProps } from 'components/UserTripCard/interfaces';
+import { UserTripCardProps } from './interfaces';
 
 // styles
 import './UserTripCard.scss';
 
-const UserTripCard: React.SFC<UserTripCardProps> = (props) => {
+const UserTripCard: React.FunctionComponent<UserTripCardProps> = (props) => {
   const { trip, match, onDelete } = props;
   return (
   <div className="user-trip-card">

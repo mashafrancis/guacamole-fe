@@ -1,10 +1,10 @@
-import DashboardPage from 'pages/DashboardPage';
 import * as React from 'react';
+
+// components
+import DashboardPage from '@pages/DashboardPage';
 
 // third-party libraries
 import { Cell, Grid, Row } from '@material/react-layout-grid';
-import MaterialIcon from '@material/react-material-icon';
-import TextField, { Input } from '@material/react-text-field';
 
 const PreferenceComponent = () => {
   return (

@@ -1,4 +1,4 @@
-import camelCase from 'utils/helpers/camelCase';
+import camelCase from '@utils/helpers/camelCase';
 
 describe('The camelCase helper function', () => {
   it('should covert a string to camel case', () => {

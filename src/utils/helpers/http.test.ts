@@ -2,8 +2,8 @@
 import * as Cookies from 'cookies-js';
 
 // helpers
-import { authService } from 'utils/auth';
-import http from 'utils/helpers/http';
+import { authService } from '@utils/auth';
+import http from '@utils/helpers/http';
 import store from '../../store';
 import { axiosMockAdapter, expiredToken, token } from '../../testHelpers';
 import CacheHandler from './CacheHandler';

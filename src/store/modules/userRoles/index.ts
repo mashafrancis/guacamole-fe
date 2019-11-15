@@ -1,5 +1,5 @@
 // thunks
-import { displaySnackMessage } from 'modules/snack';
+import { displaySnackMessage } from '@modules/snack';
 
 // interfaces
 import {

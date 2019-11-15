@@ -1,8 +1,8 @@
 // helpers
-import formatPermissions from 'utils/helpers/formatPermissions';
+import formatPermissions from '@utils/helpers/formatPermissions';
 
 // fixtures
-import { userRoles } from 'modules/userRoles/fixtures';
+import { userRoles } from '@modules/userRoles/fixtures';
 import { noAccessPermissions } from './fixtures';
 
 describe('The formatPermissions function', () => {

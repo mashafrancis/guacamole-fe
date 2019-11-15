@@ -7,12 +7,12 @@ import TextField, { HelperText, Input } from '@material/react-text-field';
 import { connect } from 'react-redux';
 
 // components
-import AuthHeader from 'components/AuthHeader';
-import Button from 'components/Button';
+import AuthHeader from '@components/AuthHeader';
+import Button from '@components/Button';
 
 // thunks
-import { forgotPassword } from 'modules/passwordReset';
-import { displaySnackMessage } from 'modules/snack';
+import { forgotPassword } from '@modules/passwordReset';
+import { displaySnackMessage } from '@modules/snack';
 
 // interfaces
 import { ForgotPasswordPageProps, ForgotPasswordPageState } from './interfaces';
@@ -21,8 +21,8 @@ import { ForgotPasswordPageProps, ForgotPasswordPageState } from './interfaces';
 import '@material/react-layout-grid/dist/layout-grid.css';
 
 // helpers
-import { validationConfig } from 'utils/helpers/resources';
-import { applyValidation } from 'utils/helpers/validationUtils';
+import { validationConfig } from '@utils/helpers/resources';
+import { applyValidation } from '@utils/helpers/validationUtils';
 
 export class ForgotPasswordPage extends React.Component<ForgotPasswordPageProps, ForgotPasswordPageState> {
   constructor(props) {

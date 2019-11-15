@@ -8,22 +8,22 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 // components
-import AuthHeader from 'components/AuthHeader';
-import Button from 'components/Button';
+import AuthHeader from '@components/AuthHeader';
+import Button from '@components/Button';
 
 // thunks
-import { loginUser } from 'modules/login';
-import { displaySnackMessage } from 'modules/snack';
+import { loginUser } from '@modules/login';
+import { displaySnackMessage } from '@modules/snack';
 
 // interfaces
 import { LoginPageProps, LoginPageState } from './interfaces';
 
 // helpers
-import { authService } from 'utils/auth';
-import { applyValidation } from 'utils/helpers/validationUtils';
+import { authService } from '@utils/auth';
+import { applyValidation } from '@utils/helpers/validationUtils';
 
 // resources
-import { validationConfig } from 'utils/helpers/resources';
+import { validationConfig } from '@utils/helpers/resources';
 
 // styles
 import './LoginPage.scss';
