@@ -97,6 +97,11 @@
     align-items: center;
     grid-column: 1/5;
     margin-bottom: 12px;
+
+    h3 {
+      margin: 0;
+      font-size: 20px;
+    }
   }
 
   .horizontal-line {
@@ -108,7 +113,8 @@
   }
 
   .trip-card {
-    border-radius: 8px;
+    border-radius: 12px;
+    max-height: 250px;
     background-color: rgba(241, 241, 241, 0.45);
     border: 1px solid #dadce0;
     display: -webkit-box;
@@ -121,12 +127,20 @@
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     &__details {
-      margin: 12px;
+      margin-top: 70px;
+      margin-bottom: 70px;
+      align-content: center;
+      text-align: center;
       color: #7e7e7e;
     }
+    h3 {
+      font-size: 40px;
+    }
+
     h5 {
       margin: 0;
     }
+
     h4 {
       color: #454545;
     }
@@ -136,9 +150,32 @@
     .trip-title {
       font-size: 1rem !important;
       }
+
     .trip-row-content {
       p:only-of-type {
         font-size: 0.9rem !important;
+      }
+    }
+
+    .trip-card {
+      max-height: 200px;
+
+      &__details {
+        margin-top: 40px;
+        margin-bottom: 40px;
+      }
+
+      h3 {
+        font-size: 24px;
+      }
+
+      h5 {
+        margin: 0;
+      }
+
+      h4 {
+        color: #454545;
+        margin: 0;
       }
     }
   }

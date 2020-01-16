@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 
 // pages
-import DashboardPage from '@pages/DashboardPage';
+import DashboardPage from '@pages/DashboardContainer';
 
 // components
 import LazyLoader from '@components/LazyLoader';

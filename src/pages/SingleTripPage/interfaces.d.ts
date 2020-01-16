@@ -1,7 +1,9 @@
-import { Trip } from 'modules/trips/interfaces';
+import { Trip } from '@modules/trips/interfaces';
 
 export interface SingleTripPageProps {
   getSingleTrip: (tripId) => Promise<any>;
+  getAllUserTrips: () => Promise<any>;
+  trips: Trip[];
   trip: Trip;
   displaySnackMessage?: (message) => Promise<any>;
   match: {
@@ -15,4 +17,5 @@ export interface SingleTripPageProps {
 export interface SingleTripPageState {
   isLoading: boolean;
   modalOpen: boolean;
+  trips: Trip[];
 }
