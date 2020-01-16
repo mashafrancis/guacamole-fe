@@ -6,6 +6,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import { countries } from 'countries-list';
+// @ts-ignore
 import { CountryRegionData } from 'react-country-region-selector';
 
 // styles
@@ -124,6 +125,7 @@ export const SelectCountryRegionBox: React.FunctionComponent<SelectBoxProps> =  
               variant="outlined"
               label={label}
               fullWidth
+              size="small"
               value={fields.country}
               onChange={updateField(location, 'country')}
               helperText={<span
@@ -159,6 +161,7 @@ export const SelectCountryRegionBox: React.FunctionComponent<SelectBoxProps> =  
             <TextField
               select
               fullWidth
+              size="small"
               variant="outlined"
               label="City"
               value={fields.region}

@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 // components
-import DashboardPage from '@pages/DashboardPage';
+import DashboardPage from '@pages/DashboardContainer';
 
 // third-party libraries
 import { Cell, Grid, Row } from '@material/react-layout-grid';

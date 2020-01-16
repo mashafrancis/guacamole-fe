@@ -3,7 +3,7 @@ import * as React from 'react';
 
 // third party libraries
 import { mount } from 'enzyme';
-import { createBrowserHistory } from 'history';
+import * as history from 'history';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import configureMockStore from 'redux-mock-store';
@@ -39,7 +39,6 @@ AtNjY5ZjQyYTBlZWEwIn0.DJSK8H4OFucHfRY5xhX2M0T57LO9er7HIRJgYbqysCI`;
 export const token = tokenString.replace(/(\r\n|\n|\r)/gm, '');
 
 export const expiredToken = expiredTokenString.replace(/(\r\n|\n|\r)/gm, '');
-
 /**
  * Utility mock store that can be used for all instances where one is required
  *
@@ -50,7 +49,7 @@ export const mockStore = (extraArgument, initialState = {}) => createStore(
   reducer,
   initialState,
   applyMiddleware(thunk.withExtraArgument(extraArgument)
-));
+  ));
 
 /**
  * Mock for axios request.
@@ -126,57 +125,15 @@ export const axiosMockAdapter = (response, error) => {
 };
 
 // mock router context instead of using Memory Router
-// export const routerContext = {
-//   context: {
-//     router: {
-//       history: createBrowserHistory(),
-//       route: {
-//         location: { pathname: '/' },
-//         match: { isExact: true },
-//       },
-//     },
-//   },
-//   childContextTypes: { router: () => null },
-// };
-
-/**
- * Returns the full permission state for a particular resource
- *
- * @param {string} resource
- *
- * @returns {Object}
- */
-export const fullPermissionsState = resource => ({
-  user: {
-    permissions: {
-      [resource]: {
-        fullAccess: true,
-        edit: true,
-        delete: true,
-        view: true,
-        add: true,
+export const routerContext = {
+  context: {
+    router: {
+      history: history.createBrowserHistory(),
+      route: {
+        location: { pathname: '/' },
+        match: { isExact: true },
       },
     },
   },
-});
-
-/**
- * Returns the view only permission state for a particular resource
- *
- * @param {string} resource
- *
- * @returns {Object}
- */
-export const viewOnlyPermissionsState = resource => ({
-  user: {
-    permissions: {
-      [resource]: {
-        fullAccess: false,
-        edit: false,
-        delete: false,
-        view: true,
-        add: false,
-      },
-    },
-  },
-});
+  childContextTypes: { router: () => null },
+};
