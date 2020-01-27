@@ -340,7 +340,7 @@ export const getAllUserTrips = () => (dispatch, getState, http) => {
     })
     .catch((errors) => {
       const error = errors.response.data.errors;
-      dispatch(displaySnackMessage(`${error}`));
+      // dispatch(displaySnackMessage(`${error}`));
       dispatch(getUserTripsFailure(errors));
     });
 };
@@ -349,12 +349,13 @@ export const deleteSingleTrip = id => (dispatch, getState, http) => {
   dispatch(deleteSingleTripRequest());
   return http.delete(`trips/${id}`)
     .then((response) => {
-      const message = response.data.data.message;
+      const message = response.data.message;
       dispatch(deleteSingleTripSuccess(id));
       dispatch(displaySnackMessage(message, true));
     })
     .catch((errors) => {
-      const error = errors.response.message;
+      console.log('Class: , Function: , Line 357 errors():', errors);
+      const error = errors.response;
       dispatch(deleteSingleTripFailure(errors));
       dispatch(displaySnackMessage(`${error}`));
     });

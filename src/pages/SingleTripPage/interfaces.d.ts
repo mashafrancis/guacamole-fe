@@ -11,6 +11,10 @@ export interface SingleTripPageProps {
       id: string;
     };
   };
+  history: {
+    dateObject: object;
+    push: (path: string, state?: object) => void;
+  };
   requestTrip: (tripId) => Promise<any>;
 }
 

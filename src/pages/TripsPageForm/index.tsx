@@ -103,13 +103,11 @@ export const TripsPageForm: React.FunctionComponent<TripsPageFormProps> = (props
     const { locations, dates, errors } = state;
     return (
       <React.Fragment>
-        <div >
           <SelectCountryRegionBox
             fields={locations.origin}
             location="origin"
             updateField={handleOnSelect}
           />
-        </div>
         <div className="form-cell">
           <SelectCountryRegionBox
             fields={locations.destination}
@@ -124,6 +122,7 @@ export const TripsPageForm: React.FunctionComponent<TripsPageFormProps> = (props
             <DatePicker
               className="mdc-text-field--fullwidth"
               name="arrival_date"
+              size="small"
               inputVariant="outlined"
               label="Departure Date"
               openTo="date"
@@ -151,6 +150,7 @@ export const TripsPageForm: React.FunctionComponent<TripsPageFormProps> = (props
             <DatePicker
               className="mdc-text-field--fullwidth"
               name="arrival_date"
+              size="small"
               inputVariant="outlined"
               label="Arrival Date"
               openTo="date"

@@ -1,5 +1,4 @@
-import SearchInput from '@components/SearchInput';
-import { TextField } from '@material-ui/core';
+import { authService } from '@utils/auth';
 import * as React from 'react';
 
 // third-party libraries
@@ -8,11 +7,11 @@ import {
   Grid,
   Row
 } from '@material/react-layout-grid';
-import MaterialIcon from '@material/react-material-icon';
 import { connect } from 'react-redux';
 
 // components
 import Loader from '@components/Loader';
+import SearchInput from '@components/SearchInput';
 import TripCard from '@components/TripCard';
 
 // thunks
@@ -47,11 +46,10 @@ export class ExplorePage extends React.Component<ExplorePageProps, ExplorePageSt
     this.props.requestTrip(tripId);
   }
 
-  renderSearchField = () => (
-    <div className="form-cell">
-      {SearchInput}
-    </div>
-  )
+  isSameUser = (trip) => {
+    const user = authService.getUser();
+    return (user.userdata.id && trip.traveller);
+  }
 
   /**
    * @description This method renders the card contents
@@ -83,6 +81,7 @@ export class ExplorePage extends React.Component<ExplorePageProps, ExplorePageSt
                   trip={trip}
                   redirect={this.redirectToSingleTrip}
                   requestTrip={this.handleSubmitTripRequest}
+                  isOwner={!!this.isSameUser(trip)}
                 />
               );
             })
@@ -95,6 +94,7 @@ export class ExplorePage extends React.Component<ExplorePageProps, ExplorePageSt
   render() {
     const { isLoading } = this.state;
     const { trips } = this.props;
+    console.log('Class: ExplorePage, Function: render, Line 97 trips():', trips);
 
     return (
       isLoading

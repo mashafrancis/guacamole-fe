@@ -13,12 +13,16 @@ import {
   Cell,
 } from '@material/react-layout-grid';
 import * as moment from 'moment';
+import { Link, NavLink } from 'react-router-dom';
 
 // components
 import TripsModal from '@components/TripsModal';
 
 // interfaces
 import { TripCardProps } from './interfaces';
+
+// utils
+import countryString from '@utils/helpers/countryString';
 
 // styles
 import './TripCard.scss';
@@ -37,10 +41,18 @@ const useStyles = makeStyles({
 
 const img = 'https://res.cloudinary.com/almondgreen/image/upload/v1570631064/Mobilities/connected_world_auu3ui.svg';
 
-const TripCard: React.SFC<TripCardProps> = (props) => {
+const TripCard: React.FunctionComponent<TripCardProps> = (props) => {
   const classes = useStyles(props);
   const [modalOpen, setModalOpen] = React.useState(false);
-  const { trip, requestTrip } = props;
+  const {
+    trip,
+    requestTrip,
+    handleDeleteTrip,
+    redirect,
+    isOwner,
+    link,
+  } = props;
+
   const handleModalOpen = () => {
     setModalOpen(true);
   };
@@ -54,6 +66,30 @@ const TripCard: React.SFC<TripCardProps> = (props) => {
     requestTrip(trip.id);
   };
 
+  const renderCardActionNotOwner = () => (
+    <React.Fragment>
+      <Button size="small" color="primary">
+        Share
+      </Button>
+      <Button size="small" color="primary" onClick={handleModalOpen}>
+        Request
+      </Button>
+    </React.Fragment>
+  );
+
+  const renderCardActionsOwner = () => (
+    <React.Fragment>
+      <Button size="small" color="primary">
+        <Link to={link}>
+          Edit
+        </Link>
+      </Button>
+      <Button size="small" color="primary" onClick={handleDeleteTrip}>
+        Delete
+      </Button>
+    </React.Fragment>
+  );
+
   return (
       <Cell
         desktopColumns={3}
@@ -61,7 +97,7 @@ const TripCard: React.SFC<TripCardProps> = (props) => {
         phoneColumns={2}
       >
         <Card className={`${classes.card} trip-card`}>
-          <CardActionArea onClick={() => { props.redirect(props.trip.id); }}>
+          <CardActionArea onClick={() => redirect(trip.id) }>
             <CardMedia
               component="img"
               alt="Request Trip"
@@ -71,22 +107,20 @@ const TripCard: React.SFC<TripCardProps> = (props) => {
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="h4">
-                {/*{`Trip to ${trip.destination}`}*/}
-                {`${props.trip.origin} to ${props.trip.destination}`}
+                {`${countryString(trip.origin)} to ${countryString(trip.destination)}`}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-                {`${moment(props.trip.departure_date).format('LL')} - ${moment(props.trip.arrival_date).format('LL')}`}
+                {`${moment(trip.departure_date).format('LL')} - ${moment(trip.arrival_date).format('LL')}`}
               </Typography>
             </CardContent>
           </CardActionArea>
           <CardActions disableSpacing>
-            <Button size="small" color="primary">
-              Share
-            </Button>
-            <Button size="small" color="primary" onClick={handleModalOpen}>
-              Request
-            </Button>
-            <TripsModal open={modalOpen} handleClose={handleModalClose} handleSubmitRequest={handleRequestTrip} />
+            {isOwner ? renderCardActionsOwner() : renderCardActionNotOwner()}
+            <TripsModal
+              open={modalOpen}
+              handleClose={handleModalClose}
+              handleSubmitRequest={handleRequestTrip}
+            />
           </CardActions>
         </Card>
     </Cell>

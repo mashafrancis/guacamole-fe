@@ -1,4 +1,4 @@
-import { UserDetails } from 'modules/user/interfaces';
+import { UserDetails } from '@modules/user/interfaces';
 
 // types
 import {
@@ -115,7 +115,7 @@ export interface Trip {
   departure_date: string | any;
   arrival_date: string | any;
   space_available: string;
-  traveller?: UserDetails;
+  traveller?: string;
 }
 
 export interface NewTrip {

@@ -7,11 +7,11 @@ import { shallow } from 'enzyme';
 // import components
 import Spinner from './';
 
-describe.skip('<Spinner />', () => {
+describe('<Spinner />', () => {
   it('should be mounted properly', () => {
     const wrapper = shallow(<Spinner />);
 
     expect(wrapper).toMatchSnapshot();
-    expect(wrapper.find('.spinner').length).toEqual(1);
+    expect(wrapper.find('.showbox').length).toEqual(1);
   });
 });

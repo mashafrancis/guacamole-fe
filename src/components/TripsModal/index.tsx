@@ -38,15 +38,17 @@ const TripsModal: React.FunctionComponent<TripsModalProps> = (props) => {
           <DialogTitle>{'Confirm Request for this Trip?'}</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Click the continue button to confirm request for this trip.
-              You'll recieve an email notification confirming your request.
+              You shall receive an email notification confirming your request.
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="secondary">
+            <Button onClick={handleClose} color="primary">
               Dismiss
             </Button>
-            <Button onClick={handleSubmitRequest} color="primary">
+            <Button
+              className="mdc-button big-round-corner-button mdc-button--raised"
+              onClick={handleSubmitRequest}
+              >
               Continue
             </Button>
           </DialogActions>
