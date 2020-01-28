@@ -4,6 +4,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 // components
+import PageBottomNavigation from '@components/BottomNavigation';
 import { MenuContext } from '@components/Context';
 import { MenuContent } from '@components/MenuContent';
 import { TopBar } from '@components/TopBar';
@@ -19,6 +20,7 @@ import { DashboardContainerProps, DashboardContainerState } from './interfaces';
 import './DashboardContainer.scss';
 
 const viewPort = window.innerWidth;
+const avatar = 'https://res.cloudinary.com/almondgreen/image/upload/v1580208660/Mobilities/avatar_ast4yi.jpg';
 
 const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (props) => {
   const [state, setState] = React.useState<DashboardContainerState>({
@@ -70,7 +72,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
     {(viewPort > 539) &&
     <img
       className="mini-account-menu__image"
-      src={props.user.photo}
+      src={props.user.photo || avatar}
       alt="image"/>}
     </span>
       </div>
@@ -102,9 +104,18 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
       }}
     >
       <div className="dashboard">
-        <MenuContent name={user.name} photo={user.photo}/>
+        <MenuContent name={`${user.first_name} ${user.last_name}`} photo={user.photo}/>
         <TopBar photoImage={photoImage()} topIcons={topIcons}/>
-        <TopAppBarFixedAdjust>{component}</TopAppBarFixedAdjust>
+        {
+          (viewPort < 539)
+            ?
+          <div className="page-content">
+            <TopAppBarFixedAdjust>{component}</TopAppBarFixedAdjust>
+            <PageBottomNavigation />
+          </div>
+            :
+          <TopAppBarFixedAdjust>{component}</TopAppBarFixedAdjust>
+        }
       </div>
     </MenuContext.Provider>
   );

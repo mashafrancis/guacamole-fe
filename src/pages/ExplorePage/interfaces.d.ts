@@ -1,4 +1,4 @@
-import { Trip } from 'modules/trips/interfaces';
+import { Trip } from '@modules/trips/interfaces';
 
 export interface ExplorePageProps {
   isLoading: boolean;

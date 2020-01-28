@@ -3,7 +3,6 @@ import * as React from 'react';
 // third-party libraries
 import MaterialIcon from '@material/react-material-icon';
 import TopAppBar, {
-  TopAppBarFixedAdjust,
   TopAppBarIcon,
   TopAppBarRow,
   TopAppBarSection,
@@ -29,7 +28,7 @@ export const TopBar: React.FunctionComponent<TopBarProps> = props => (
           <TopAppBarIcon navIcon tabIndex={0}>
             <MaterialIcon
               onClick={() => setOpen(true)}
-              hasRipple icon="notes" initRipple={null}/>
+              hasRipple icon="menu" initRipple={null}/>
           </TopAppBarIcon>}
           <TopAppBarTitle>
             <NavLink to={'/'}>

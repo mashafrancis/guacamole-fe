@@ -1,4 +1,5 @@
 // react libraries
+import ErrorBoundary from '@components/ErrorBoundary';
 import * as React from 'react';
 
 // third party libraries
@@ -50,19 +51,24 @@ export class App extends React.Component<AppProps, AppState> {
 
   render() {
     const { isUserAuthenticated, isGettingUserDetails } = this.state;
+    const checkUserDetailsAndAuthentication = (
+      isGettingUserDetails: boolean,
+      isUserAuthenticated: boolean) => (isGettingUserDetails && isUserAuthenticated);
 
-    return isGettingUserDetails && isUserAuthenticated
-      ? <Loader />
-      : <React.Fragment>
-        <SnackBar />
-        <>
-          {
-            location.pathname !== '/'
-            && isUserAuthenticated
-          }
-          { this.props.serverError.error ? <InternalServerErrorMessage /> : <Routes /> }
-        </>
-      </React.Fragment>;
+    return (checkUserDetailsAndAuthentication(isGettingUserDetails, isUserAuthenticated) ? <Loader /> :
+      <ErrorBoundary>
+        <React.Fragment>
+          <SnackBar />
+          <>
+            {
+              location.pathname !== '/'
+              && isUserAuthenticated
+            }
+            {<Routes/>}
+          </>
+        </React.Fragment>
+      </ErrorBoundary>
+    );
   }
 }
 

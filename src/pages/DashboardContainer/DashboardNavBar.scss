@@ -267,9 +267,9 @@ footer {
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 536px) {
   .mdc-top-app-bar {
-    background-color: #d6dae04d;
+    //background-color: #d6dae04d;
     color: #000000;
 
     &__title {
@@ -368,7 +368,7 @@ footer {
   }
 
   .mdc-drawer__header {
-    background-color: rgba(17, 17, 17, 0.91);
+    background-color: rgba(17, 17, 17, 0.76);
   }
 }
 

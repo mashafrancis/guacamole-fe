@@ -4,4 +4,7 @@ export interface TripCardProps {
   trip: Trip;
   redirect?: (tripId: string) => void;
   requestTrip?: (tripId: string) => void;
+  isOwner: boolean;
+  handleDeleteTrip?: () => void;
+  link?: string;
 }

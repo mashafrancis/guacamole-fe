@@ -1,4 +1,7 @@
 // react libraries
+import CardTravelIcon from '@material-ui/icons/CardTravel';
+import ExploreIcon from '@material-ui/icons/Explore';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import { ExplorePage } from '@pages/ExplorePage';
 import PreferencePage from '@pages/PreferencePage';
 import { TripsPage } from '@pages/TripsPage';
@@ -48,5 +51,23 @@ export const BottomMenus = [
     icon: 'launch',
     primaryText: 'Send feedback',
     component: PreferencePage,
+  },
+];
+
+export const BottomNavigationMenus = [
+  {
+    navLink: '/explore',
+    icon: <ExploreIcon />,
+    primaryText: 'Explore',
+  },
+  {
+    navLink: '/trips',
+    icon: <CardTravelIcon />,
+    primaryText: 'Trips',
+  },
+  {
+    navLink: '/preferences',
+    icon: <FavoriteIcon />,
+    primaryText: 'Favorites',
   },
 ];

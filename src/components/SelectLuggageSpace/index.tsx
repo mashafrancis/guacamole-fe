@@ -33,8 +33,9 @@ export const SelectLuggageSpace: React.FunctionComponent<SelectLuggageSpaceProps
         flexWrap: 'wrap',
       },
       formControl: {
-        margin: theme.spacing(1),
-        minWidth: 150,
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1),
+        minWidth: 200,
       },
       selectEmpty: {
         marginTop: theme.spacing(2),
@@ -48,7 +49,7 @@ export const SelectLuggageSpace: React.FunctionComponent<SelectLuggageSpaceProps
     <form className={classes.root} autoComplete="off">
       <FormControl variant="outlined" className={classes.formControl}>
         <InputLabel ref={inputLabel} htmlFor="outlined-age-simple">
-          Space
+          Space Available
         </InputLabel>
         <Select
           className="mdc-text-field--fullwidth"
@@ -60,10 +61,10 @@ export const SelectLuggageSpace: React.FunctionComponent<SelectLuggageSpaceProps
             id: 'outlined-age-simple',
           }}
         >
-          <MenuItem value={0}>None</MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          <MenuItem value={0}>None (0)</MenuItem>
+          <MenuItem value={10}>Ten (10)</MenuItem>
+          <MenuItem value={20}>Twenty (20)</MenuItem>
+          <MenuItem value={30}>Thirty (30)</MenuItem>
         </Select>
       </FormControl>
     </form>
