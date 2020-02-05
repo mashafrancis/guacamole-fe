@@ -6,6 +6,6 @@ export interface TripCardProps {
   requestTrip?: (tripId: string) => void;
   isOwner: boolean;
   handleDeleteTrip?: () => void;
-  link?: string;
   setSelectedTrip: (tripId: string) => void;
+  editTrip?: (editTrip: Trip) => void
 }

@@ -19,7 +19,9 @@ import { Link, NavLink } from 'react-router-dom';
 
 import { TripsPageProps, TripsPageState } from './interfaces';
 import Loader from '@components/Loader';
-import { TripsPageForm } from '@pages/TripsPageForm';
+import TripsPageForm from '@pages/TripsPageForm';
+import EditSingleTripPage from '@pages/EditSingleTripPage';
+import { Trip } from '@modules/trips/interfaces';
 
 export const TripsPage: React.FunctionComponent<TripsPageProps> = (props) => {
   const [state, setState] = React.useState<TripsPageState>({
@@ -41,11 +43,9 @@ export const TripsPage: React.FunctionComponent<TripsPageProps> = (props) => {
 
   const [showingNewTripForm, setShowingNewTripForm] = React.useState<Boolean>(false)
 
-  // React.useEffect(() => {
-  //   props.getAllUserTrips()
-  //     .then(() => setState({ ...state, trips: props.trips }))
-  //     .then(() => setState({ ...state, isLoading: false }));
-  // },              []);
+  const [showingSingleTrip, setShowingSingleTrip] = React.useState<Boolean>(false)
+  const [selectedTripId, setSelectedTripId] = React.useState<string>()
+  const [ editTrip, setEditTrip] = React.useState<Trip>(undefined)
 
   React.useEffect(() => {
     switch (state.action) {
@@ -60,28 +60,6 @@ export const TripsPage: React.FunctionComponent<TripsPageProps> = (props) => {
       .then(() => setState({ ...state, trips: props.trips }))
       .then(() => setState({ ...state, isLoading: false }));
   },              [state.action]);
-
-  // const handleDelete = (trip) => {
-  //   switch (state.action) {
-  //     case 'delete':
-  //       props.deleteSingleTrip(trip.id)
-  //         .then(() => setState({
-  //           ...state,
-  //           action: '',
-  //           isDeleteModal: false, isLoading: false,
-  //         }));
-  //       break;
-  //     case 'dismiss':
-  //       setState({ ...state, isDeleteModal: false });
-  //       break;
-  //   }
-  // };
-
-  const redirectToSingleTrip = (trip_id) => {
-    props.history.push(`/trips/${
-      state.trips
-    }`);
-  };
 
   const renderHeaderContent = () => {
     return (
@@ -153,7 +131,7 @@ export const TripsPage: React.FunctionComponent<TripsPageProps> = (props) => {
       <div className="blank-content">
         <h4>You don't have any trip scheduled</h4>
         <h5>Tap + to create one</h5>
-          <Fab className="create-trip-button" icon={<MaterialIcon icon="add" initRipple={null}/>}
+          <Fab onClick={() => setShowingNewTripForm(!showingNewTripForm)} className="create-trip-button" icon={<MaterialIcon icon="add" initRipple={null}/>}
           />
       </div>
     </React.Fragment>
@@ -184,8 +162,9 @@ export const TripsPage: React.FunctionComponent<TripsPageProps> = (props) => {
                   key={trip.id}
                   trip={trip}
                   isOwner={true}
-                  link={`${props.match.url}/edit/${trip.id}`}
-                  // match={props.match}
+                  setSelectedTrip={setSelectedTripId}
+                  setShowingSingleTrip={setShowingSingleTrip}
+                  editTrip={setEditTrip}
                   handleDeleteTrip={() => setState({ ...state, trip_id: trip.id, isDeleteModal: true })}
                 />
               );
@@ -202,7 +181,7 @@ export const TripsPage: React.FunctionComponent<TripsPageProps> = (props) => {
         </Row>
         <Row>
           <Cell>
-              <Fab className="create-trip-button" icon={<MaterialIcon icon="add" initRipple={null}/>}
+              <Fab onClick={() => setShowingNewTripForm(!showingNewTripForm)} className="create-trip-button" icon={<MaterialIcon icon="add" initRipple={null}/>}
               />
           </Cell>
         </Row>
@@ -210,7 +189,7 @@ export const TripsPage: React.FunctionComponent<TripsPageProps> = (props) => {
     );
   };
 
-  return state.isLoading ? <Loader /> : showingNewTripForm ? <TripsPageForm setShowingNewTripForm={setShowingNewTripForm} /> : renderTripsComponent();
+  return state.isLoading ? <Loader /> : showingNewTripForm ? <TripsPageForm setShowingNewTripForm={setShowingNewTripForm} /> : editTrip ? <EditSingleTripPage setEditTrip={setEditTrip} editTripId={selectedTripId} /> : renderTripsComponent();
 };
 
 export const mapStateToProps = state => ({

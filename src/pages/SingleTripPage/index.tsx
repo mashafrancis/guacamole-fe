@@ -35,16 +35,16 @@ export const SingleTripPage: React.FunctionComponent<SingleTripPageProps> = (pro
     trips: [],
   });
 
+  const tripId = props.selectedTripId;
 
   React.useEffect(() => {
-    const tripId = props.selectedTripId;
     props.getSingleTrip(tripId)
       .then(() => setState({ ...state, isLoading: false }))
       .then(() => props.getAllUserTrips()
       .then(() => setState({ ...state, trips: props.trips }))
       .then(() => setState({ ...state, isLoading: false })));
     return () => setState({...state, isLoading: true})
-  },[]);
+  },[tripId]);
 
   const handleModalOpen = () => {
     setState({ ...state, modalOpen: true });
@@ -160,9 +160,7 @@ export const SingleTripPage: React.FunctionComponent<SingleTripPageProps> = (pro
       :
       <div className="register">
       <AuthHeader
-        forwardButtonName={'Home'}
         backwardButtonName={'Back'}
-        forwardAction={ () => history.push('/')}
         backwardAction={ () => setShowingSingleTrip(false)}/>
       <Grid>
         <Row>

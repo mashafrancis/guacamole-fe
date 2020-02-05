@@ -82,7 +82,7 @@ const drawerContent = (selectedIndex, setSelectedIndex, setOpen, logoutUser) => 
           ))
         }
         <ListItem onClick={logoutUser}>
-          <ListItemGraphic className="drawer-icon" graphic={<MaterialIcon icon="exit_to_app"/>} />
+          <ListItemGraphic graphic={<MaterialIcon icon="exit_to_app"/>} />
           <ListItemText primaryText="Logout"/>
         </ListItem>
       </List>

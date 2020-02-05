@@ -26,15 +26,15 @@ import { ExplorePageProps } from './interfaces';
 import SingleTripPage from '@pages/SingleTripPage';
 
 export const ExplorePage: React.FunctionComponent<ExplorePageProps> = props => {
-  const [ isLoading, setIsLoading ] = React.useState<Boolean>(false)
+  const [isLoading, setIsLoading] = React.useState<Boolean>(false)
   const { trips, history } = props
-  const [ showingSingleTrip, setShowingSingleTrip ] = React.useState<Boolean>(false)
-  const [ selectedTripId, setSelectedTripId ] = React.useState<string>()
+  const [showingSingleTrip, setShowingSingleTrip] = React.useState<Boolean>(false)
+  const [selectedTripId, setSelectedTripId] = React.useState<string>()
 
-  React.useEffect(()=> {
+  React.useEffect(() => {
     props.getAllTrips()
       .then(() => setIsLoading(false));
-  }) 
+  })
 
 
   const handleSubmitTripRequest = (tripId) => {
@@ -70,7 +70,7 @@ export const ExplorePage: React.FunctionComponent<ExplorePageProps> = props => {
             tabletColumns={4}
             phoneColumns={4}
           >
-              <SearchInput />
+            <SearchInput />
           </Cell>
         </Row>
         <Row>
@@ -80,8 +80,8 @@ export const ExplorePage: React.FunctionComponent<ExplorePageProps> = props => {
                 <TripCard
                   key={trip.id}
                   trip={trip}
-                  requestTrip={this.handleSubmitTripRequest}
-                  isOwner={!!this.isSameUser(trip)}
+                  requestTrip={handleSubmitTripRequest}
+                  isOwner={!!isSameUser(trip)}
                   setSelectedTrip={setSelectedTripId}
                   setShowingSingleTrip={setShowingSingleTrip}
                 />
@@ -95,8 +95,8 @@ export const ExplorePage: React.FunctionComponent<ExplorePageProps> = props => {
 
   return (
     isLoading
-    ? <Loader />
-    : showingSingleTrip ? <SingleTripPage history={history} selectedTripId={selectedTripId} setSelectedTripId={setSelectedTripId} setShowingSingleTrip={setShowingSingleTrip} /> : renderExploreContent(trips)
+      ? <Loader />
+      : showingSingleTrip ? <SingleTripPage history={history} selectedTripId={selectedTripId} setSelectedTripId={setSelectedTripId} setShowingSingleTrip={setShowingSingleTrip} /> : renderExploreContent(trips)
   );
 }
 

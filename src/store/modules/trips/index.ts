@@ -296,7 +296,6 @@ export const addNewTrip = trip => (dispatch, getState, http) => {
     .then((response) => {
       dispatch(addTripSuccess(response.data.data));
       dispatch(displaySnackMessage('Your trip had been added successfully.'));
-      window.location.replace('/trips');
     })
     .catch((errors) => {
       dispatch(addTripFailure(errors));

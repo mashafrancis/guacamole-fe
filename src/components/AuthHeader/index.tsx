@@ -9,7 +9,6 @@ import { AuthHeaderProps } from './interfaces';
 
 const forwardArrow = (action, name) => (
   <React.Fragment>
-    {/* <NavLink to={link}> */}
       <span className="register-toolbar-actions">
         <div className="register__logo">
           <span className="product-logo-text">{name}</span>
@@ -22,13 +21,11 @@ const forwardArrow = (action, name) => (
             aria_label="Go forward"
           />
       </span>
-    {/* </NavLink> */}
   </React.Fragment>
 );
 
 const backArrow = (action, name) => (
   <React.Fragment>
-    {/* <NavLink to={link}> */}
       <span className="register-toolbar-actions">
         <Button
           type="button"
@@ -41,20 +38,19 @@ const backArrow = (action, name) => (
           <span className="product-logo-text">{name}</span>
         </div>
       </span>
-    {/* </NavLink> */}
   </React.Fragment>
 );
 
 const AuthHeader: React.SFC<AuthHeaderProps> = props => (
   <React.Fragment>
     <header>
-        {backArrow(props.backwardAction, props.backwardButtonName)}
+        {props.backwardButtonName ? backArrow(props.backwardAction, props.backwardButtonName) : ''}
         <div className="mini-account-menu">
           <div className="mini-account-menu--desktop">
-            {forwardArrow(props.forwardAction, props.forwardButtonName)}
+            {props.forwardButtonName ? forwardArrow(props.forwardAction, props.forwardButtonName) : ''}
           </div>
           <div className="mini-account-menu--mobile">
-            {forwardArrow(props.forwardAction, props.forwardButtonName)}
+            {props.forwardButtonName ?  forwardArrow(props.forwardAction, props.forwardButtonName) : ''}
           </div>
         </div>
       </header>

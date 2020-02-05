@@ -70,6 +70,7 @@ export const TripsPageForm: React.FunctionComponent<TripsPageFormProps> = (props
   const onSubmit = (event) => {
     event.preventDefault();
     const { locations, dates } = state;
+    const { setShowingNewTripForm } = props;
     const trip = {
       origin: `${Object.values(locations.origin).join(',')}` as string,
       destination: `${Object.values(locations.destination).join(',')}` as string,
@@ -83,12 +84,9 @@ export const TripsPageForm: React.FunctionComponent<TripsPageFormProps> = (props
     props.addNewTrip(trip)
       .then(() => {
         setState({ ...state, isLoading: false });
-      });
+      }).then(() => setShowingNewTripForm(false));
   };
 
-  const handleNavigationAction = (to: string) => {
-    document.location.href = to
-  }
 
   const handleOnSelect = (location: string, field: string) => (event) => {
     setState({ ...state, locations: {
@@ -191,14 +189,13 @@ export const TripsPageForm: React.FunctionComponent<TripsPageFormProps> = (props
 
   return (() => {
     const { isLoading } = state;
+    const { setShowingNewTripForm } = props;
 
     return (
       <div className="register">
         <AuthHeader
-          forwardButtonName="Home"
           backwardButtonName="Back"
-          forwardAction={() => handleNavigationAction('/')}
-          backwardAction={() => handleNavigationAction('/trips')}
+          backwardAction={() => setShowingNewTripForm(false)}
         />
         <Container maxWidth="sm">
           <Grid container direction="column" spacing={2}>

@@ -26,6 +26,7 @@ import countryString from '@utils/helpers/countryString';
 
 // styles
 import './TripCard.scss';
+import { editTrip } from '@modules/trips';
 
 const useStyles = makeStyles({
   root: {
@@ -51,8 +52,13 @@ const TripCard: React.FunctionComponent<TripCardProps> = (props) => {
     isOwner,
     setShowingSingleTrip,
     setSelectedTrip,
-    link,
+    editTrip
   } = props;
+
+  const handleEditTrip = () => {
+    setSelectedTrip(trip.id)
+    editTrip(trip)
+  }
 
   const handleModalOpen = () => {
     setModalOpen(true);
@@ -85,10 +91,8 @@ const TripCard: React.FunctionComponent<TripCardProps> = (props) => {
 
   const renderCardActionsOwner = () => (
     <React.Fragment>
-      <Button size="small" color="primary">
-        <Link to={link}>
-          Edit
-        </Link>
+      <Button size="small" color="primary" onClick={handleEditTrip} >
+        Edit
       </Button>
       <Button size="small" color="primary" onClick={handleDeleteTrip}>
         Delete
