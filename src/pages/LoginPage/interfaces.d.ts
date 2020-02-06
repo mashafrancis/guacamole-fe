@@ -18,4 +18,6 @@ export interface LoginPageState {
   errors: {
     [key: string]: string
   };
+  password: string;
+  email: string;
 }

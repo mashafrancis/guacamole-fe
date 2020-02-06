@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 // components
 import AuthHeader from '@components/AuthHeader';
 import Button from '@components/Button';
+import EmailField from '@components/EmailField';
 
 // thunks
 import { forgotPassword } from '@modules/passwordReset';
@@ -29,10 +30,7 @@ export class ForgotPasswordPage extends React.Component<ForgotPasswordPageProps,
     super(props);
     this.state = {
       isLoading: false,
-      isValid: true,
-      focused: false,
-      fields: {},
-      errors: {},
+      email: '',
     };
   }
 
@@ -44,62 +42,16 @@ export class ForgotPasswordPage extends React.Component<ForgotPasswordPageProps,
    * @returns {void}
    */
   handleInputChange = (event) => {
-    const { name: field, value } = event.target;
+    const { value, name } = event;
 
     this.setState(prevState => ({
-      fields: {
-        ...prevState.fields,
-        [field]: value,
-      },
+      ...prevState,
+      [name]: value,
     }));
   }
 
-  /**
-   * Sets the field error string
-   *
-   * @param {String} field The name of the error field
-   * @param {String} error The error message
-   *
-   * @returns {void}
-   */
-  setFieldError = (field: string, error: string) => {
-    this.setState(prevState => ({
-      errors: {
-        ...prevState.errors,
-        [field]: error,
-      },
-    }));
-  }
-
-  /**
-   * Validates a single field of a form
-   * Triggered by a form input event
-   *
-   * @param {event} event DOM event
-   * @param {object} config
-   *
-   * @returns {void}
-   */
-  validateSingleField = (event, config = validationConfig) => {
-    const field = event.target.name;
-    const value = this.state.fields[field];
-    const error = applyValidation(value, config[field]);
-
-    this.setFieldError(field, error);
-  }
-
-  /**
-   * Computed property for determining if the form can be submitted
-   *
-   * @returns {Boolean}
-   */
-  formIsReady = () => {
-    const { errors, fields } = this.state;
-    const expectedFieldCount = 1;
-    const formHasMissingFields = Object.keys(fields).length < expectedFieldCount;
-    const formHasError = Object.values(errors).some(error => Boolean(error));
-
-    return !formHasMissingFields && !formHasError;
+  fieldStateChanged = (field: keyof ForgotPasswordPageState) => (state) => {
+    this.setState({ ...state, [field]: state.errors.length === 0 });
   }
 
   /**
@@ -111,46 +63,10 @@ export class ForgotPasswordPage extends React.Component<ForgotPasswordPageProps,
    */
   onSubmit = (event) => {
     event.preventDefault();
-    const { fields } = this.state;
-    const user = {
-      email: fields.email as string,
-    };
+    const { email } = this.state;
+    const user = { email };
     this.props.forgotPassword(user);
     this.setState({ isLoading: true });
-  }
-
-  renderEnterOldPassword = () => {
-    const { fields } = this.state;
-
-    return (
-      <React.Fragment>
-        <div className="form-cell">
-          <TextField
-            className="mdc-text-field--fullwidth"
-            outlined
-            label="Enter your email"
-            leadingIcon={<MaterialIcon role="button" icon="email" initRipple={null}/>}
-            helperText={
-              <HelperText
-                className="mdc-text-field-helper-text--validation-msg"
-                isValidationMessage={true}
-                persistent={true}
-                validation={true}>
-                {'A password reset link will be sent to your email account'}
-              </HelperText>}
-          >
-            <Input
-              value={fields.email}
-              name="email"
-              id="7"
-              type="email"
-              required={true}
-              onBlur={this.validateSingleField}
-              onChange={this.handleInputChange}/>
-          </TextField>
-        </div>
-      </React.Fragment>
-    );
   }
 
   render() {
@@ -172,6 +88,7 @@ export class ForgotPasswordPage extends React.Component<ForgotPasswordPageProps,
             tabletColumns={7}
           >
             <h1 className="headline-2">Reset password</h1>
+            <h5>A password reset link will be sent to your email account</h5>
           </Cell>
         </Row>
         <Row>
@@ -184,7 +101,15 @@ export class ForgotPasswordPage extends React.Component<ForgotPasswordPageProps,
             desktopColumns={4}
             tabletColumns={4}
           >
-            {this.renderEnterOldPassword()}
+            <div className="form-cell">
+              <EmailField
+                id="email"
+                label="Enter your email"
+                placeholder="Enter Email Address"
+                onStateChanged={(e) => { this.fieldStateChanged('email'); this.handleInputChange(e); }}
+                required
+              />
+            </div>
           </Cell>
         </Row>
         <Row>
@@ -197,7 +122,7 @@ export class ForgotPasswordPage extends React.Component<ForgotPasswordPageProps,
               type="button"
               name="Reset Password"
               id="cc-register"
-              disabled={!this.formIsReady() || this.state.isLoading}
+              disabled={!this.state.email}
               onClick={this.onSubmit}
               classes="mdc-button big-round-corner-button mdc-button--raised"
             />

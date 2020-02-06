@@ -65,6 +65,7 @@
     "browserslist": "^4.8.3",
     "canvas": "^2.6.1",
     "classnames": "^2.2.6",
+    "clsx": "^1.0.4",
     "codecov": "^3.6.1",
     "cookies-js": "^1.2.3",
     "cors": "^2.8.5",
@@ -79,6 +80,7 @@
     "firebase": "^7.4.0",
     "history": "^4.10.1",
     "html2canvas": "^1.0.0-rc.5",
+    "isemail": "^3.2.0",
     "jest-canvas-mock": "^2.2.0",
     "jest-localstorage-mock": "^2.4.0",
     "jquery": "^3.4.1",
@@ -114,7 +116,8 @@
     "regenerator-runtime": "^0.13.3",
     "sass-rem": "^2.0.1",
     "start-server-and-test": "^1.10.6",
-    "webpack-merge": "^4.2.2"
+    "webpack-merge": "^4.2.2",
+    "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",
