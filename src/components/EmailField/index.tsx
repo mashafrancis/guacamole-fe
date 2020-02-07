@@ -1,8 +1,8 @@
-import MaterialIcon from '@material/react-material-icon';
 import * as React from 'react';
 
 // third party apps
 import FormField from '@components/FormField';
+import MaterialIcon from '@material/react-material-icon';
 import { validate } from 'isemail';
 
 // interfaces

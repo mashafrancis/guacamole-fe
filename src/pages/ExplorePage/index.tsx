@@ -46,6 +46,7 @@ export const ExplorePage: React.FunctionComponent<ExplorePageProps> = (props) =>
     const user = authService.getUser();
     return (user.userdata.id && trip.traveller);
   };
+
   const renderSearchField = () => (
     <div className="form-cell">
       {SearchInput}
