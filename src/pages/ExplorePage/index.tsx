@@ -1,5 +1,3 @@
-import SearchInput from '@components/SearchInput';
-import { TextField } from '@material-ui/core';
 import * as React from 'react';
 
 // third-party libraries
@@ -8,11 +6,11 @@ import {
   Grid,
   Row
 } from '@material/react-layout-grid';
-import MaterialIcon from '@material/react-material-icon';
 import { connect } from 'react-redux';
 
 // components
 import Loader from '@components/Loader';
+import SearchInput from '@components/SearchInput';
 import TripCard from '@components/TripCard';
 
 // thunks
@@ -20,34 +18,39 @@ import { displaySnackMessage } from '@modules/snack';
 import { getAllTrips, requestTrip } from '@modules/trips';
 
 // pages
-import DashboardContainer from '@pages/DashboardContainer';
+import SingleTripPage from '@pages/SingleTripPage';
+
+// helpers
+import { authService } from '@utils/auth';
 
 // interfaces
 import { ExplorePageProps } from './interfaces';
-import SingleTripPage from '@pages/SingleTripPage';
 
-export const ExplorePage: React.FunctionComponent<ExplorePageProps> = props => {
-  const [ isLoading, setIsLoading ] = React.useState<Boolean>(false)
-  const { trips, history } = props
-  const [ showingSingleTrip, setShowingSingleTrip ] = React.useState<Boolean>(false)
-  const [ selectedTripId, setSelectedTripId ] = React.useState<string>()
+export const ExplorePage: React.FunctionComponent<ExplorePageProps> = (props) => {
+  const [isLoading, setIsLoading] = React.useState<Boolean>(false);
+  const { trips, history } = props;
+  const [showingSingleTrip, setShowingSingleTrip] = React.useState<Boolean>(false);
+  const [selectedTripId, setSelectedTripId] = React.useState<string>();
 
-  React.useEffect(()=> {
+  React.useEffect(() => {
     props.getAllTrips()
       .then(() => setIsLoading(false));
-  }) 
-
+  });
 
   const handleSubmitTripRequest = (tripId) => {
     setIsLoading(false);
     props.requestTrip(tripId);
-  }
+  };
 
+  const isSameUser = (trip) => {
+    const user = authService.getUser();
+    return (user.userdata.id && trip.traveller);
+  };
   const renderSearchField = () => (
     <div className="form-cell">
       {SearchInput}
     </div>
-  )
+  );
 
   /**
    * @description This method renders the card contents
@@ -67,7 +70,7 @@ export const ExplorePage: React.FunctionComponent<ExplorePageProps> = props => {
             tabletColumns={4}
             phoneColumns={4}
           >
-              <SearchInput />
+            <SearchInput />
           </Cell>
         </Row>
         <Row>
@@ -77,9 +80,10 @@ export const ExplorePage: React.FunctionComponent<ExplorePageProps> = props => {
                 <TripCard
                   key={trip.id}
                   trip={trip}
+                  requestTrip={handleSubmitTripRequest}
+                  isOwner={!!isSameUser(trip)}
                   setSelectedTrip={setSelectedTripId}
                   setShowingSingleTrip={setShowingSingleTrip}
-                  requestTrip={handleSubmitTripRequest}
                 />
               );
             })
@@ -87,15 +91,20 @@ export const ExplorePage: React.FunctionComponent<ExplorePageProps> = props => {
         </Row>
       </Grid>
     );
-  }
+  };
 
   return (
     isLoading
-    ? <Loader />
-    : showingSingleTrip ? <SingleTripPage history={history} selectedTripId={selectedTripId} setSelectedTripId={setSelectedTripId} setShowingSingleTrip={setShowingSingleTrip} /> : renderExploreContent(trips)
+      ? <Loader />
+      : showingSingleTrip
+      ? <SingleTripPage
+          history={history}
+          selectedTripId={selectedTripId}
+          setSelectedTripId={setSelectedTripId}
+          setShowingSingleTrip={setShowingSingleTrip}
+        /> : renderExploreContent(trips)
   );
-}
-
+};
 
 export const mapStateToProps = state => ({
   trips: state.trips.data,

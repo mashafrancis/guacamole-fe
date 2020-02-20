@@ -64,17 +64,13 @@ export const EditSingleTripPage: React.FunctionComponent<EditSingleTripPageProps
     },
   });
 
-  const tripId = window.location.pathname
-    .replace('http://', '')
-    .split('/');
-
-  const tripValue = props.trips.filter(res => res.id.includes(tripId[3]));
-
-  const [selectedDepartureDate, handleDepartureDateChange] = React.useState(tripValue[0].departure_date);
-  const [selectedArrivalDate, handleArrivalDateChange] = React.useState(tripValue[0].arrival_date);
+  const { editTripId, setEditTrip } = props;
+  const tripValue = props.trips.find(trip => trip.id === editTripId)
+  const [selectedDepartureDate, handleDepartureDateChange] = React.useState(tripValue.departure_date);
+  const [selectedArrivalDate, handleArrivalDateChange] = React.useState(tripValue.arrival_date);
 
   React.useEffect(() => {
-    setState({ ...state, trip: tripValue[0] });
+    setState({ ...state, trip: tripValue });
   },              []);
 
   const [selectedSpace, setSpace] = React.useState({
@@ -103,7 +99,7 @@ export const EditSingleTripPage: React.FunctionComponent<EditSingleTripPageProps
     props.editTrip(trip)
       .then(() => {
         setState({ ...state, isLoading: false });
-      });
+      }).then(() => setEditTrip(undefined));
   }
 
   const handleOnSelect = (location: string, field: string) => (event) => {
@@ -208,14 +204,11 @@ export const EditSingleTripPage: React.FunctionComponent<EditSingleTripPageProps
 
   return (() => {
     const { isLoading } = state;
-    const { history } = props
     return (
       <div className="register">
         <AuthHeader
-          forwardButtonName="Home"
           backwardButtonName="Back"
-          forwardAction={ () => history.push('/')}
-          backwardAction={ () => history.push('/trips')}
+          backwardAction={() => setEditTrip(undefined)}
         />
         <Container maxWidth="sm">
           <Grid container direction="column" spacing={2}>

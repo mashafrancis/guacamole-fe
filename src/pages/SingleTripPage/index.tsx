@@ -1,5 +1,3 @@
-import AuthHeader from '@components/AuthHeader';
-import TripCard from '@components/TripCard';
 import * as React from 'react';
 
 // third-party libraries
@@ -12,11 +10,16 @@ import { connect } from 'react-redux';
 import DashboardContainer from '@pages/DashboardContainer';
 
 // components
+import AuthHeader from '@components/AuthHeader';
 import Button from '@components/Button';
 import Loader from '@components/Loader';
+import TripCard from '@components/TripCard';
 
 // thunks
 import { getAllUserTrips, getSingleTrip, requestTrip } from '@modules/trips';
+
+// utils
+import countryString from '@utils/helpers/countryString';
 
 // styles
 import './SingleTripPage.scss';
@@ -32,16 +35,16 @@ export const SingleTripPage: React.FunctionComponent<SingleTripPageProps> = (pro
     trips: [],
   });
 
+  const tripId = props.selectedTripId;
 
   React.useEffect(() => {
-    const tripId = props.selectedTripId;
     props.getSingleTrip(tripId)
       .then(() => setState({ ...state, isLoading: false }))
       .then(() => props.getAllUserTrips()
       .then(() => setState({ ...state, trips: props.trips }))
       .then(() => setState({ ...state, isLoading: false })));
     return () => setState({...state, isLoading: true})
-  },[]);
+  },[tripId]);
 
   const handleModalOpen = () => {
     setState({ ...state, modalOpen: true });
@@ -75,8 +78,8 @@ export const SingleTripPage: React.FunctionComponent<SingleTripPageProps> = (pro
               phoneColumns={4}
             >
               <div className="trip">
-                <div className="trip-card">
-                  <div className="trip-card__details">
+                <div className="single-trip-card">
+                  <div className="single-trip-card__details">
                     <h3>{`Trip to ${trip.destination}`}</h3>
                     <h4>
                       {`${moment(trip.departure_date).format('LL')}`} -
@@ -120,15 +123,27 @@ export const SingleTripPage: React.FunctionComponent<SingleTripPageProps> = (pro
             </Cell>
           </Row>
           <Row>
+            <Cell
+              className="mdc-layout-grid__cell grid-start-3 mdc-layout-grid__cell--align-middle"
+              columns={8}
+              desktopColumns={8}
+              tabletColumns={8}
+              phoneColumns={4}
+            >
+              <h4>Explore More Trips.</h4>
+            </Cell>
+          </Row>
+          <Row>
             {
               props.trips.map((trip) => {
                 return (
                   <TripCard
                     key={trip.id}
                     trip={trip}
+                    requestTrip={handleRequestTrip}
+                    isOwner={true}
                     setSelectedTrip={setSelectedTripId}
                     setShowingSingleTrip={setShowingSingleTrip}
-                    requestTrip={this.handleSubmitTripRequest}
                   />
                 );
               })
@@ -145,9 +160,7 @@ export const SingleTripPage: React.FunctionComponent<SingleTripPageProps> = (pro
       :
       <div className="register">
       <AuthHeader
-        forwardButtonName={'Home'}
         backwardButtonName={'Back'}
-        forwardAction={ () => history.push('/')}
         backwardAction={ () => setShowingSingleTrip(false)}/>
       <Grid>
         <Row>

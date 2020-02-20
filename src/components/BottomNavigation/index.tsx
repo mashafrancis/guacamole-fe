@@ -1,15 +1,17 @@
+import { BottomNavigationMenus } from '@pages/MenuRoutes';
 import * as React from 'react';
 
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import { makeStyles } from '@material-ui/core/styles';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import RestoreIcon from '@material-ui/icons/Restore';
+import { NavLink } from 'react-router-dom';
+
+// styles
+import './BottomNavigation.scss';
 
 const useStyles = makeStyles({
   root: {
-    width: 500,
+    width: 'auto',
   },
 });
 
@@ -24,11 +26,19 @@ export const PageBottomNavigation = (props) => {
         setValue(newValue);
       }}
       showLabels
-      className={classes.root}
+      className={`${classes.root} page-content__navigation`}
     >
-      <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
-      <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-      <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
+      {
+        BottomNavigationMenus.map((menu, index) => {
+          return (
+            <BottomNavigationAction
+              key={index}
+              label={menu.primaryText}
+              icon={<NavLink to={menu.navLink}>{menu.icon}</NavLink>}
+            />
+          );
+        })
+      }
     </BottomNavigation>
   );
 };

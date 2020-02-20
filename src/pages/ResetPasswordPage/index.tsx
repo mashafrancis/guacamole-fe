@@ -2,15 +2,12 @@ import * as React from 'react';
 
 // third-party libraries
 import { Cell, Grid, Row } from '@material/react-layout-grid';
-import MaterialIcon from '@material/react-material-icon';
-import TextField, { HelperText, Input } from '@material/react-text-field';
 import { connect } from 'react-redux';
 
 // components
 import AuthHeader from '@components/AuthHeader';
 import Button from '@components/Button';
-import { validationConfig } from '@utils/helpers/resources';
-import { applyValidation } from '@utils/helpers/validationUtils';
+import PasswordField from '@components/PasswordField';
 
 // thunks
 import { resetPassword } from '@modules/passwordReset';
@@ -27,12 +24,7 @@ export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, R
     super(props);
     this.state = {
       isLoading: false,
-      isValid: true,
-      focused: false,
-      fields: {},
-      errors: {},
-      isPasswordHidden: true,
-      isConfirmPasswordHidden: true,
+      password: '',
       token: window.location.search && new URLSearchParams(window.location.search).getAll('token')[0],
     };
   }
@@ -45,104 +37,16 @@ export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, R
    * @returns {void}
    */
   handleInputChange = (event) => {
-    const { name: field, value } = event.target;
+    const { value, name } = event;
 
     this.setState(prevState => ({
-      fields: {
-        ...prevState.fields,
-        [field]: value,
-      },
+      ...prevState,
+      [name]: value,
     }));
   }
 
-  toggleHidePassword = () => {
-    this.setState(prevState => ({
-      isPasswordHidden: !prevState.isPasswordHidden,
-    }));
-  }
-
-  toggleHideConfirmPassword = () => {
-    this.setState(prevState => ({
-      isConfirmPasswordHidden: !prevState.isConfirmPasswordHidden,
-    }));
-  }
-
-  /**
-   * Sets the field error string
-   *
-   * @param {String} field The name of the error field
-   * @param {String} error The error message
-   *
-   * @returns {void}
-   */
-  setFieldError = (field: string, error: string) => {
-    this.setState(prevState => ({
-      errors: {
-        ...prevState.errors,
-        [field]: error,
-      },
-    }));
-  }
-
-  /**
-   * Validates a single field of a form
-   * Triggered by a form input event
-   *
-   * @param {event} event DOM event
-   * @param {object} config
-   *
-   * @returns {void}
-   */
-  validateSingleField = (event, config = validationConfig) => {
-    const field = event.target.name;
-    const value = this.state.fields[field];
-    const error = applyValidation(value, config[field]);
-
-    this.setFieldError(field, error);
-  }
-
-  /**
-   * Validates the password field
-   *
-   * @param {event} event DOM event
-   *
-   * @returns {void}
-   */
-  validatePasswordField = (event) => {
-    const field = event.target.name;
-    const value = this.state.fields[field];
-    (!value)
-      ? this.setFieldError(field, 'Kindly provide your password')
-      : this.setFieldError(field, '');
-  }
-
-  /**
-   * Validates the confirmation password
-   *
-   * @param {event} event DOM event
-   *
-   * @returns {void}
-   */
-  validateConfirmationPassword = (event) => {
-    const field = event.target.name;
-    const value = this.state.fields[field];
-    (this.state.fields.password !== value)
-      ? this.setFieldError(field, 'Password mismatch')
-      : this.setFieldError(field, '');
-  }
-
-  /**
-   * Computed property for determining if the form can be submitted
-   *
-   * @returns {Boolean}
-   */
-  formIsReady = () => {
-    const { errors, fields } = this.state;
-    const expectedFieldCount = 2;
-    const formHasMissingFields = Object.keys(fields).length < expectedFieldCount;
-    const formHasError = Object.values(errors).some(error => Boolean(error));
-
-    return !formHasMissingFields && !formHasError;
+  fieldStateChanged = (field: keyof ResetPasswordPageState) => (state) => {
+    this.setState({ ...state, [field]: state.errors.length === 0 });
   }
 
   /**
@@ -154,87 +58,35 @@ export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, R
    */
   onSubmit = (event) => {
     event.preventDefault();
-    const { fields, token } = this.state;
-    const user = {
-      password: fields.password as string,
-    };
+    const { password, token } = this.state;
+    const user = { password };
 
     this.props.resetPassword(user, token);
     this.setState({ isLoading: true });
   }
 
   renderResetPasswordForm = () => {
-    const { fields, errors, isPasswordHidden, isConfirmPasswordHidden } = this.state;
-
     return (
       <React.Fragment>
         <div className="form-cell">
-          <TextField
-            className="mdc-text-field--fullwidth"
-            outlined
-            label="Enter New Password"
-            onLeadingIconSelect={this.toggleHidePassword}
-            leadingIcon={
-              <MaterialIcon
-                role="button"
-                icon={isPasswordHidden ? 'visibility' : 'visibility_off'}
-                hasRipple={true}
-                initRipple={null}/>}
-            helperText={
-              <HelperText
-                className="mdc-text-field-invalid-helper"
-                isValidationMessage={true}
-                persistent={true}
-                validation={true}>
-                {errors.password}
-              </HelperText>}
-          >
-            <Input
-              value={fields.password}
-              name="password"
-              id="7"
-              type={isPasswordHidden ? 'password' : 'text'}
-              required={true}
-              onBlur={this.validateSingleField}
-              onChange={this.handleInputChange}/>
-          </TextField>
-        </div>
-        <div className="form-cell">
-          <TextField
-            className="mdc-text-field--fullwidth"
-            outlined
-            label="Confirm New Password"
-            onLeadingIconSelect={this.toggleHideConfirmPassword}
-            leadingIcon={
-              <MaterialIcon
-                role="button"
-                icon={isConfirmPasswordHidden ? 'visibility' : 'visibility_off'}
-                hasRipple={true}
-                initRipple={null}/>}
-            helperText={
-              <HelperText
-                className="mdc-text-field-invalid-helper"
-                isValidationMessage={true}
-                persistent={true}
-                validation={true}>
-                {errors.confirmPassword}
-              </HelperText>}
-          >
-            <Input
-              value={fields.confirmPassword}
-              name="confirmPassword"
-              id="8"
-              type={isConfirmPasswordHidden ? 'password' : 'text'}
-              required={true}
-              onBlur={this.validateConfirmationPassword}
-              onChange={this.handleInputChange}/>
-          </TextField>
+          <PasswordField
+            id="password"
+            label="password"
+            type="password"
+            aria-describedby="password-helper-text"
+            onStateChanged={(e) => { this.fieldStateChanged('password'); this.handleInputChange(e); }}
+            required
+            placeholder="Enter Password"
+            thresholdLength={7}
+            minStrength={3}
+          />
         </div>
       </React.Fragment>
     );
   }
 
   render() {
+    const { password, isLoading } = this.state;
     const { history } = this.props
 
     return (
@@ -278,9 +130,9 @@ export class ResetPasswordPage extends React.Component<ResetPasswordPageProps, R
           >
             <Button
               type="button"
-              name={this.state.isLoading ? 'Loading...' : 'Confirm New Password'}
+              name={isLoading ? 'Loading...' : 'Confirm New Password'}
               id="cc-register"
-              disabled={!this.formIsReady()}
+              disabled={!password}
               onClick={this.onSubmit}
               classes="mdc-button big-round-corner-button mdc-button--raised"
             />

@@ -5,7 +5,7 @@ export interface TripsPageProps {
   trip: Trip;
   displaySnackMessage?: (message) => Promise<any>;
   getAllUserTrips: () => Promise<any>;
-  deleteSingleTrip: (id) => Promise<any>;
+  deleteSingleTrip: (id) => void;
   history: {
     dateObject: object;
     push: (path: string, state?: object) => void;

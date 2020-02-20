@@ -11,12 +11,12 @@ export interface RegisterPageState {
   isLoading: boolean;
   isValid: boolean;
   focused: boolean;
-  isPasswordHidden: boolean;
-  isConfirmPasswordHidden: boolean;
   fields: {
     [key: string]: string | number
   };
-  errors: {
-    [key: string]: string
-  };
+  errors: any;
+  password?: string;
+  email?: string;
+  username?: string;
+  value?: string;
 }

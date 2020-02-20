@@ -2,6 +2,7 @@ export interface TripsPageFormProps {
   addNewTrip: (trip) => Promise<any>;
   displaySnackMessage?: (message) => Promise<any>;
   error?: object;
+  setShowingNewTripForm: (state)=> void
 }
 
 interface Location {

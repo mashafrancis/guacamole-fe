@@ -6,6 +6,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 // pages
 import PageNotFound from '@components/PageNotFound';
+import DashboardContainer from '@pages/DashboardContainer';
 import ForgotPasswordPage from '@pages/ForgotPasswordPage';
 import HomePage from '@pages/HomePage';
 import LoginPage from '@pages/LoginPage';
@@ -13,7 +14,6 @@ import RegisterPage from '@pages/RegisterPage';
 import ResetPasswordPage from '@pages/ResetPasswordPage';
 import SocialLoginPage from '@pages/SocialLoginPage';
 import SocialRegisterPage from '@pages/SocialRegisterPage';
-import DashboardPage from '@pages/DashboardContainer';
 
 const Routes = () => (
   <Route>
@@ -25,7 +25,7 @@ const Routes = () => (
         <Route exact path="/login/email" component={LoginPage} />
         <Route exact path="/forgot-password" component={ForgotPasswordPage} />
         <Route exact path="/forgot-password/reset" component={ResetPasswordPage} />
-        <Route exact path="/dashboard" component={DashboardPage} />
+        <Route exact path="/dashboard" component={DashboardContainer} />
         <Route path="/404" component={PageNotFound} />
         <Redirect to="/404" />
       </Switch>

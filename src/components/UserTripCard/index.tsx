@@ -66,7 +66,7 @@ const UserTripCard: React.FunctionComponent<UserTripCardProps> = (props) => {
             onClick={() => { props.redirect(trip.id); }}
             type="button"
             name="share"
-            classes="mdc-icon-button material-icons"
+            classes="mdc-leadingIcon-button material-icons"
             aria_label="Share"
           />
         </CardActionIcons>

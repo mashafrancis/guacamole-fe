@@ -1,24 +1,16 @@
 import * as React from 'react';
 
+// styles
+import { createMuiTheme, createStyles, Grid, ListItem, ListItemText, makeStyles, Theme } from '@material-ui/core';
 // third party apps
 import Icon from '@material-ui/core/Icon';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
+import { ThemeProvider } from '@material-ui/styles';
 import { countries } from 'countries-list';
 // @ts-ignore
 import { CountryRegionData } from 'react-country-region-selector';
-
-// styles
-import {
-  createMuiTheme,
-  createStyles,
-  Grid, ListItem,
-  ListItemText,
-  makeStyles,
-  Theme
-} from '@material-ui/core';
-import { ThemeProvider } from '@material-ui/styles';
 import { SelectBoxProps } from './interfaces';
 import './SelectBox.scss';
 
@@ -74,7 +66,7 @@ export const SelectCountryRegionBox: React.FunctionComponent<SelectBoxProps> =  
           country => (country.name === name)
         ).regions;
       }(fields.country);
-    }, [fields.country]
+    },        [fields.country]
   );
 
   const useStyles = makeStyles((theme: Theme) => createStyles({

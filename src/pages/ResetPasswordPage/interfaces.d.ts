@@ -14,14 +14,5 @@ export interface ResetPasswordPageProps {
 export interface ResetPasswordPageState {
   isLoading: boolean;
   token: string;
-  isValid: boolean;
-  focused: boolean;
-  isPasswordHidden: boolean;
-  isConfirmPasswordHidden: boolean,
-  fields: {
-    [key: string]: string | number
-  };
-  errors: {
-    [key: string]: string
-  };
+  password: string;
 }

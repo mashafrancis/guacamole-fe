@@ -39,7 +39,7 @@ const getFormattedPermission = (accessLevelPermissions: Permission[]): Formatted
 
 /**
  * Converts resourceAccessLevels to an object with the resource names
- * as keys and values as object with boolean permissions. E.g
+ * as keys and value as object with boolean permissions. E.g
  * ```
  *  {
  *    center: {

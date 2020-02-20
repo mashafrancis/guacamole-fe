@@ -1,36 +1,27 @@
 import * as React from 'react';
 
+// components
+import LazyLoader from '@components/LazyLoader';
+import TripCard from '@components/TripCard';
+import UserTripCard from '@components/UserTripCard';
+
 // third-party libraries
-import Dialog, {
-  DialogButton,
-  DialogContent,
-  DialogFooter,
-  DialogTitle,
-} from '@material/react-dialog';
+import Dialog, { DialogButton, DialogContent, DialogFooter, DialogTitle } from '@material/react-dialog';
 import Fab from '@material/react-fab';
 import { Cell, Grid, Row } from '@material/react-layout-grid';
 import MaterialIcon from '@material/react-material-icon';
-import * as moment from 'moment';
 import { connect } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 
-// pages
-import DashboardPage from '@pages/DashboardContainer';
-
-// components
-import LazyLoader from '@components/LazyLoader';
-import Table from '@components/Table';
-import UserTripCard from '@components/UserTripCard';
-
 // thunks
 import { displaySnackMessage } from '@modules/snack';
-import {
-  deleteSingleTrip,
-  getAllUserTrips
-} from '@modules/trips';
+import { deleteSingleTrip, getAllUserTrips } from '@modules/trips';
+import { Trip } from '@modules/trips/interfaces';
 
-import { TripsPageProps, TripsPageState } from './interfaces';
 import Loader from '@components/Loader';
+import EditSingleTripPage from '@pages/EditSingleTripPage';
+import TripsPageForm from '@pages/TripsPageForm';
+import { TripsPageProps, TripsPageState } from './interfaces';
 
 export const TripsPage: React.FunctionComponent<TripsPageProps> = (props) => {
   const [state, setState] = React.useState<TripsPageState>({
@@ -50,52 +41,24 @@ export const TripsPage: React.FunctionComponent<TripsPageProps> = (props) => {
     trip_id: '',
   });
 
+  const [showingNewTripForm, setShowingNewTripForm] = React.useState<Boolean>(false);
+  const [showingSingleTrip, setShowingSingleTrip] = React.useState<Boolean>(false);
+  const [selectedTripId, setSelectedTripId] = React.useState<string>();
+  const [editTrip, setEditTrip] = React.useState<Trip>(undefined);
+
   React.useEffect(() => {
+    switch (state.action) {
+      case 'delete':
+        props.deleteSingleTrip(state.trip_id);
+        break;
+      case 'dismiss':
+        setState({ ...state, isDeleteModal: false });
+        break;
+    }
     props.getAllUserTrips()
       .then(() => setState({ ...state, trips: props.trips }))
       .then(() => setState({ ...state, isLoading: false }));
-  },              []);
-
-  React.useEffect(() => {
-    switch (state.action) {
-      case 'delete':
-        props.deleteSingleTrip(state.trip_id)
-          .then(() => setState({
-            ...state,
-            action: '',
-            isDeleteModal: false, isLoading: false,
-          }));
-        props.getAllUserTrips()
-          .then(() => setState({ ...state, trips: props.trips }))
-          .then(() => setState({ ...state, isLoading: false }));
-        break;
-      case 'dismiss':
-        setState({ ...state, isDeleteModal: false });
-        break;
-    }
   },              [state.action]);
-
-  const handleDelete = (trip) => {
-    switch (state.action) {
-      case 'delete':
-        props.deleteSingleTrip(trip.id)
-          .then(() => setState({
-            ...state,
-            action: '',
-            isDeleteModal: false, isLoading: false,
-          }));
-        break;
-      case 'dismiss':
-        setState({ ...state, isDeleteModal: false });
-        break;
-    }
-  };
-
-  const redirectToSingleTrip = (trip_id) => {
-    props.history.push(`/trips/${
-      state.trips
-    }`);
-  };
 
   const renderHeaderContent = () => {
     return (
@@ -119,8 +82,13 @@ export const TripsPage: React.FunctionComponent<TripsPageProps> = (props) => {
         <h5>Do you confirm deletion of trip?</h5>
       </DialogContent>
       <DialogFooter>
-        <DialogButton action="delete">Delete</DialogButton>
-        <DialogButton action="dismiss" isDefault>Dismiss</DialogButton>
+        <DialogButton action="dismiss">Dismiss</DialogButton>
+        <DialogButton
+          className="mdc-button big-round-corner-button mdc-button--raised"
+          action="delete"
+          isDefault>
+          Delete
+        </DialogButton>
       </DialogFooter>
     </Dialog>
   );
@@ -157,48 +125,15 @@ export const TripsPage: React.FunctionComponent<TripsPageProps> = (props) => {
     </React.Fragment>
   );
 
-  const renderUserTrips = (trips) => {
-    const tableHeaders = {
-      Origin: { valueKey: 'origin', colWidth: '30' },
-      Destination: { valueKey: 'destination', colWidth: '30' },
-      Departure: { valueKey: 'departure_date', colWidth: '30' },
-      Arrival: { valueKey: 'arrival_date', colWidth: '30' },
-      Actions: { valueKey: 'actions' },
-    };
-
-    const tableValues = trips.map(trip => ({
-      id: trip.id,
-      origin: trip.origin,
-      destination: trip.destination,
-      departure_date: `${moment(trip.departure_date).format('LL')}`,
-      arrival_date: `${moment(trip.arrival_date).format('LL')}`,
-      actions: ActionButtons(trip),
-    }));
-
-    return (
-      (window.innerWidth < 539)
-        ? renderUserTripsMobile(trips)
-        :
-        <LazyLoader height={110}>
-        <div className="user-trips-table">
-          <Table
-            keys={tableHeaders}
-            values={tableValues}
-          />
-        </div>
-        </LazyLoader>
-    );
-  };
-
   const blankContent = () => (
     <React.Fragment>
       <div className="blank-content">
         <h4>You don't have any trip scheduled</h4>
         <h5>Tap + to create one</h5>
-        <NavLink to={'/trips/new-trip'}>
-          <Fab className="create-trip-button" icon={<MaterialIcon icon="add" initRipple={null}/>}
+          <Fab
+            onClick={() => setShowingNewTripForm(!showingNewTripForm)}
+            className="create-trip-button" icon={<MaterialIcon icon="add" initRipple={null}/>}
           />
-        </NavLink>
       </div>
     </React.Fragment>
   );
@@ -207,49 +142,66 @@ export const TripsPage: React.FunctionComponent<TripsPageProps> = (props) => {
     return (
       <Grid>
         <Row>
-            <Cell
-              className="mdc-layout-grid__cell grid-start-5
-                      mdc-layout-grid__cell--align-middle"
-              columns={4}
-              desktopColumns={4}
-              tabletColumns={8}
-              phoneColumns={4}
-            >
-              <div className="cover">
-                <div className="head-title">
-                  <div className="title-cover title-cover-page">
-                    <h3>Recent Trips</h3>
-                  </div>
-                </div>
-              </div>
-            </Cell>
-          </Row>
-        <Row>
           <Cell
-            columns={12}
-            desktopColumns={12}
-            tabletColumns={8}
+            className="mdc-layout-grid__cell grid-start-5 mdc-layout-grid__cell--align-middle"
+            align="middle"
+            order={5}
+            columns={4}
+            desktopColumns={4}
+            tabletColumns={4}
             phoneColumns={4}
           >
-            {DeleteModal()}
-            {!props.trips.length || undefined
-              ? blankContent()
-              : renderUserTrips(props.trips)}
+            <h3 className="user-trips-title">My Recent Trips</h3>
           </Cell>
         </Row>
         <Row>
+          {DeleteModal()}
+          {(props.trips.length > 0) ?
+            props.trips.map((trip) => {
+              return (
+                <TripCard
+                  key={trip.id}
+                  trip={trip}
+                  isOwner={true}
+                  setSelectedTrip={setSelectedTripId}
+                  setShowingSingleTrip={setShowingSingleTrip}
+                  editTrip={setEditTrip}
+                  handleDeleteTrip={() => setState({ ...state, trip_id: trip.id, isDeleteModal: true })}
+                />
+              );
+            }) :
+            <Cell
+              columns={12}
+              desktopColumns={12}
+              tabletColumns={8}
+              phoneColumns={4}
+            >
+              {blankContent()}
+            </Cell>
+          }
+        </Row>
+        <Row>
           <Cell>
-            <NavLink to={'/trips/new-trip'}>
-              <Fab className="create-trip-button" icon={<MaterialIcon icon="add" initRipple={null}/>}
+              <Fab
+                onClick={() => setShowingNewTripForm(!showingNewTripForm)}
+                className="create-trip-button"
+                icon={<MaterialIcon icon="add" initRipple={null}/>}
               />
-            </NavLink>
           </Cell>
         </Row>
       </Grid>
     );
   };
 
-  return state.isLoading ? <Loader /> : renderTripsComponent();
+  return state.isLoading ? <Loader /> :
+    showingNewTripForm
+      ?
+      <TripsPageForm setShowingNewTripForm={setShowingNewTripForm} />
+      : editTrip
+      ? <EditSingleTripPage
+          setEditTrip={setEditTrip}
+          editTripId={selectedTripId}
+        /> : renderTripsComponent();
 };
 
 export const mapStateToProps = state => ({

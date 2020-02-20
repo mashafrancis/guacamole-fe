@@ -12,12 +12,5 @@ export interface ForgotPasswordPageProps {
 
 export interface ForgotPasswordPageState {
   isLoading: boolean;
-  isValid: boolean;
-  focused: boolean;
-  fields: {
-    [key: string]: string | number
-  };
-  errors: {
-    [key: string]: string
-  };
+  email: string;
 }

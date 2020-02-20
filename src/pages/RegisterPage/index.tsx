@@ -1,162 +1,98 @@
 import * as React from 'react';
 
-// third-party libraries
-import {
-  Cell,
-  Grid,
-  Row
-} from '@material/react-layout-grid';
-import MaterialIcon from '@material/react-material-icon';
-import TextField, { HelperText, Input } from '@material/react-text-field';
-import { connect } from 'react-redux';
-
 // components
 import AuthHeader from '@components/AuthHeader';
 import Button from '@components/Button';
-
+import EmailField from '@components/EmailField';
+import FormField from '@components/FormField';
+import PasswordField from '@components/PasswordField';
+// third-party libraries
+import { Cell, Grid, Row } from '@material/react-layout-grid';
+import MaterialIcon from '@material/react-material-icon';
 // thunks
 import { registerUser } from '@modules/register';
 import { displaySnackMessage } from '@modules/snack';
-
+// third-party libraries
+import { connect } from 'react-redux';
 // interfaces
 import { RegisterPageProps, RegisterPageState } from './interfaces';
-
-// helpers
-import { applyValidation } from '@utils/helpers/validationUtils';
-
-// resources
-import { validationConfig } from '@utils/helpers/resources';
-
 // styles
-// import '@material/react-layout-grid/dist/layout-grid.css';
 import './RegisterPage.scss';
 
 export class RegisterPage extends React.Component<RegisterPageProps, RegisterPageState> {
+  private errorMessage;
   // This method calls the parent element with props parameter.
   constructor(props) {
     super(props);
     this.state = {
+      fields: {},
+      password: '',
+      email: '',
+      username: '',
       isLoading: false,
       isValid: true,
       focused: false,
-      fields: {},
-      errors: {},
-      isPasswordHidden: true,
-      isConfirmPasswordHidden: true,
+      errors: [],
+      value: '',
     };
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentDidMount () {
+    const sessionError = localStorage.getItem('sessionError');
+
+    if (sessionError) {
+      this.errorMessage = sessionError;
+      displaySnackMessage(this.errorMessage);
+    }
+  }
+
+  componentWillUnmount() {
+    localStorage.removeItem('locationReferrer');
   }
 
   /**
    * Handles text field input change
    *
-   * @param {event} event input change event
-   *
    * @returns {void}
+   * @param e
    */
-  handleInputChange = (event) => {
-    const { name: field, value } = event.target;
+  handleInputChange = (e) => {
+    const { value, name } = e;
 
     this.setState(prevState => ({
-      fields: {
-        ...prevState.fields,
-        [field]: value,
-      },
+      ...prevState,
+      [name]: value,
     }));
   }
 
-  toggleHidePassword = () => {
-    this.setState(prevState => ({
-      isPasswordHidden: !prevState.isPasswordHidden,
-    }));
+  fieldStateChanged = (field: keyof RegisterPageState) => (state) => {
+    this.setState({ ...state, [field]: state.errors.length === 0 });
   }
 
-  toggleHideConfirmPassword = () => {
-    this.setState(prevState => ({
-      isConfirmPasswordHidden: !prevState.isConfirmPasswordHidden,
-    }));
-  }
-
-  /**
-   * Sets the field error string
-   *
-   * @param {String} field The name of the error field
-   * @param {String} error The error message
-   *
-   * @returns {void}
-   */
-  setFieldError = (field: string, error: string) => {
-    this.setState(prevState => ({
-      errors: {
-        ...prevState.errors,
-        [field]: error,
-      },
-    }));
-  }
-
-  /**
-   * Validates a single field of a form
-   * Triggered by a form input event
-   *
-   * @param {event} event DOM event
-   * @param {object} config
-   *
-   * @returns {void}
-   */
-  validateSingleField = (event, config = validationConfig) => {
-    const field = event.target.name;
-    const value = this.state.fields[field];
-    const error = applyValidation(value, config[field]);
-
-    this.setFieldError(field, error);
-  }
-
-  /**
-   * Validates the confirmation password
-   *
-   * @param {event} event DOM event
-   *
-   * @returns {void}
-   */
-  validateConfirmationPassword = (event) => {
-    const field = event.target.name;
-    const value = this.state.fields[field];
-    (this.state.fields.password !== value)
-      ? this.setFieldError(field, 'Password mismatch')
-      : this.setFieldError(field, '');
-  }
-
-  /**
-   * Computed property for determining if the form can be submitted
-   *
-   * @returns {Boolean}
-   */
-  formIsReady = () => {
-    const { errors, fields } = this.state;
-    const expectedFieldCount = 4;
-    const formHasMissingFields = Object.keys(fields).length < expectedFieldCount;
-    const formHasError = Object.values(errors).some(error => Boolean(error));
-
-    return !formHasMissingFields && !formHasError;
-  }
-
-  /**
-   * Handles the submission on successful validation
-   *
-   * @param {event} event DOM event
-   *
-   * @returns {void}
-   */
-  onSubmit = (event) => {
-    event.preventDefault();
-    const { fields } = this.state;
-    const user = {
-      username: fields.username as string,
-      email: fields.email as string,
-      password: fields.password as string,
+  validateUsername = (value) => {
+    const hasSpecialCharacters = (char) => {
+      const code = char.charCodeAt(0);
+      return !(!(code > 31 && code < 48) && !(code > 57 && code < 65));
     };
 
-    this.setState({ isLoading: true });
+    for (const char of value) {
+      if (hasSpecialCharacters(char)) { throw new Error('Username should contain only letters and numbers'); }
+    }
+    if (value.trim().length < 4) { throw new Error('Username cannot be lesser than 4 characters'); }
+    if (value.trim().length > 20) { throw new Error('Username cannot be greater than 20 characters'); }
+  }
+
+  onSubmit = (event) => {
+    event.preventDefault();
+    const { username, email, password } = this.state;
+    const user = {
+      username,
+      email,
+      password,
+    };
+
+    this.setState(prevState => ({ ...prevState, isLoading: true }));
 
     this.props.registerUser(user)
       .then(() => {
@@ -165,128 +101,50 @@ export class RegisterPage extends React.Component<RegisterPageProps, RegisterPag
   }
 
   renderRegisterForm = () => {
-    const { fields, errors, isPasswordHidden, isConfirmPasswordHidden } = this.state;
-
     return (
       <React.Fragment>
         <div className="form-cell">
-          <TextField
-            className="mdc-text-field--fullwidth"
-            outlined
-            label="Username"
+          <FormField
+            id="username"
+            labelText="Username"
+            type="text"
             leadingIcon={<MaterialIcon role="button" icon="alternate_email" initRipple={null}/>}
-            helperText={
-              <HelperText
-                className="mdc-text-field-invalid-helper"
-                isValidationMessage={true}
-                persistent={true}
-                validation={true}>
-                {errors.username}
-              </HelperText>}
-          >
-            <Input
-              value={fields.username}
-              name="username"
-              id="1"
-              type="text"
-              required={true}
-              onBlur={this.validateSingleField}
-              onChange={this.handleInputChange}/>
-          </TextField>
+            aria-describedby="username-helper-text"
+            required
+            validator={this.validateUsername}
+            onStateChanged={(e) => { this.fieldStateChanged('username'); this.handleInputChange(e); }}
+          />
         </div>
         <div className="form-cell">
-          <TextField
-            className="mdc-text-field--fullwidth"
-            outlined
-            label="Email"
-            leadingIcon={<MaterialIcon role="button" icon="email" initRipple={null}/>}
-            helperText={
-              <HelperText
-                className="mdc-text-field-invalid-helper"
-                isValidationMessage={true}
-                persistent={true}
-                validation={true}>
-                {errors.email}
-              </HelperText>}
-          >
-            <Input
-              value={fields.email}
-              name="email"
-              id="2"
-              type="text"
-              required={true}
-              onBlur={this.validateSingleField}
-              onChange={this.handleInputChange}/>
-          </TextField>
+          <EmailField
+            id="email"
+            label="email"
+            placeholder="Enter Email Address"
+            onStateChanged={(e) => { this.fieldStateChanged('email'); this.handleInputChange(e); }}
+            required
+          />
         </div>
         <div className="form-cell">
-          <TextField
-            className="mdc-text-field--fullwidth"
-            outlined
-            label="Password"
-            onLeadingIconSelect={this.toggleHidePassword}
-            leadingIcon={
-              <MaterialIcon
-                role="button"
-                icon={isPasswordHidden ? 'visibility' : 'visibility_off'}
-                hasRipple={true}
-                initRipple={null}/>}
-            helperText={
-              <HelperText
-                className="mdc-text-field-invalid-helper"
-                isValidationMessage={true}
-                persistent={true}
-                validation={true}>
-                {errors.password}
-              </HelperText>}
-          >
-            <Input
-              value={fields.password}
-              name="password"
-              id="3"
-              type={isPasswordHidden ? 'password' : 'text'}
-              required={true}
-              onBlur={this.validateSingleField}
-              onChange={this.handleInputChange}/>
-          </TextField>
-        </div>
-        <div className="form-cell">
-          <TextField
-            className="mdc-text-field--fullwidth"
-            outlined
-            label="Confirm Password"
-            onLeadingIconSelect={this.toggleHideConfirmPassword}
-            leadingIcon={
-              <MaterialIcon
-                role="button"
-                icon={isConfirmPasswordHidden ? 'visibility' : 'visibility_off'}
-                hasRipple={true}
-                initRipple={null}/>}
-            helperText={
-              <HelperText
-                className="mdc-text-field-invalid-helper"
-                isValidationMessage={true}
-                persistent={true}
-                validation={true}>
-                {errors.confirmPassword}
-              </HelperText>}
-          >
-            <Input
-              value={fields.confirmPassword}
-              name="confirmPassword"
-              id="4"
-              type={isConfirmPasswordHidden ? 'password' : 'text'}
-              required={true}
-              onBlur={this.validateConfirmationPassword}
-              onChange={this.handleInputChange}/>
-          </TextField>
+          <PasswordField
+            id="password"
+            label="password"
+            type="password"
+            aria-describedby="password-helper-text"
+            onStateChanged={(e) => { this.fieldStateChanged('password'); this.handleInputChange(e); }}
+            required
+            placeholder="Enter Password"
+            thresholdLength={7}
+            minStrength={3}
+          />
         </div>
       </React.Fragment>
     );
   }
 
   render() {
-    const { isLoading } = this.state;
+    const { isLoading, username, email, password } = this.state;
+    const formValidated = username && email && password;
+
     const { history } = this.props
     return (
       <div className="register">
@@ -328,7 +186,7 @@ export class RegisterPage extends React.Component<RegisterPageProps, RegisterPag
                 type="button"
                 name={isLoading ? 'Registering...' : 'Register'}
                 id="cc-register"
-                disabled={!this.formIsReady()}
+                disabled={!formValidated}
                 onClick={this.onSubmit}
                 classes="mdc-button big-round-corner-button mdc-button--raised"
               />

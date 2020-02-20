@@ -1,9 +1,10 @@
 import * as React from 'react';
 
 // third-party libraries
+import EmailField from '@components/EmailField';
+import FormField from '@components/FormField';
 import { Cell, Grid, Row } from '@material/react-layout-grid';
 import MaterialIcon from '@material/react-material-icon';
-import TextField, { HelperText, Input } from '@material/react-text-field';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
@@ -20,14 +21,9 @@ import { LoginPageProps, LoginPageState } from './interfaces';
 
 // helpers
 import { authService } from '@utils/auth';
-import { applyValidation } from '@utils/helpers/validationUtils';
-
-// resources
-import { validationConfig } from '@utils/helpers/resources';
 
 // styles
 import './LoginPage.scss';
-// import '@material/react-layout-grid/dist/layout-grid.css';
 
 export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
   private errorMessage;
@@ -41,6 +37,8 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
       fields: {},
       errors: {},
       isPasswordHidden: true,
+      password: '',
+      email: '',
     };
     this.onSubmit = this.onSubmit.bind(this);
   }
@@ -66,83 +64,30 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
    * @returns {void}
    */
   handleInputChange = (event) => {
-    const { name: field, value } = event.target;
+    const { value, name } = event;
 
     this.setState(prevState => ({
-      fields: {
-        ...prevState.fields,
-        [field]: value,
-      },
+      ...prevState,
+      [name]: value,
     }));
+  }
+
+  fieldStateChanged = (field: keyof LoginPageState) => (state) => {
+    this.setState({ ...state, [field]: state.errors.length === 0 });
   }
 
   toggleHidePassword = () => {
-    this.setState(prevState => ({
-      isPasswordHidden: !prevState.isPasswordHidden,
-    }));
-  }
-
-  /**
-   * Sets the field error string
-   *
-   * @param {String} field The name of the error field
-   * @param {String} error The error message
-   *
-   * @returns {void}
-   */
-  setFieldError = (field: string, error: string) => {
-    this.setState(prevState => ({
-      errors: {
-        ...prevState.errors,
-        [field]: error,
-      },
-    }));
-  }
-
-  /**
-   * Validates a single field of a form
-   * Triggered by a form input event
-   *
-   * @param {event} event DOM event
-   * @param {object} config
-   *
-   * @returns {void}
-   */
-  validateSingleField = (event, config = validationConfig) => {
-    const field = event.target.name;
-    const value = this.state.fields[field];
-    const error = applyValidation(value, config[field]);
-
-    this.setFieldError(field, error);
+    this.setState(prevState => ({ isPasswordHidden: !prevState.isPasswordHidden }));
   }
 
   /**
    * Validates the password field
    *
-   * @param {event} event DOM event
-   *
    * @returns {void}
+   * @param value
    */
-  validatePasswordField = (event) => {
-    const field = event.target.name;
-    const value = this.state.fields[field];
-    (!value)
-      ? this.setFieldError(field, 'Kindly provide your password')
-      : this.setFieldError(field, '');
-  }
-
-  /**
-   * Computed property for determining if the form can be submitted
-   *
-   * @returns {Boolean}
-   */
-  formIsReady = () => {
-    const { errors, fields } = this.state;
-    const expectedFieldCount = 2;
-    const formHasMissingFields = Object.keys(fields).length < expectedFieldCount;
-    const formHasError = Object.values(errors).some(error => Boolean(error));
-
-    return !formHasMissingFields && !formHasError;
+  validatePasswordField = (value) => {
+    if (!value) { throw new Error('Kindly provide your password'); }
   }
 
   /**
@@ -154,10 +99,10 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
    */
   onSubmit = (event) => {
     event.preventDefault();
-    const { fields } = this.state;
+    const { email, password } = this.state;
     const user = {
-      email: fields.email as string,
-      password: fields.password as string,
+      email,
+      password,
     };
 
     this.setState({ isLoading: true });
@@ -191,40 +136,24 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
   }
 
   renderLoginForm = () => {
-    const { fields, errors, isPasswordHidden } = this.state;
+    const { isPasswordHidden } = this.state;
 
     return (
       <React.Fragment>
         <div className="form-cell">
-          <TextField
-            className="mdc-text-field--fullwidth"
-            outlined
+          <EmailField
+            id="email"
             label="Email"
-            leadingIcon={<MaterialIcon role="button" icon="email" initRipple={null}/>}
-            helperText={
-              <HelperText
-                className="mdc-text-field-invalid-helper"
-                isValidationMessage={true}
-                persistent={true}
-                validation={true}>
-                {errors.email}
-              </HelperText>}
-          >
-            <Input
-              value={fields.email}
-              name="email"
-              id="5"
-              type="text"
-              required={true}
-              onBlur={this.validateSingleField}
-              onChange={this.handleInputChange}/>
-          </TextField>
+            placeholder="Enter Email Address"
+            onStateChanged={(e) => { this.fieldStateChanged('email'); this.handleInputChange(e); }}
+            required
+          />
         </div>
         <div className="form-cell">
-          <TextField
-            className="mdc-text-field--fullwidth"
-            outlined
-            label="Password"
+          <FormField
+            id="password"
+            labelText="Password"
+            type={isPasswordHidden ? 'password' : 'text'}
             onLeadingIconSelect={this.toggleHidePassword}
             leadingIcon={
               <MaterialIcon
@@ -232,31 +161,19 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
                 icon={isPasswordHidden ? 'visibility' : 'visibility_off'}
                 hasRipple={true}
                 initRipple={null}/>}
-            helperText={
-              <HelperText
-                className="mdc-text-field-invalid-helper"
-                isValidationMessage={true}
-                persistent={true}
-                validation={true}>
-                {errors.password}
-              </HelperText>}
-          >
-            <Input
-              value={fields.password}
-              name="password"
-              id="6"
-              type={isPasswordHidden ? 'password' : 'text'}
-              required={true}
-              onBlur={this.validatePasswordField}
-              onChange={this.handleInputChange}/>
-          </TextField>
+            aria-describedby="username-helper-text"
+            required
+            validator={this.validatePasswordField}
+            onStateChanged={(e) => { this.fieldStateChanged('password'); this.handleInputChange(e); }}
+          />
         </div>
       </React.Fragment>
     );
   }
 
   render() {
-    const { isLoading } = this.state;
+    const { isLoading, email, password } = this.state;
+    const formValidated = email && password;
     const isAuthenticated = authService.isAuthenticated();
     const triedToAuthenticate = localStorage.getItem('triedToAuthenticate');
     const { history } = this.props
@@ -309,7 +226,7 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
               type="button"
               name={isLoading ? 'Please wait...' : 'Login'}
               id="cc-register"
-              disabled={!this.formIsReady()}
+              disabled={!formValidated}
               onClick={this.onSubmit}
               classes="mdc-button big-round-corner-button mdc-button--raised"
             />

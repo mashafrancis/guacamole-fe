@@ -5,8 +5,8 @@ import {
   GET_USER_DETAILS_SUCCESS,
  } from './types';
 
-import { UserRole } from 'modules/userRoles/interfaces';
-import { FormattedPermissions } from 'utils/helpers/formatPermissions/interfaces';
+import { UserRole } from '@modules/userRoles/interfaces';
+import { FormattedPermissions } from '@utils/helpers/formatPermissions/interfaces';
 
 export interface GetUserDetailsActionSuccess {
   userDetails: UserDetails;

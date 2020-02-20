@@ -3,7 +3,6 @@ import * as React from 'react';
 // third-party libraries
 import MaterialIcon from '@material/react-material-icon';
 import TopAppBar, {
-  TopAppBarFixedAdjust,
   TopAppBarIcon,
   TopAppBarRow,
   TopAppBarSection,
@@ -19,17 +18,37 @@ import { TopBarProps } from './interfaces';
 
 const viewPort = window.innerWidth;
 
-export const TopBar: React.FunctionComponent<TopBarProps> = props => (
-  <MenuContext.Consumer>
-    {({ setOpen }) => (
-      <TopAppBar className="dashboard-mobile-nav">
+export const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
+  const menu = React.useContext(MenuContext);
+
+  const renderTopRightIcons = () => (
+    <div className="companion-nav">
+      {
+        props.topIcons.map((topIcon, index) => {
+          return (
+            <TopAppBarIcon key={index} navIcon tabIndex={0}>
+              <MaterialIcon
+                onClick={topIcon.clickEvent}
+                hasRipple icon={topIcon.icon}
+                initRipple={null}
+              />
+            </TopAppBarIcon>
+          );
+        })
+      }
+      {(viewPort > 539) && props.photoImage}
+    </div>
+  );
+
+  return (
+    <TopAppBar className="dashboard-mobile-nav">
       <TopAppBarRow>
         <TopAppBarSection align="start">
           {(viewPort < 539) &&
           <TopAppBarIcon navIcon tabIndex={0}>
             <MaterialIcon
-              onClick={() => setOpen(true)}
-              hasRipple icon="notes" initRipple={null}/>
+              onClick={() => menu.setOpen(true)}
+              hasRipple icon="menu" initRipple={null}/>
           </TopAppBarIcon>}
           <TopAppBarTitle>
             <NavLink to={'/'}>
@@ -45,7 +64,7 @@ export const TopBar: React.FunctionComponent<TopBarProps> = props => (
           {
             viewPort > 539 &&
             <React.Fragment>
-              <div className="topbar-divider topbar-lockup-divider" />
+              <div className="topbar-divider topbar-lockup-divider"/>
               <div className="topbar-title">
                 <h4>Explore Page</h4>
               </div>
@@ -53,25 +72,9 @@ export const TopBar: React.FunctionComponent<TopBarProps> = props => (
           }
         </TopAppBarSection>
         <TopAppBarSection align="end" role="toolbar">
-          <div className="companion-nav">
-            {
-              props.topIcons.map((topIcon, index) => {
-                return (
-                  <TopAppBarIcon key={index} navIcon tabIndex={0}>
-                    <MaterialIcon
-                      onClick={topIcon.clickEvent}
-                      hasRipple icon={topIcon.icon}
-                      initRipple={null}
-                    />
-                  </TopAppBarIcon>
-                );
-              })
-            }
-            {(viewPort > 539) && props.photoImage}
-          </div>
+          {renderTopRightIcons()}
         </TopAppBarSection>
       </TopAppBarRow>
     </TopAppBar>
-    )}
-  </MenuContext.Consumer>
-);
+  );
+};

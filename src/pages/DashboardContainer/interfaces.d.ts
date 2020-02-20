@@ -1,4 +1,4 @@
-import { UserDetails } from 'modules/user/interfaces';
+import { UserDetails } from '@modules/user/interfaces';
 
 export interface DashboardContainerProps {
   drawerEl?: object;
@@ -7,7 +7,7 @@ export interface DashboardContainerProps {
   };
   history: {
     push: (url: string) => void;
-  }
+  };
   component: any;
   user?: UserDetails;
   logoutUser: () => void;
