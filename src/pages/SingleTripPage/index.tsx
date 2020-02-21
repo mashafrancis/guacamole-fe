@@ -35,17 +35,16 @@ export const SingleTripPage: React.FunctionComponent<SingleTripPageProps> = (pro
     trips: [],
   });
 
-  const tripId = props.match.params.id;
-  React.useEffect(() => {
-    props.getSingleTrip(tripId)
-      .then(() => setState({ ...state, isLoading: false }));
-  },              []);
+  const tripId = props.selectedTripId;
 
   React.useEffect(() => {
-    props.getAllUserTrips()
+    props.getSingleTrip(tripId)
+      .then(() => setState({ ...state, isLoading: false }))
+      .then(() => props.getAllUserTrips()
       .then(() => setState({ ...state, trips: props.trips }))
-      .then(() => setState({ ...state, isLoading: false }));
-  },              []);
+      .then(() => setState({ ...state, isLoading: false })));
+    return () => setState({...state, isLoading: true})
+  },[tripId]);
 
   const handleModalOpen = () => {
     setState({ ...state, modalOpen: true });
@@ -60,13 +59,13 @@ export const SingleTripPage: React.FunctionComponent<SingleTripPageProps> = (pro
     props.requestTrip(props.trip.id);
   };
 
-  const redirectToSingleTrip = (tripId) => {
-    props.history.push(`/trips/${tripId}`);
-  };
+  const handleShowExplorePage = () => {
+    props.setShowingSingleTrip(false)
+  }
+
 
   const BodyContent = () => {
-    const { trip } = props;
-
+    const { trip, setShowingSingleTrip, setSelectedTripId } = props;
     return (
       <div className="single-trip-page">
         <Grid>
@@ -141,9 +140,10 @@ export const SingleTripPage: React.FunctionComponent<SingleTripPageProps> = (pro
                   <TripCard
                     key={trip.id}
                     trip={trip}
-                    redirect={redirectToSingleTrip}
                     requestTrip={handleRequestTrip}
                     isOwner={true}
+                    setSelectedTrip={setSelectedTripId}
+                    setShowingSingleTrip={setShowingSingleTrip}
                   />
                 );
               })
@@ -153,17 +153,15 @@ export const SingleTripPage: React.FunctionComponent<SingleTripPageProps> = (pro
       </div>
     );
   };
-
+  const { history, setShowingSingleTrip } = props
   return (
     state.isLoading
       ? <Loader />
       :
       <div className="register">
       <AuthHeader
-        forwardButtonName={'Home'}
         backwardButtonName={'Back'}
-        forwardLink={'/'}
-        backwardLink={'/explore'}/>
+        backwardAction={ () => setShowingSingleTrip(false)}/>
       <Grid>
         <Row>
           <Cell

@@ -14,11 +14,10 @@ import List, {
   ListItemText
 } from '@material/react-list';
 import MaterialIcon from '@material/react-material-icon';
-import { NavLink } from 'react-router-dom';
 
 // components
 import { MenuContext } from '@components/Context';
-import { BottomMenus, Menus } from '@pages/MenuRoutes';
+import { Menus } from '@components/MenusRoutes';
 
 // interfaces
 import { MenuContentProps } from './interfaces';
@@ -48,7 +47,6 @@ const mobileDrawerHeader = (setOpen, name, photo) => {
     <DrawerHeader>
       <div className="drawer-logo">
         <div role="tablist"
-             // ref={e => menuAnchorEl.current = e}
              className="mdc-tab-bar"
              onClick={() => setOpen(false)}
         >
@@ -69,65 +67,49 @@ const drawerContent = (selectedIndex, setSelectedIndex, setOpen, logoutUser) => 
         selectedIndex={selectedIndex}
       >
         {
-          Menus.map((menu, index) => {
-            return (
-              <NavLink key={index} to={menu.navLink}>
+          Menus.map((group, groupIndex) => (
+            <React.Fragment key={groupIndex} >
+              {group.map((item, itemIndex) => (
                 <ListItem
-                  onClick={() => {
-                    setSelectedIndex(index);
-                    setOpen(false);
-                  }}>
-                  <ListItemGraphic className="drawer-icon" graphic={<MaterialIcon icon={menu.icon}/>} />
-                  <ListItemText tabIndex={0} primaryText={menu.primaryText}/>
-                </ListItem>
-              </NavLink>
-            );
-          })
-        }
-      </List>
-      <ListDivider tag="div" />
-      <ListGroupSubheader tag="h3">Do more with your account</ListGroupSubheader>
-      {
-          BottomMenus.map((item, index) => {
-            return (
-              <NavLink key={index} to={item.navLink}>
-                <ListItem onClick={() => {
-                  setSelectedIndex(index);
-                  setOpen(false);
-                }}>
-                  <ListItemGraphic className="drawer-icon" graphic={<MaterialIcon icon={item.icon}/>} />
-                  <ListItemText primaryText={item.primaryText}/>
-                </ListItem>
-              </NavLink>
-            );
-          })
+                  key={`${groupIndex}.${itemIndex}`}
+                  className={(selectedIndex.group === groupIndex && selectedIndex.item === itemIndex) && 'mdc-list-item--selected'}
+                  onClick={() => setSelectedIndex({ group: groupIndex, item: itemIndex }) && setOpen(false)} >
+                  <ListItemGraphic graphic={<MaterialIcon icon={item.icon} initRipple={null} />} />
+                  <ListItemText primaryText={item.primaryText} />
+                </ListItem >)
+              )}
+              < ListDivider tag="div" />
+              {groupIndex === 0 ? <ListGroupSubheader tag="h3">Do more with your account</ListGroupSubheader> : null}
+            </React.Fragment>
+          ))
         }
         <ListItem onClick={logoutUser}>
-          <ListItemGraphic className="drawer-icon" graphic={<MaterialIcon icon="exit_to_app"/>} />
+          <ListItemGraphic graphic={<MaterialIcon icon="exit_to_app"/>} />
           <ListItemText primaryText="Logout"/>
         </ListItem>
+      </List>
     </ListGroup>
     <footer className="drawer-footer">
-      <a className="footer-text" href="https://www.almond.com/privacy" target="_blank" rel="noopener">Privacy</a> · <a
-      className="footer-text" href="https://www.almond.com/tos" target="_blank" rel="noopener">Terms</a> · <a
-      className="footer-text" href="https://www.almond.com/about" target="_blank" rel="noopener">About</a>
+      <a className="footer-text" href="https://www.mobilities.com/privacy" target="_blank" rel="noopener">Privacy</a> ·
+      <a className="footer-text" href="https://www.mobilities.com/tos" target="_blank" rel="noopener">Terms</a> ·
+      <a className="footer-text" href="https://www.mobilities.com/about" target="_blank" rel="noopener">About</a>
     </footer>
   </React.Fragment>
 );
 
-export const MenuContent: React.FunctionComponent<MenuContentProps> = props => (
-  <MenuContext.Consumer>
-    {({ isOpen, setOpen, selectedIndex, setSelectedIndex, logoutUser }) => (
-      <Drawer
-        modal = {(viewPort < 539)}
-        open={isOpen}
-        onClose={() => setOpen(false)}
-        >
-        {mobileDrawerHeader(setOpen, props.name, props.photo)}
-        <DrawerContent>
-          {drawerContent(selectedIndex, setSelectedIndex, setOpen, logoutUser)}
-        </DrawerContent>
-      </Drawer>
-    )}
-  </MenuContext.Consumer>
-);
+export const MenuContent: React.FunctionComponent<MenuContentProps> = (props) => {
+  const menu = React.useContext(MenuContext);
+  const { isOpen, setOpen, selectedIndex, setSelectedIndex, logoutUser } = menu;
+  return (
+    <Drawer
+      modal={(viewPort < 539)}
+      open={isOpen}
+      onClose={() => setOpen(false)}
+    >
+      {mobileDrawerHeader(setOpen, props.name, props.photo)}
+      <DrawerContent>
+        {drawerContent(selectedIndex, setSelectedIndex, setOpen, logoutUser)}
+      </DrawerContent>
+    </Drawer>
+  );
+};

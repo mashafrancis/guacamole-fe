@@ -5,6 +5,9 @@ export interface DashboardContainerProps {
   match?: {
     url: string;
   };
+  history: {
+    push: (url: string) => void;
+  };
   component: any;
   user?: UserDetails;
   logoutUser: () => void;
@@ -13,7 +16,10 @@ export interface DashboardContainerProps {
 export interface DashboardContainerState {
   isOpen: boolean;
   isMenuOpen: boolean;
-  selectedIndex: number;
+  selectedIndex: {
+    group: number;
+    item: number
+  };
   isLoading: boolean;
   isFeedbackMenuOpen: boolean;
   isFeedbackModal: boolean;

@@ -70,13 +70,14 @@ export class ForgotPasswordPage extends React.Component<ForgotPasswordPageProps,
   }
 
   render() {
+    const { history } = this.props
     return (
       <div className="register">
       <AuthHeader
         forwardButtonName="Home"
         backwardButtonName="Back"
-        forwardLink={'/'}
-        backwardLink={'/login/email'}
+        forwardAction={() => history.push('/')}
+        backwardAction={ () => history.push('/login/email')}
       />
       <Grid>
         <Row>

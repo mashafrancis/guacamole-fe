@@ -5,6 +5,9 @@ export interface LoginPageProps {
   location: {
     search: string;
   };
+  history: {
+    push: (url: string) => void
+  }
 }
 
 export interface LoginPageState {

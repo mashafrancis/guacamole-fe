@@ -176,7 +176,7 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
     const formValidated = email && password;
     const isAuthenticated = authService.isAuthenticated();
     const triedToAuthenticate = localStorage.getItem('triedToAuthenticate');
-
+    const { history } = this.props
     this.validateLogin(triedToAuthenticate, isAuthenticated);
 
     return (
@@ -184,8 +184,8 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
       <AuthHeader
         forwardButtonName="Register"
         backwardButtonName="Back"
-        forwardLink={'/register/email'}
-        backwardLink={'/login'}
+        forwardAction={() => history.push('/register/email')}
+        backwardAction={() => history.push('/login')}
       />
       <Grid>
         <Row>

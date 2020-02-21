@@ -57,6 +57,13 @@ p {
   overflow: auto;
   font-family: Google Sans, Roboto, Helvetica Neue, sans-serif !important;
 
+  .mdc-list-item {
+    &__selected {
+      background-color: #10A36D !important;
+      color: #10A36D !important;
+    }
+  }
+
   .mdc-top-app-bar {
     background-color: #fff;
     color: #fff;

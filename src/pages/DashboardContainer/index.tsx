@@ -7,7 +7,10 @@ import { connect } from 'react-redux';
 import PageBottomNavigation from '@components/BottomNavigation';
 import { MenuContext } from '@components/Context';
 import { MenuContent } from '@components/MenuContent';
+import { Menus } from '@components/MenusRoutes';
 import { TopBar } from '@components/TopBar';
+import UserModal from '@components/UserModal';
+import MenuSurface, { Corner } from '@material/react-menu-surface';
 import { TopAppBarFixedAdjust, TopAppBarIcon } from '@material/react-top-app-bar';
 
 // thunks
@@ -26,7 +29,10 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
   const [state, setState] = React.useState<DashboardContainerState>({
     isOpen: false,
     isMenuOpen: false,
-    selectedIndex: 0,
+    selectedIndex: {
+      group: 0,
+      item: 0,
+    },
     isLoading: true,
     isFeedbackMenuOpen: false,
     isFeedbackModal: false,
@@ -43,8 +49,8 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
 
   const setOpen = (isOpen: boolean) => {
     const menu = state.menu;
-    // @ts-ignore
     setState({
+      ...state,
       menu: {
         ...menu,
         isOpen: menu.isOpen = isOpen,
@@ -52,8 +58,12 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
     });
   };
 
-  const setSelectedIndex = () => {
-    setState({ ...state, selectedIndex: 1 });
+  const setSelectedIndex = (selectedIndex: { group: number, item: number }) => {
+    setState({ ...state, selectedIndex });
+  };
+
+  const onMenuOpenClose = () => {
+    setState({ ...state, isMenuOpen: !state.isMenuOpen });
   };
 
   const logoutUser = () => {
@@ -64,9 +74,9 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
   const photoImage = () => (
     <TopAppBarIcon actionItem tabIndex={0}>
       <div role="tablist"
-           ref={e => menuAnchorEl.current = e}
-           className="mdc-tab-bar"
-           onClick={() => setState({ ...state, isOpen: true })}
+        ref={e => menuAnchorEl.current = e}
+        className="mdc-tab-bar"
+        onClick={() => setState({ ...state, isOpen: true })}
       >
     <span className="mini-account-menu__image">
     {(viewPort > 539) &&
@@ -90,8 +100,9 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
     },
   ];
 
-  const { component, user } = props;
-  const { isOpen, selectedIndex } = state.menu;
+  const { user, history } = props;
+  const { isOpen } = state.menu;
+  const { selectedIndex } = state;
 
   return (
     <MenuContext.Provider
@@ -104,17 +115,38 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
       }}
     >
       <div className="dashboard">
-        <MenuContent name={`${user.first_name} ${user.last_name}`} photo={user.photo}/>
-        <TopBar photoImage={photoImage()} topIcons={topIcons}/>
+        <MenuContent
+          name={`${user.first_name} ${user.last_name}`}
+          photo={user.photo}
+        />
+        <TopBar
+          photoImage={photoImage()}
+          topIcons={topIcons}
+        />
+        <MenuSurface
+          open={state.isMenuOpen}
+          anchorCorner={Corner.BOTTOM_LEFT}
+          onClose={onMenuOpenClose}
+          anchorElement={menuAnchorEl.current}
+        >
+          <UserModal
+            user={props.user}
+            logoutUser={props.logoutUser}
+          />
+        </MenuSurface>
         {
           (viewPort < 539)
             ?
           <div className="page-content">
-            <TopAppBarFixedAdjust>{component}</TopAppBarFixedAdjust>
+            <TopAppBarFixedAdjust className="drawer-content">
+              {React.createElement(Menus[selectedIndex.group][selectedIndex.item].component, { history })}
+            </TopAppBarFixedAdjust>
             <PageBottomNavigation />
           </div>
             :
-          <TopAppBarFixedAdjust>{component}</TopAppBarFixedAdjust>
+            <TopAppBarFixedAdjust className="drawer-content">
+              {React.createElement(Menus[selectedIndex.group][selectedIndex.item].component, { history })}
+            </TopAppBarFixedAdjust>
         }
       </div>
     </MenuContext.Provider>

@@ -27,10 +27,6 @@ const PreferenceComponent = () => {
   );
 };
 
-const PreferencePage = () => (
-  <React.Fragment>
-    <DashboardPage component={PreferenceComponent()}/>
-  </React.Fragment>
-);
+const PreferencePage = () => PreferenceComponent();
 
 export default PreferencePage;
