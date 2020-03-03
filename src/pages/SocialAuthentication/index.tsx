@@ -78,7 +78,7 @@ export class SocialAuthentication extends React.Component<SocialAuthenticationPr
         this.props.socialAuthentication(payload);
       })
       .catch(() => {
-        this.props.displaySnackMessage('Your email has are already been used to log in with another service');
+        this.props.displaySnackMessage('Something went wrong with the social authentication, please try again');
       });
   }
 

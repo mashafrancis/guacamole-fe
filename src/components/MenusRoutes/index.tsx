@@ -2,9 +2,9 @@ import PageNotFound from '@components/PageNotFound';
 import ExplorePage from '@pages/ExplorePage';
 import PreferencePage from '@pages/PreferencePage';
 import TripsPage from '@pages/TripsPage';
-import { ComponentsProps } from './interfaces.d';
+import { ComponentsProps } from './interfaces';
 
-export const Menus: Array<Array<ComponentsProps>> = [
+export const Menus: ComponentsProps[][] = [
   [
     {
       primaryText: 'Explore',
