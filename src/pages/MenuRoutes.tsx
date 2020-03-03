@@ -56,18 +56,23 @@ export const BottomMenus = [
 
 export const BottomNavigationMenus = [
   {
-    navLink: '/explore',
     icon: <ExploreIcon />,
-    primaryText: 'Explore',
+    label: 'Explore',
+    value: 'explore',
   },
   {
-    navLink: '/trips',
     icon: <CardTravelIcon />,
-    primaryText: 'Trips',
+    label: 'Trips',
+    value: 'trips',
   },
   {
-    navLink: '/preferences',
     icon: <FavoriteIcon />,
-    primaryText: 'Favorites',
+    label: 'Favorites',
+    value: 'favorites',
+  },
+  {
+    icon: <FavoriteIcon />,
+    label: 'More',
+    value: 'more',
   },
 ];

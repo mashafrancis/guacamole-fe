@@ -73,18 +73,23 @@ const drawerContent = (selectedIndex, setSelectedIndex, setOpen, logoutUser) => 
                 <ListItem
                   key={`${groupIndex}.${itemIndex}`}
                   className={(selectedIndex.group === groupIndex && selectedIndex.item === itemIndex) && 'mdc-list-item--selected'}
-                  onClick={() => setSelectedIndex({ group: groupIndex, item: itemIndex }) && setOpen(false)} >
-                  <ListItemGraphic graphic={<MaterialIcon icon={item.icon} initRipple={null} />} />
-                  <ListItemText primaryText={item.primaryText} />
-                </ListItem >)
+                  onClick={() => setSelectedIndex({ group: groupIndex, item: itemIndex }) }
+                >
+                  <ListItemGraphic
+                    className="drawer-icon"
+                    graphic={<MaterialIcon icon={item.icon}/>}
+                  />
+                  <ListItemText tabIndex={0} primaryText={item.primaryText}/>
+                </ListItem>)
               )}
               < ListDivider tag="div" />
               {groupIndex === 0 ? <ListGroupSubheader tag="h3">Do more with your account</ListGroupSubheader> : null}
             </React.Fragment>
-          ))
+            )
+          )
         }
-        <ListItem onClick={logoutUser}>
-          <ListItemGraphic graphic={<MaterialIcon icon="exit_to_app"/>} />
+        <ListItem onClick={logoutUser} className="mdc-list-item--logout">
+          <ListItemGraphic className="drawer-icon" graphic={<MaterialIcon icon="exit_to_app"/>} />
           <ListItemText primaryText="Logout"/>
         </ListItem>
       </List>
