@@ -9,6 +9,7 @@ import TopAppBar, {
   TopAppBarTitle,
 } from '@material/react-top-app-bar';
 import { NavLink } from 'react-router-dom';
+import { useViewport } from '../../hooks';
 
 // utils
 import { MenuContext } from '../Context';
@@ -16,10 +17,11 @@ import { MenuContext } from '../Context';
 // interface
 import { TopBarProps } from './interfaces';
 
-const viewPort = window.innerWidth;
-
 export const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
   const menu = React.useContext(MenuContext);
+
+  const { width } = useViewport();
+  const breakpoint = 539;
 
   const renderTopRightIcons = () => (
     <div className="companion-nav">
@@ -36,7 +38,7 @@ export const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
           );
         })
       }
-      {(viewPort > 539) && props.photoImage}
+      {(width < breakpoint) && props.photoImage}
     </div>
   );
 
@@ -44,7 +46,7 @@ export const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
     <TopAppBar className="dashboard-mobile-nav">
       <TopAppBarRow>
         <TopAppBarSection align="start">
-          {(viewPort < 539) &&
+          {(width < breakpoint) &&
           <TopAppBarIcon navIcon tabIndex={0}>
             <MaterialIcon
               onClick={() => menu.setOpen(true)}
@@ -62,7 +64,7 @@ export const TopBar: React.FunctionComponent<TopBarProps> = (props) => {
             </NavLink>
           </TopAppBarTitle>
           {
-            viewPort > 539 &&
+            (width < breakpoint) &&
             <React.Fragment>
               <div className="topbar-divider topbar-lockup-divider"/>
               <div className="topbar-title">

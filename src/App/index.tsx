@@ -14,6 +14,7 @@ import { getUserDetails } from '@modules/user';
 import InternalServerErrorMessage from '@components/InternalServerErrorMessage';
 import Loader from '@components/Loader';
 import SnackBar from '@components/SnackBar';
+import { ViewportProvider } from '../hooks';
 import Routes from '../routes';
 
 // styles
@@ -56,18 +57,20 @@ export class App extends React.Component<AppProps, AppState> {
       isUserAuthenticated: boolean) => (isGettingUserDetails && isUserAuthenticated);
 
     return (checkUserDetailsAndAuthentication(isGettingUserDetails, isUserAuthenticated) ? <Loader /> :
-      <ErrorBoundary>
-        <React.Fragment>
-          <SnackBar />
-          <>
-            {
-              location.pathname !== '/'
-              && isUserAuthenticated
-            }
-            {<Routes/>}
-          </>
-        </React.Fragment>
-      </ErrorBoundary>
+      <ViewportProvider>
+        <ErrorBoundary>
+          <React.Fragment>
+            <SnackBar />
+            <>
+              {
+                location.pathname !== '/'
+                && isUserAuthenticated
+              }
+              {<Routes/>}
+            </>
+          </React.Fragment>
+        </ErrorBoundary>
+      </ViewportProvider>
     );
   }
 }

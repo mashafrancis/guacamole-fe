@@ -26,7 +26,6 @@ import countryString from '@utils/helpers/countryString';
 
 // styles
 import './TripCard.scss';
-import { editTrip } from '@modules/trips';
 
 const useStyles = makeStyles({
   root: {
@@ -52,13 +51,13 @@ const TripCard: React.FunctionComponent<TripCardProps> = (props) => {
     isOwner,
     setShowingSingleTrip,
     setSelectedTrip,
-    editTrip
+    editTrip,
   } = props;
 
   const handleEditTrip = () => {
-    setSelectedTrip(trip.id)
-    editTrip(trip)
-  }
+    setSelectedTrip(trip.id);
+    editTrip(trip);
+  };
 
   const handleModalOpen = () => {
     setModalOpen(true);
@@ -69,9 +68,9 @@ const TripCard: React.FunctionComponent<TripCardProps> = (props) => {
   };
 
   const onSelectTripCard = () => {
-    setShowingSingleTrip(true)
-    setSelectedTrip(trip.id)
-  }
+    setShowingSingleTrip(true);
+    setSelectedTrip(trip.id);
+  };
 
   const handleRequestTrip = () => {
     handleModalClose();
@@ -102,7 +101,7 @@ const TripCard: React.FunctionComponent<TripCardProps> = (props) => {
 
   return (
       <Cell
-        desktopColumns={3}
+        desktopColumns={2}
         tabletColumns={4}
         phoneColumns={2}
       >
@@ -120,7 +119,7 @@ const TripCard: React.FunctionComponent<TripCardProps> = (props) => {
                 {`${countryString(trip.origin)} to ${countryString(trip.destination)}`}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-                {`${moment(trip.departure_date).format('LL')} - ${moment(trip.arrival_date).format('LL')}`}
+                {`${moment(trip.departure_date).format('LL')}`}
               </Typography>
             </CardContent>
           </CardActionArea>

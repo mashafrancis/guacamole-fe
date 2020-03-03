@@ -1,10 +1,19 @@
+import MaterialIcon from '@material/react-material-icon';
+import * as React from 'react';
+
+// pages
 import PageNotFound from '@components/PageNotFound';
+import CardTravelIcon from '@material-ui/icons/CardTravel';
+import ExploreIcon from '@material-ui/icons/Explore';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExplorePage from '@pages/ExplorePage';
 import PreferencePage from '@pages/PreferencePage';
 import TripsPage from '@pages/TripsPage';
-import { ComponentsProps } from './interfaces';
 
-export const Menus: ComponentsProps[][] = [
+// interfaces
+import { MenuProps } from './interfaces';
+
+export const Menus: MenuProps[][] = [
   [
     {
       primaryText: 'Explore',
@@ -39,4 +48,27 @@ export const Menus: ComponentsProps[][] = [
       icon: 'launch',
     },
   ],
+];
+
+export const BottomNavigationMenus = [
+  {
+    icon: <MaterialIcon hasRipple icon="explore" initRipple={null}/>,
+    label: 'Explore',
+    value: 'explore',
+  },
+  {
+    icon: <MaterialIcon hasRipple icon="card_travel" initRipple={null}/>,
+    label: 'Trips',
+    value: 'trips',
+  },
+  {
+    icon: <MaterialIcon hasRipple icon="bookmarks" initRipple={null}/>,
+    label: 'Bookmarked',
+    value: 'bookmark',
+  },
+  {
+    icon: <MaterialIcon hasRipple icon="more_horiz" initRipple={null}/>,
+    label: 'More',
+    value: 'more',
+  },
 ];

@@ -30,9 +30,7 @@
       &__navigation-icon {
         color: rgba(0, 0, 0, 0.87) !important;
       }
-
     }
-
 
     .topbar-divider {
       margin-left: 16px;
@@ -45,7 +43,7 @@
       color: #dadce0;
       content: '';
       height: 32px;
-      margin-left: 112px;
+      margin-left: 118px;
       margin-right: 90px;
       width: 1px;
     }
@@ -56,19 +54,22 @@
       padding: 4px 100px;
       //border: 1px solid #dadce0;
       border-radius: 4px;
+      display: flex;
+      cursor: pointer;
 
       h4 {
         font-weight: 500;
-        margin-bottom: 0;
+        font-size: 18px;
+        padding-right: 10px;
       }
     }
 
     .drawer-icon {
       margin: 0 .5rem;
-      color: #80868b;
-      width: 16px;
-      height: 16px;
-      font-size: 18px;
+      //color: #80868b;
+      width: 18px;
+      height: 18px;
+      font-size: 20px;
       font-feature-settings: 'liga';
       word-break: normal;
       font-weight: normal;
@@ -269,9 +270,9 @@ footer {
   }
 }
 
-@media (max-width: 536px) {
+@media (max-width: 539px) {
   .mdc-top-app-bar {
-    //background-color: #d6dae04d;
+    background-color: #d6dae04d;
     color: #000000;
 
     &__title {
@@ -284,11 +285,6 @@ footer {
     &__navigation-icon {
       color: rgba(99, 99, 99, 0.81) !important;
     }
-  }
-
-  .mdc-list-item--selected {
-    background: '#1967d2' !important;
-    opacity: 0.19
   }
 
   .mdc-drawer .mdc-list-item {
@@ -375,7 +371,19 @@ footer {
   }
 
   .mdc-drawer__header {
-    background-color: rgba(17, 17, 17, 0.76);
+    background-color: rgba(17, 17, 17, 0.91);
+  }
+
+  .topbar-lockup-divider {
+    display: none;
+  }
+
+  .topbar-title {
+    display: none;
+  }
+
+  .topbar-device-id {
+    display: none;
   }
 }
 
@@ -384,7 +392,6 @@ footer {
     padding-top: 18px;
     padding-bottom: 8px;
     padding-left: 20px;
-    display: flex;
 
     &__image {
       height: 30px
@@ -401,4 +408,3 @@ footer {
     }
   }
 }
-

@@ -1,10 +1,12 @@
 import * as React from 'react';
 
+const selectedIndex = JSON.parse(window.localStorage.getItem('selectedIndex'));
+
 export const MenuContext = React.createContext({
   isOpen: false,
   selectedIndex: {
-    group: 0,
-    item: 0,
+    group: selectedIndex === null || undefined || false ? 0 : selectedIndex.group,
+    item: selectedIndex === null || undefined || false ? 0 : selectedIndex.item,
   },
   setOpen: (_open: boolean) => {},
   setSelectedIndex: (_selectedIndex: {group: number, item: number}) => {},
@@ -14,4 +16,9 @@ export const MenuContext = React.createContext({
 export const UserContext = React.createContext({
   name: '',
   photo: '',
+});
+
+export const ViewportContext = React.createContext({
+  width: 0,
+  height: 0,
 });

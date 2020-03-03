@@ -16,6 +16,9 @@ import { TopAppBarFixedAdjust, TopAppBarIcon } from '@material/react-top-app-bar
 // thunks
 import { logoutUser } from '@modules/user';
 
+// hooks
+import { useViewport } from '../../hooks';
+
 // interfaces
 import { DashboardContainerProps, DashboardContainerState } from './interfaces';
 
@@ -45,6 +48,19 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
     },
   });
 
+  const { width } = useViewport();
+  const breakpoint = 539;
+
+  React.useEffect(() => {
+    const selectedIndex = JSON.parse(window.localStorage.getItem('selectedIndex'));
+    if (selectedIndex) {
+      setState({ ...state, selectedIndex });
+    } else {
+      const initialSelectedIndex =  { group: 0, item: 0 };
+      window.localStorage.setItem('selectedIndex', JSON.stringify(initialSelectedIndex));
+    }
+  },              []);
+
   const menuAnchorEl = React.useRef<any>(null);
 
   const setOpen = (isOpen: boolean) => {
@@ -60,6 +76,7 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
 
   const setSelectedIndex = (selectedIndex: { group: number, item: number }) => {
     setState({ ...state, selectedIndex });
+    window.localStorage.setItem('selectedIndex', JSON.stringify(selectedIndex));
   };
 
   const onMenuOpenClose = () => {
@@ -134,20 +151,10 @@ const DashboardContainer: React.FunctionComponent<DashboardContainerProps> = (pr
             logoutUser={props.logoutUser}
           />
         </MenuSurface>
-        {
-          (viewPort < 539)
-            ?
-          <div className="page-content">
-            <TopAppBarFixedAdjust className="drawer-content">
-              {React.createElement(Menus[selectedIndex.group][selectedIndex.item].component, { history })}
-            </TopAppBarFixedAdjust>
-            <PageBottomNavigation />
-          </div>
-            :
-            <TopAppBarFixedAdjust className="drawer-content">
-              {React.createElement(Menus[selectedIndex.group][selectedIndex.item].component, { history })}
-            </TopAppBarFixedAdjust>
-        }
+        <TopAppBarFixedAdjust>
+          {React.createElement(Menus[selectedIndex.group][selectedIndex.item].component, { history })}
+        </TopAppBarFixedAdjust>
+        { width < breakpoint && <PageBottomNavigation/> }
       </div>
     </MenuContext.Provider>
   );
