@@ -91,7 +91,7 @@
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.27",
     "moxios": "^0.4.0",
-    "postcss-loader": "^3.0.0",
+    "postcss-loader": "^4.0.0",
     "prop-types": "^15.7.2",
     "rc-progress": "^2.5.2",
     "react": "^16.12.0",
